@@ -1,7 +1,9 @@
 NAME	:= minishell
 CFLAGS	:= -Wextra -Wall -Werror -g
 HEADERS	:= -I ./include
-SRCS	:= src/main.c
+SRCS	:=	src/main.c \
+			src/lexer.c \
+			src/error.c
 OBJS	:= ${SRCS:.c=.o}
 LIBS	:= -lreadline
 

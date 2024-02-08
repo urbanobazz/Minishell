@@ -2,16 +2,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Minishell",
-            "type": "cppdbg",
+            "name": "Debug minishell (LLDB)",
+            "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/minishell",
             "args": [],
-            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb"
+            "preLaunchTask": "build minishell"
         }
     ]
 }

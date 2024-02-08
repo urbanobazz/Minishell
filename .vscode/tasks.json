@@ -2,14 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build and Clean",
+            "label": "build minishell",
             "type": "shell",
-            "command": "make && make clean",
+            "command": "make",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": []
+            "problemMatcher": "$gcc",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
         }
     ]
 }

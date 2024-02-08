@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/08 19:00:18 by louis.demet      ###   ########.fr       */
+/*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
+/*   Updated: 2024/02/08 19:19:59 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	minishell(void)
+void	handle_error(t_data *data)
 {
-	t_data	*data;
-
-	data = (t_data *)malloc(sizeof(t_data));
-	data->user_input = readline("minishell: ");
-	lexer(data);
-	// parser();
-	// executor();
-	// free_data();
-	// minishell();
-}
-
-int	main(int argc, char **argv)
-{
-	(void)argv;
-	if (argc != 1)
-		return (0);
-	minishell();
-	return (1);
+	(void)data;
 }
