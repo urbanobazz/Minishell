@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 15:27:38 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/09 15:49:35 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,32 @@ void execute_cmd(char *cmd, int input_fd, int output_fd)
 	execve("/bin/sh", argv, envp);
 }
 
+void	execute_shell_command_with_redirection(t_data *data, int i)
+{
+	int	infile_fd;
+	int outfile_fd;
+
+	if (i == 0)
+		infile_fd = data->infile_fd;
+	else
+	{
+		infile_fd = data->pipes[i - 1][0];
+		close(data->pipes[i - 1][1]);
+	}
+	if (i == data->command_count - 1)
+		outfile_fd = data->outfile_fd;
+	else
+	{
+		outfile_fd = data->pipes[i][1];
+		close(data->pipes[i][0]);
+	}
+	execute_cmd(data->commands[i], infile_fd, outfile_fd);
+}
+
+
 void	run_subprocesses(t_data *data)
 {
 	int	i;
-	int	infile_fd;
-	int outfile_fd;
 
 	i = 0;
 	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
@@ -72,22 +93,14 @@ void	run_subprocesses(t_data *data)
 		handle_error(data);
 	while (i < data->command_count)
 	{
-		if (i == 0)
-			infile_fd = data->infile_fd;
-		else
-			infile_fd = data->pipes[i - 1][0];
-		if (i == data->command_count - 1)
-			outfile_fd = data->outfile_fd;
-		else
-			outfile_fd = data->pipes[i][1];
 		data->processes[i] = fork();
 		if (data->processes[i] == 0)
-			execute_cmd(data->commands[i], infile_fd, outfile_fd);
+			execute_shell_command_with_redirection(data, i);
 		else if (data->processes[i] < 0)
 			handle_error(data);
 		i++;
 	}
-	i = 0;
+	i = 1;
 	while (i < data->command_count)
 		waitpid(data->processes[i++], NULL, 0);
 }
