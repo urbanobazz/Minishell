@@ -7,11 +7,15 @@ LIBS    := 	-lreadline \
 SRCS    := 	src/main.c \
 		   	src/lexer.c \
 		   	src/error.c
-OBJS    := 	$(SRCS:.c=.o)
+OBJDIR  := 	obj
+OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
-all: $(NAME)
+all: $(OBJDIR) $(NAME)
 
-%.o: %.c
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)/src
+
+$(OBJDIR)/%.o: %.c
 	@$(CC) -o $@ -c $< $(INCLUDE) && printf "Compiling: $(notdir $<)\n"
 
 $(NAME): $(OBJS)
@@ -19,11 +23,11 @@ $(NAME): $(OBJS)
 	@$(CC) $(OBJS) $(INCLUDE) -o $(NAME) $(LIBS)
 
 clean:
-	@rm -rf $(OBJS)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@rm -rf $(NAME)
 
-re: clean all
+re: fclean all
 
 .PHONY: all clean fclean re
