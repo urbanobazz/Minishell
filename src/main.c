@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 16:41:25 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/09 20:14:13 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_data	*init_data()
 {
 	t_data	*data;
-	
+
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		handle_error(data);
@@ -38,6 +38,7 @@ void	minishell(void)
 			free_data(data);
 			break;
 		}
+		add_history(data->user_input);
 		lexer(data);
 		parser(data);
 		executor(data);
