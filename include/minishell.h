@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/08 19:59:56 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/09 11:00:23 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <readline/readline.h>
 # include <stdlib.h>
+# include "libft.h"
 
 typedef struct s_tokens
 {

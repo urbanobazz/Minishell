@@ -4,10 +4,10 @@ INCLUDE :=	-I ./include \
 			-I ./libft
 LIBS    := 	-lreadline \
 			-L ./libft -lft
-OBJS    := 	$(SRCS:.c=.o)
 SRCS    := 	src/main.c \
 		   	src/lexer.c \
 		   	src/error.c
+OBJS    := 	$(SRCS:.c=.o)
 
 all: $(NAME)
 
