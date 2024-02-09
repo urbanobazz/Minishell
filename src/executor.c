@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 15:49:35 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/09 16:03:57 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	init_redirections(t_data *data)
 void execute_cmd(char *cmd, int input_fd, int output_fd)
 {
     char *argv[4] = {"/bin/sh", "-c", cmd, NULL};
-    char *envp[] = {NULL};
+	// char **argv = ft_split(cmd, ' ');
+    // char *envp[] = {NULL};
 
 	if (input_fd != STDIN_FILENO)
 	{
@@ -57,7 +58,7 @@ void execute_cmd(char *cmd, int input_fd, int output_fd)
 		dup2(output_fd, STDOUT_FILENO);
 		close(output_fd);
 	}
-	execve("/bin/sh", argv, envp);
+	execve(argv[0], argv, NULL);
 }
 
 void	execute_shell_command_with_redirection(t_data *data, int i)
