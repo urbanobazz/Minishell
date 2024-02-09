@@ -4,7 +4,7 @@
         {
             "label": "build minishell",
             "type": "shell",
-            "command": "make",
+            "command": "make && make clean",
             "group": {
                 "kind": "build",
                 "isDefault": true
