@@ -6,7 +6,8 @@ LIBS    := 	-lreadline \
 			-L ./libft -lft
 SRCS    := 	src/main.c \
 		   	src/lexer.c \
-		   	src/error.c
+		   	src/error.c \
+			src/parser.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
