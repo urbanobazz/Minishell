@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 14:32:30 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/09 16:41:25 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,25 @@ t_data	*init_data()
 	return (data);
 }
 
+
 void	minishell(void)
 {
 	t_data	*data;
 
-	data = init_data();
-	data->user_input = readline("minishell: ");
-	lexer(data);
-	parser(data);
-	executor(data);
-	// free_data(data);
-	// minishell();
+	while (1)
+	{
+		data = init_data();
+		data->user_input = readline("minishell: ");
+		if (data->user_input && ft_strcmp(data->user_input, "exit") == 0)
+		{
+			free_data(data);
+			break;
+		}
+		lexer(data);
+		parser(data);
+		executor(data);
+		free_data(data);
+	}
 }
 
 int	main(int argc, char **argv)

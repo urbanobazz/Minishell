@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 16:38:25 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/06 18:53:24 by lodemetz          #+#    #+#             */
+/*   Updated: 2024/02/09 16:40:39 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	free_data(t_data *data)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (data)
-		free(data);
-}
+	size_t			i;
+	unsigned char	*us1;
+	unsigned char	*us2;
 
-void	handle_error(t_data *data)
-{
-	free_data(data);
-	exit(EXIT_FAILURE);
+	us1 = (unsigned char *)s1;
+	us2 = (unsigned char *)s2;
+	i = 0;
+	while (us1[i] && us2[i] && us1[i] == us2[i])
+		i++;
+	return (us1[i] - us2[i]);
 }

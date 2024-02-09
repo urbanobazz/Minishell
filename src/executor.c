@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 16:03:57 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/09 16:17:42 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	execute_shell_command_with_redirection(t_data *data, int i)
 	}
 	execute_cmd(data->commands[i], infile_fd, outfile_fd);
 }
-
 
 void	run_subprocesses(t_data *data)
 {
