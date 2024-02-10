@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 13:36:41 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 11:48:17 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	init_command_array(t_data *data)
 	}
 	data->command_count -= not_command_count;
 	data->commands = (char **)malloc(sizeof(char *) * data->command_count);
-	if (!data->commands)
-		handle_error(data);
+	data->command_paths = (char **)malloc(sizeof(char *) * data->command_count);
+	if (!data->commands || !data->command_paths)
+		handle_error(data, "Not enough memory to create commands array");
 }
 
 void	parser(t_data *data)

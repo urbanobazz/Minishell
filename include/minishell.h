@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 20:17:02 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/10 11:46:12 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ typedef struct s_data
 	t_token		*tokens;
 	int			command_count;
 	char		**commands;
+	char		**command_paths;
 	char		*std_input;
 	char		*std_output;
 	int			infile_fd;
 	int			outfile_fd;
 	int			**pipes;
+	char		**env_paths;
 	pid_t		*processes;
 } t_data;
 
 // error.c
-void	handle_error(t_data *data);
+void	handle_error(t_data *data, char *message);
 void	free_data(t_data *data);
+void	free_split(char **arr);
 
 // lexer.c
 void	lexer(t_data *data);

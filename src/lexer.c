@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 11:30:59 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 12:11:37 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	create_token(t_data *data, char *token)
 	
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
-		handle_error(data);
+		handle_error(data, "Not enough memory to create token");
 	new->token = ft_strtrim(token, " ");
 	free(token);
 	add_token(&data->tokens, new);
