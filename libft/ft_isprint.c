@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 16:45:53 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/06 16:48:05 by lodemetz         ###   ########.fr       */
+/*   Created: 2023/11/09 17:52:32 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/17 11:00:25 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(int c)
+int	ft_isprint(int arg)
 {
-	if (c >= 32 && c <= 126)
-		return (1);
-	return (0);
+	return (arg >= 32 && arg <= 126);
 }

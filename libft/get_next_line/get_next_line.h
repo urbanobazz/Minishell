@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 13:00:56 by ubazzane          #+#    #+#             */
-/*   Updated: 2023/11/20 10:30:54 by ubazzane         ###   ########.fr       */
+/*   Created: 2023/11/21 16:17:26 by ubazzane          #+#    #+#             */
+/*   Updated: 2024/02/10 19:09:15 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef	GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*last_ptr;
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include "../libft.h"
 
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	last_ptr = ft_lstlast(*lst);
-	last_ptr -> next = new;
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
+char	*get_next_line(int fd);
+
+#endif

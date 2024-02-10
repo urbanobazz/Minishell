@@ -3,50 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 18:41:17 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/12 12:50:25 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/16 19:33:13 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/17 18:06:48 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Function name 
-// ft_putnbr_fd
-
-// Prototype 
-// void ft_putnbr_fd(int n, int fd);
-
-// Turn in files 
-// -
-
-// Parameters 
-// n: The integer to output.
-// fd: The file descriptor on which to write.
-
-// Return value 
-// None
-
-// External functs. 
-// write
-
-// Description 
-// Outputs the integer ’n’ to the given file descriptor.
 
 #include "libft.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	if (n == INT_MIN)
+	char	c;
+	long	nbr;
+
+	nbr = n;
+	if (nbr < 0)
 	{
-		ft_putstr_fd("-2147483648", fd);
-		return ;
+		write(fd, "-", 1);
+		nbr *= -1;
 	}
-	if (n < 0)
-	{
-		n = -n;
-		ft_putchar_fd('-', fd);
-	}
-	if (n >= 10)
-		ft_putnbr_fd(n / 10, fd);
-	ft_putchar_fd(n % 10 + '0', fd);
+	if (nbr > 9)
+		ft_putnbr_fd(nbr / 10, fd);
+	c = nbr % 10 + '0';
+	write(fd, &c, 1);
 }

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 13:00:56 by ubazzane          #+#    #+#             */
-/*   Updated: 2023/11/20 10:30:54 by ubazzane         ###   ########.fr       */
+/*   Created: 2023/11/27 16:47:41 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/27 16:48:31 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+size_t	ft_strlen(const char *str)
 {
-	t_list	*last_ptr;
+	size_t	len;
 
-	if (!*lst)
+	len = 0;
+	if (!str)
+		return (0);
+	while (str[len])
 	{
-		*lst = new;
-		return ;
+		len++;
 	}
-	last_ptr = ft_lstlast(*lst);
-	last_ptr -> next = new;
+	return (len);
 }
