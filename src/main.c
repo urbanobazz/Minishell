@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/09 20:14:13 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/10 10:12:08 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ t_data	*init_data()
 	return (data);
 }
 
+int	get_user_input(t_data *data)
+{
+	data->user_input = readline("minishell: ");
+	if (data->user_input && ft_strcmp(data->user_input, "exit") == 0)
+	{
+		free_data(data);
+		return (0);
+	}
+	add_history(data->user_input);
+	return (1);
+}
+
 
 void	minishell(void)
 {
@@ -32,13 +44,8 @@ void	minishell(void)
 	while (1)
 	{
 		data = init_data();
-		data->user_input = readline("minishell: ");
-		if (data->user_input && ft_strcmp(data->user_input, "exit") == 0)
-		{
-			free_data(data);
+		if(!get_user_input(data))
 			break;
-		}
-		add_history(data->user_input);
 		lexer(data);
 		parser(data);
 		executor(data);
