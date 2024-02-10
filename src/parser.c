@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 16:11:14 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 16:29:42 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void init_command_array(t_data *data)
 	data->commands = (char ***)malloc(sizeof(char **) * data->command_count);
 	data->cmd_paths = (char **)malloc(sizeof(char *) * data->command_count);
 	if (!data->commands || !data->cmd_paths)
-		handle_error(data, "Not enough memory to create commands array");
+		error_and_quit(data, "Not enough memory to create commands array");
 }
 
 void parse_tokens(t_data *data)
@@ -90,7 +90,7 @@ void parse_command_paths(t_data *data)
 		{
 			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->commands[i][0]);
 			if (!data->cmd_paths[i])
-				handle_error(data, "Not enough memory to create command path");
+				error_and_quit(data, "Not enough memory to create command path");
 			if (access(data->cmd_paths[i], X_OK) == 0)
 				break;
 			free(data->cmd_paths[i]);
@@ -98,7 +98,7 @@ void parse_command_paths(t_data *data)
 			j++;
 		}
 		if (!data->cmd_paths[i])
-			handle_error(data, "Command does not exist");
+			error_and_restart(data, "Command does not exist");
 		i++;
 	}
 }

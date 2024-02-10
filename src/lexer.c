@@ -6,15 +6,15 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 16:15:28 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 16:24:18 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*get_last_token(t_token *lst)
+void *get_last_token(t_token *lst)
 {
-	t_token	*last;
+	t_token *last;
 
 	last = lst;
 	while (lst)
@@ -25,41 +25,40 @@ void	*get_last_token(t_token *lst)
 	return (last);
 }
 
-void	add_token(t_token **lst, t_token *new)
+void add_token(t_token **lst, t_token *new)
 {
-	t_token	*last;
+	t_token *last;
 
 	if (!*lst)
 	{
 		*lst = new;
-		return ;
+		return;
 	}
 	last = get_last_token(*lst);
 	last->next = new;
 }
 
-void	create_token(t_data *data, char *token)
+void create_token(t_data *data, char *token)
 {
 	t_token *new;
-	
+
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
-		handle_error(data, "Not enough memory to create token");
+		error_and_quit(data, "Not enough memory to create token");
 	new->token = ft_strtrim(token, " ");
 	free(token);
 	add_token(&data->tokens, new);
 }
 
-
-int	is_operator(char c)
+int is_operator(char c)
 {
-	return (c == '|' || c == '<' || c =='>' );
+	return (c == '|' || c == '<' || c == '>');
 }
 
-void	lexer(t_data *data)
+void lexer(t_data *data)
 {
-	int	i;
-	int	len;
+	int i;
+	int len;
 
 	i = 0;
 	while (data->user_input[i])
