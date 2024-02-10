@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 16:24:18 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 19:51:22 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,21 @@ int is_operator(char c)
 
 void lexer(t_data *data)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
+	int	quote_open;
 
 	i = 0;
+	quote_open = 0;
 	while (data->user_input[i])
 	{
 		len = 0;
-		while (!is_operator(data->user_input[i + len]) && data->user_input[i + len])
+		while ((!is_operator(data->user_input[i + len]) || quote_open) && data->user_input[i + len])
+		{
+			if (data->user_input[i + len] == DOUBLE_QUOTE || data->user_input[i + len] == SINGLE_QUOTE)
+				quote_open = !quote_open;
 			len++;
+		}
 		create_token(data, ft_substr(data->user_input, i, len));
 		i += len;
 		if (is_operator(data->user_input[i]))
