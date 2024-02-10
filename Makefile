@@ -8,7 +8,8 @@ SRCS    := 	src/main.c \
 		   	src/lexer.c \
 		   	src/error.c \
 			src/parser.c \
-			src/executor.c
+			src/executor.c \
+			src/list.c \
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
