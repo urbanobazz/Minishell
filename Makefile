@@ -27,9 +27,11 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -rf $(OBJDIR)
+	@make clean -C ./libft
 
 fclean: clean
 	@rm -rf $(NAME)
+	@make fclean -C ./libft
 
 re: fclean all
 
