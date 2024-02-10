@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 12:11:37 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 16:15:28 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	create_token(t_data *data, char *token)
 }
 
 
-int is_operator(char c)
+int	is_operator(char c)
 {
 	return (c == '|' || c == '<' || c =='>' );
 }
 
-void lexer(t_data *data)
+void	lexer(t_data *data)
 {
 	int	i;
 	int	len;
@@ -70,7 +70,12 @@ void lexer(t_data *data)
 		create_token(data, ft_substr(data->user_input, i, len));
 		i += len;
 		if (is_operator(data->user_input[i]))
-			create_token(data, ft_substr(data->user_input, i, 1));
+		{
+			if (is_operator(data->user_input[i + 1]))
+				create_token(data, ft_substr(data->user_input, i++, 2));
+			else
+				create_token(data, ft_substr(data->user_input, i, 1));
+		}
 		i++;
 	}
 }

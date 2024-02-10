@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 13:52:36 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 16:11:14 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ void init_command_array(t_data *data)
 			not_command_count++;
 		else if (token_list->token[0] == '<' || token_list->token[0] == '>')
 			not_command_count += 2;
+		if (token_list->token[0] == '<' && token_list->token[1] == '<')
+			data->heredoc_mode = 1;
+		else if (token_list->token[0] == '>' || token_list->token[1] == '>')
+			data->append_mode = 1;
 		token_list = token_list->next;
 	}
 	data->command_count -= not_command_count;

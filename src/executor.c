@@ -6,13 +6,13 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 13:39:12 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 16:16:08 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void init_pipes(t_data *data)
+void	init_pipes(t_data *data)
 {
 	int i;
 
@@ -28,7 +28,7 @@ void init_pipes(t_data *data)
 	}
 }
 
-void init_redirections(t_data *data)
+void	init_redirections(t_data *data)
 {
 	if (data->std_input)
 		data->infile_fd = open(data->std_input, O_RDONLY);
@@ -42,7 +42,7 @@ void init_redirections(t_data *data)
 		handle_error(data, "Input or output file does not exist");
 }
 
-void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
+void	execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 {
 	if (input_fd != STDIN_FILENO)
 	{
@@ -57,7 +57,7 @@ void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 	execve(data->cmd_paths[i], data->commands[i], NULL);
 }
 
-void execute_shell_command_with_redirection(t_data *data, int i)
+void	execute_shell_command_with_redirection(t_data *data, int i)
 {
 	int infile_fd;
 	int outfile_fd;
@@ -79,7 +79,7 @@ void execute_shell_command_with_redirection(t_data *data, int i)
 	execute_cmd(data, i, infile_fd, outfile_fd);
 }
 
-void run_subprocesses(t_data *data)
+void	run_subprocesses(t_data *data)
 {
 	int i;
 
@@ -114,7 +114,7 @@ void	close_pipes_and_wait(t_data *data)
         waitpid(data->processes[i++], NULL, 0);
 }
 
-void executor(t_data *data)
+void	executor(t_data *data)
 {
 	init_pipes(data);
 	init_redirections(data);
