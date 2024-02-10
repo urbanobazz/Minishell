@@ -6,15 +6,15 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 13:00:42 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 13:09:31 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_token_lstsize(t_token *lst)
+int ft_token_lstsize(t_token *lst)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (lst)
@@ -25,10 +25,10 @@ int	ft_token_lstsize(t_token *lst)
 	return (i);
 }
 
-void	init_command_array(t_data *data)
+void init_command_array(t_data *data)
 {
-	t_token	*token_list;
-	int		not_command_count;
+	t_token *token_list;
+	int not_command_count;
 
 	data->command_count = ft_token_lstsize(data->tokens);
 	token_list = data->tokens;
@@ -42,16 +42,16 @@ void	init_command_array(t_data *data)
 		token_list = token_list->next;
 	}
 	data->command_count -= not_command_count;
-	data->commands = (char **)malloc(sizeof(char *) * data->command_count);
-	data->command_paths = (char **)malloc(sizeof(char *) * data->command_count);
-	if (!data->commands || !data->command_paths)
+	data->commands = (char ***)malloc(sizeof(char **) * data->command_count);
+	data->cmd_paths = (char **)malloc(sizeof(char *) * data->command_count);
+	if (!data->commands || !data->cmd_paths)
 		handle_error(data, "Not enough memory to create commands array");
 }
 
-void	parse_tokens(t_data *data)
+void parse_tokens(t_data *data)
 {
-	t_token	*token_list;
-	int		i;
+	t_token *token_list;
+	int i;
 
 	init_command_array(data);
 	token_list = data->tokens;
@@ -61,7 +61,7 @@ void	parse_tokens(t_data *data)
 		if (is_operator(token_list->token[0]))
 		{
 			if (token_list->token[0] == '|')
-				data->commands[i++] = token_list->next->token;
+				data->commands[i++] = ft_split(token_list->next->token, ' ');
 			else if (token_list->token[0] == '<')
 				data->std_input = token_list->next->token;
 			else if (token_list->token[0] == '>')
@@ -69,41 +69,38 @@ void	parse_tokens(t_data *data)
 			token_list = token_list->next;
 		}
 		else
-			data->commands[i++] = token_list->token;
+			data->commands[i++] = ft_split(token_list->token, ' ');
 		token_list = token_list->next;
 	}
 }
 
-void	parse_command_paths(t_data *data)
+void parse_command_paths(t_data *data)
 {
-	char	**cmd;
-	int		i;
-	int		j;
+	int i;
+	int j;
 
 	i = 0;
 	while (i < data->command_count)
 	{
 		j = 0;
-		cmd = ft_split(data->commands[i], ' ');
 		while (data->env_paths[j])
 		{
-			data->command_paths[i] = ft_strjoin(data->env_paths[j++], cmd[0]);
-			if (!data->command_paths[i])
+			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->commands[i][0]);
+			if (!data->cmd_paths[i])
 				handle_error(data, "Not enough memory to create command path");
-			if (access(data->command_paths[i], X_OK) == 0)
-				break ;
-			free(data->command_paths[i]);
-			data->command_paths[i] = 0;
+			if (access(data->cmd_paths[i], X_OK) == 0)
+				break;
+			free(data->cmd_paths[i]);
+			data->cmd_paths[i] = 0;
+			j++;
 		}
-		if (!data->command_paths[i])
+		if (!data->cmd_paths[i])
 			handle_error(data, "Command does not exist");
-		free_split(cmd);
 		i++;
 	}
 }
 
-
-void	parser(t_data *data)
+void parser(t_data *data)
 {
 	parse_tokens(data);
 	parse_command_paths(data);
