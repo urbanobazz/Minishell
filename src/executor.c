@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 13:21:52 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 13:29:50 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,27 +79,58 @@ void execute_shell_command_with_redirection(t_data *data, int i)
 	execute_cmd(data, i, infile_fd, outfile_fd);
 }
 
-void run_subprocesses(t_data *data)
-{
-	int i;
+// void run_subprocesses(t_data *data)
+// {
+// 	int i;
 
-	i = 0;
-	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
-	if (!data->processes)
-		handle_error(data, "Not enough memory to create subprocess array");
-	while (i < data->command_count)
-	{
-		data->processes[i] = fork();
-		if (data->processes[i] == 0)
-			execute_shell_command_with_redirection(data, i);
-		else if (data->processes[i] < 0)
-			handle_error(data, "Not enough memory to fork subprocess");
-		i++;
-	}
-	i = 0;
-	while (i < data->command_count)
-		waitpid(data->processes[i++], NULL, 0);
+// 	i = 0;
+// 	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
+// 	if (!data->processes)
+// 		handle_error(data, "Not enough memory to create subprocess array");
+// 	while (i < data->command_count)
+// 	{
+// 		data->processes[i] = fork();
+// 		if (data->processes[i] == 0)
+// 			execute_shell_command_with_redirection(data, i);
+// 		else if (data->processes[i] < 0)
+// 			handle_error(data, "Not enough memory to fork subprocess");
+// 		waitpid(data->processes[i], NULL, 0);
+// 		i++;
+// 	}
+// 	// i = 0;
+// 	// while (i < data->command_count)
+// }
+
+void run_subprocesses(t_data *data) {
+    int i;
+
+    data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
+    if (!data->processes)
+        handle_error(data, "Not enough memory to create subprocess array");
+
+    // Fork all subprocesses first
+    for (i = 0; i < data->command_count; ++i) {
+        data->processes[i] = fork();
+        if (data->processes[i] == 0) { // Child process
+            execute_shell_command_with_redirection(data, i);
+        } else if (data->processes[i] < 0) { // Fork failed
+            handle_error(data, "Not enough memory to fork subprocess");
+        }
+        // Parent process continues to next iteration to fork next subprocess
+    }
+
+    // Close all pipe ends in the parent, as they are no longer needed
+    for (i = 0; i < data->command_count - 1; ++i) {
+        close(data->pipes[i][0]);
+        close(data->pipes[i][1]);
+    }
+
+    // Wait for all subprocesses after they have been forked
+    for (i = 0; i < data->command_count; ++i) {
+        waitpid(data->processes[i], NULL, 0);
+    }
 }
+
 
 void executor(t_data *data)
 {
