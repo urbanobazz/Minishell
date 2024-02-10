@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 16:29:03 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 19:14:24 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ void	free_data_and_restart(t_data *data)
 	minishell();
 }
 
-#include <stdio.h> // Remove after replacing printf with ft_printf
+
 void	error_and_restart(t_data *data, char *message)
 {
-	printf("Error: %s\n", message);
+	ft_printf("Error: %s\n", message);
 	free_data(data);
 	minishell();
 }
 
 void	error_and_quit(t_data *data, char *message)
 {
-	printf("Error: %s\n", message);
+	ft_printf("Error: %s\n", message);
 	free_data(data);
 	exit(EXIT_FAILURE);
 }

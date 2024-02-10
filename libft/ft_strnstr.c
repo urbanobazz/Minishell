@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:37:28 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/13 17:43:18 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/11 15:59:19 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/14 12:13:20 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,23 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	char	*big_start;
-	char	*little_start;
-	size_t	ref_len;
+	int		i;
+	size_t	little_len;
 
-	if (!*little)
+	if (little[0] == '\0')
 		return ((char *)big);
-	while (*big && len)
+	little_len = 0;
+	while (little[little_len])
+		little_len++;
+	while (*big && len >= little_len)
 	{
-		big_start = (char *)big;
-		little_start = (char *)little;
-		ref_len = len;
-		while (*big && *little && *big == *little && ref_len)
-		{
-			big++;
-			little++;
-			ref_len--;
-		}
-		if (!*little)
-			return (big_start);
-		big = ++big_start;
-		little = little_start;
+		i = 0;
+		while ((little[i] == big[i]) && little[i])
+			i++;
+		if (little[i] == '\0')
+			return ((char *)big);
+		big ++;
 		len--;
 	}
 	return (0);
 }
-
-// int	main()
-// {
-// 	char haystack[30] = "aaabcabcd";
-// 	char *result = ft_strnstr(haystack, "abcd", 9);
-// 	return (0);
-// }

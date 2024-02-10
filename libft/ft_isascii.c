@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 16:33:52 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/10 18:02:58 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/09 17:51:47 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/13 13:43:46 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(int c)
+int	ft_isascii(int arg)
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
+	return (arg >= 0 && arg <= 127);
 }

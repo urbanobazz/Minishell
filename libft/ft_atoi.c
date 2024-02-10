@@ -3,40 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 16:22:04 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/10 18:02:11 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/09 17:25:55 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/14 11:08:23 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_isspace(char c)
+int	ft_atoi(const char *str)
 {
-	return (c == 32 || (c >= 9 && c <= 13));
-}
+	int	res;
+	int	sign;
+	int	sign_count;
 
-int	ft_atoi(const char *nptr)
-{
-	int			sign;
-	long long	nbr;
-
+	res = 0;
 	sign = 1;
-	nbr = 0;
-	while (ft_isspace(*nptr))
-		nptr++;
-	if (*nptr == '+' || *nptr == '-')
+	sign_count = 0;
+	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
+		str++;
+	while (*str == '-' || *str == '+')
 	{
-		if (*nptr == '-')
+		if (*str == '-')
 			sign = -1;
-		nptr++;
+		str++;
+		sign_count++;
 	}
-	while (*nptr >= '0' && *nptr <= '9')
-		nbr = nbr * 10 + *nptr++ - '0';
-	if (nbr * sign > 2147483647)
+	if (sign_count > 1)
 		return (0);
-	if (nbr * sign < -2147483648)
-		return (-1);
-	return (nbr * sign);
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
+	return (sign * res);
 }
