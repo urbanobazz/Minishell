@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 13:09:31 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 13:52:36 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void parse_tokens(t_data *data)
 	t_token *token_list;
 	int i;
 
-	init_command_array(data);
 	token_list = data->tokens;
 	i = 0;
 	while (token_list)
@@ -102,6 +101,7 @@ void parse_command_paths(t_data *data)
 
 void parser(t_data *data)
 {
+	init_command_array(data);
 	parse_tokens(data);
 	parse_command_paths(data);
 }
