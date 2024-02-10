@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 13:08:02 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 13:21:52 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void run_subprocesses(t_data *data)
 			handle_error(data, "Not enough memory to fork subprocess");
 		i++;
 	}
-	i = 1;
+	i = 0;
 	while (i < data->command_count)
 		waitpid(data->processes[i++], NULL, 0);
 }
