@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 16:29:42 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 17:46:10 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void init_redirections(t_data *data)
 		data->infile_fd = open(data->std_input, O_RDONLY);
 	else
 		data->infile_fd = 0;
-	if (data->std_output)
+	if (data->std_output && data->append_mode)
+		data->outfile_fd = open(data->std_output, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else if (data->std_output)
 		data->outfile_fd = open(data->std_output, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
 		data->outfile_fd = 1;
