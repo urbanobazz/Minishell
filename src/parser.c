@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 11:48:17 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 13:00:42 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_command_array(t_data *data)
 		handle_error(data, "Not enough memory to create commands array");
 }
 
-void	parser(t_data *data)
+void	parse_tokens(t_data *data)
 {
 	t_token	*token_list;
 	int		i;
@@ -72,4 +72,39 @@ void	parser(t_data *data)
 			data->commands[i++] = token_list->token;
 		token_list = token_list->next;
 	}
+}
+
+void	parse_command_paths(t_data *data)
+{
+	char	**cmd;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < data->command_count)
+	{
+		j = 0;
+		cmd = ft_split(data->commands[i], ' ');
+		while (data->env_paths[j])
+		{
+			data->command_paths[i] = ft_strjoin(data->env_paths[j++], cmd[0]);
+			if (!data->command_paths[i])
+				handle_error(data, "Not enough memory to create command path");
+			if (access(data->command_paths[i], X_OK) == 0)
+				break ;
+			free(data->command_paths[i]);
+			data->command_paths[i] = 0;
+		}
+		if (!data->command_paths[i])
+			handle_error(data, "Command does not exist");
+		free_split(cmd);
+		i++;
+	}
+}
+
+
+void	parser(t_data *data)
+{
+	parse_tokens(data);
+	parse_command_paths(data);
 }

@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 12:10:11 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 12:59:43 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,34 +84,6 @@ void	execute_shell_command_with_redirection(t_data *data, int i)
 	execute_cmd(data, i, infile_fd, outfile_fd);
 }
 
-void	get_command_paths(t_data *data)
-{
-	char	**cmd;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < data->command_count)
-	{
-		j = 0;
-		cmd = ft_split(data->commands[i], ' ');
-		while (data->env_paths[j])
-		{
-			data->command_paths[i] = ft_strjoin(data->env_paths[j++], cmd[0]);
-			if (!data->command_paths[i])
-				handle_error(data, "Not enough memory to create command path");
-			if (access(data->command_paths[i], X_OK) == 0)
-				break ;
-			free(data->command_paths[i]);
-			data->command_paths[i] = 0;
-		}
-		if (!data->command_paths[i])
-			handle_error(data, "Command does not exist");
-		free_split(cmd);
-		i++;
-	}
-}
-
 void	run_subprocesses(t_data *data)
 {
 	int	i;
@@ -120,7 +92,6 @@ void	run_subprocesses(t_data *data)
 	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
 	if (!data->processes)
 		handle_error(data, "Not enough memory to create subprocess array");
-	get_command_paths(data);
 	while (i < data->command_count)
 	{
 		data->processes[i] = fork();
