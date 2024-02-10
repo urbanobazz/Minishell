@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 16:31:17 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/10 17:49:51 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ t_data	*init_data()
 	init_environment_paths(data);
 	data->std_input = 0;
 	data->std_output = 0;
+	data->append_mode = 0;
+	data->heredoc_mode = 0;
 	return (data);
 }
 
