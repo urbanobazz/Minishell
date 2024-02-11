@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 17:51:29 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/11 12:14:27 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void parse_tokens(t_data *data)
 		if (is_operator(token_list->token[0]))
 		{
 			if (token_list->token[0] == '|')
-				data->commands[i++] = ft_split(token_list->next->token, ' ');
+				data->commands[i++] = split_skip_quotes(token_list->next->token, ' ');
 			else if (token_list->token[0] == '<')
 				data->std_input = token_list->next->token;
 			else if (token_list->token[0] == '>')
@@ -59,7 +59,7 @@ void parse_tokens(t_data *data)
 			token_list = token_list->next;
 		}
 		else
-			data->commands[i++] = ft_split(token_list->token, ' ');
+			data->commands[i++] = split_skip_quotes(token_list->token, ' ');
 		token_list = token_list->next;
 	}
 }
