@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 17:02:44 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 18:18:26 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int		is_operator(char c);
 
 // parser.c
 void	parser(t_data *data);
+
+// expander.c
+void	expand_variables_and_remove_quotes(t_data *data);
 
 // executor.c
 void	executor(t_data *data);
