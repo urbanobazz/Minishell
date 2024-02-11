@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/11 18:36:21 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/11 19:36:24 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,30 @@ void	find_heredoc_delimeter(t_data *data, t_token *token_list)
 	else
 		error_and_quit(data, "No heredoc delimeter found");
 }
-char	*get_heredoc_content(t_data *data)
+char	*write_heredoc(t_data *data)
 {
 	char	*line;
-	char	*temp;
-	char	*heredoc_content;
+	int		fd;
+	char	*heredoc_file;
 
-	heredoc_content = ft_strdup("");
+	heredoc_file = ".heredoc";
+	fd = open(heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		error_and_quit(data, "Failed to open heredoc file for writing");
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
+		{
+			close(fd);
 			error_and_quit(data, "Heredoc content not found");
+		}
 		if (!ft_strcmp(line, data->heredoc_delimeter))
 			break;
-		temp = ft_strjoin(heredoc_content, "\n");
-		free(heredoc_content);
-		heredoc_content = ft_strjoin(temp, line);
-		free(temp);
+		write(fd, line, strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 	}
-	//ft_printf("heredoc content: %s$\n", heredoc_content); // debug
-	return (heredoc_content);
+	close(fd);
+	return (heredoc_file);
 }

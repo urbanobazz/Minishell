@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 18:36:18 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/11 19:41:36 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_data
 	int		**pipes;
 	char	**env_paths;
 	pid_t	*processes;
-	int		heredoc_mode;
+	int		heredoc_mode; // probably not needed
 	char	*heredoc_delimeter;
 	int		append_mode;
 } t_data;
@@ -68,7 +68,7 @@ int		ft_token_lstsize(t_token *lst);
 
 //heredoc.c
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
-char	*get_heredoc_content(t_data *data);
+char	*write_heredoc(t_data *data);
 
 // main.c
 void	minishell(void);
