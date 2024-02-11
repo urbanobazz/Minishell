@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 17:53:21 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 18:13:21 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**split_commands(char *str, t_data *data)
 	return (arr);
 }
 
-void parse_tokens(t_data *data)
+void split_and_store_commands(t_data *data)
 {
 	t_token *token_list;
 	int i;
@@ -79,7 +79,7 @@ void	expand_variables(char **str)
 	(void)str;
 }
 
-void expand_and_remove_quotes(t_data *data)
+void expand_variables_and_remove_quotes(t_data *data)
 {
 	int i;
 	int j;
@@ -107,7 +107,7 @@ void expand_and_remove_quotes(t_data *data)
 	}
 }
 
-void parse_command_paths(t_data *data)
+void find_command_paths(t_data *data)
 {
 	int i;
 	int j;
@@ -128,7 +128,7 @@ void parse_command_paths(t_data *data)
 			j++;
 		}
 		if (!data->cmd_paths[i])
-			error_and_restart(data, "Command does not exist");
+			error_and_restart(data, "Command not found");
 		i++;
 	}
 }
@@ -136,7 +136,7 @@ void parse_command_paths(t_data *data)
 void parser(t_data *data)
 {
 	init_command_array(data);
-	parse_tokens(data);
-	expand_and_remove_quotes(data);
-	parse_command_paths(data);
+	split_and_store_commands(data);
+	expand_variables_and_remove_quotes(data);
+	find_command_paths(data);
 }
