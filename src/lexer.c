@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 11:13:42 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 11:33:05 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,21 @@ void lexer(t_data *data)
 {
 	int	i;
 	int	len;
-	int	quote_open;
+	int	single_quote_open;
+	int	double_quote_open;
 
 	i = 0;
-	quote_open = 0;
+	single_quote_open = 0;
+	double_quote_open = 0;
 	while (data->user_input[i])
 	{
 		len = 0;
-		while ((!is_operator(data->user_input[i + len]) || quote_open) && data->user_input[i + len])
+		while ((!is_operator(data->user_input[i + len]) || single_quote_open || double_quote_open) && data->user_input[i + len])
 		{
-			if (data->user_input[i + len] == DOUBLE_QUOTE || data->user_input[i + len] == SINGLE_QUOTE)
-				quote_open = !quote_open;
+			if (data->user_input[i + len] == SINGLE_QUOTE && !double_quote_open)
+				single_quote_open = !single_quote_open;
+			else if (data->user_input[i + len] == DOUBLE_QUOTE && !single_quote_open)
+				double_quote_open = !double_quote_open;
 			len++;
 		}
 		create_token(data, ft_substr(data->user_input, i, len));

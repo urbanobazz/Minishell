@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 17:49:51 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 11:37:45 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	get_user_input(t_data *data)
 	}
 	add_history(data->user_input);
 }
-
 
 void	minishell(void)
 {

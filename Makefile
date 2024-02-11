@@ -4,9 +4,9 @@ INCLUDE :=	-I ./include \
 			-I ./libft
 LIBS    := 	-lreadline \
 			-L ./libft -lft
-SRCS    := 	src/main.c \
-		   	src/lexer.c \
-		   	src/error.c \
+SRCS    :=	src/main.c \
+			src/lexer.c \
+			src/error.c \
 			src/parser.c \
 			src/executor.c \
 			src/list_utils.c
