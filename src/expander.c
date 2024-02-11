@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 20:45:12 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 22:13:21 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,31 @@ int		count_variables(char	*str)
 
 int	*get_variable_positions(t_data *data, char *str)
 {
+	int	i;
+	int	j;
 	int	*pos;
 	int	var_count;
 
+	i = 0;
+	j = 0;
 	var_count = count_variables(str);
-	pos = malloc(sizeof(int) * var_count);
+	pos = malloc(sizeof(int) * (var_count + 1));
 	if (!pos)
 		error_and_quit(data, "Not enough memory to expand variables");
+	while (j < var_count)
+	{
+		if (*str != '$')
+			i++;
+		while (*str && *str != '$')
+			str++;
+		if (*str == '$')
+		{
+			pos[j++] = i++;
+			str++;
+		}
+	}
+	pos[j] = 0;
+	return (pos);
 }
 
 char	*find_variable(char **paths, char *var)
