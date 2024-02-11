@@ -6,11 +6,11 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:08:13 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/11 15:53:17 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 16:28:04 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 unsigned int	count_words_quotes(char const *s, char c)
 {
