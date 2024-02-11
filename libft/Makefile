@@ -1,9 +1,10 @@
 NAME = libft.a
 CC = cc
-CCAR = ar rcs
+AR = ar rcs
 CFLAGS = -Wall -Wextra -Werror
-HFILE = libft.h
-OBJS = ${SRC:.c=.o}
+HDIR = .
+HFILE = $(HDIR)/libft.h
+OBJDIR := obj
 SRC =	ft_atoi.c\
 		ft_bzero.c\
 		ft_calloc.c\
@@ -51,19 +52,20 @@ SRC =	ft_atoi.c\
 		./ft_printf/ft_printf.c\
 		./ft_printf/ft_putsth.c\
 		./ft_printf/ft_printf_utils.c\
-		./get_next_line/get_next_line.c\
-
+		./get_next_line/get_next_line.c
+OBJS = $(SRC:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(HFILE)
+$(OBJDIR)/%.o: %.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(HDIR)
 
 $(NAME): $(OBJS)
-	$(CCAR) $(NAME) $(OBJS)
+	$(AR) $(NAME) $(OBJS)
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJDIR)
 
 fclean: clean
 	rm -f $(NAME)
