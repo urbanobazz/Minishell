@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:08:13 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/11 16:28:04 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 16:45:41 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ unsigned int	count_words_quotes(char const *s, char c)
 			nwords++;
 		while (*s && (*s != c || sq || dq))
 		{
-			if (*s == SINGLE_QUOTE && !dq)
+			if (*s == SGL_QUOTE && !dq)
 				sq = !sq;
-			else if (*s == DOUBLE_QUOTE && !sq)
+			else if (*s == DBL_QUOTE && !sq)
 				dq = !dq;
 			s++;
 		}
@@ -50,9 +50,9 @@ unsigned int	get_length_quotes(char const *s, char c)
 	dq = 0;
 	while (s[i] && (s[i] != c || sq || dq))
 	{
-		if (s[i] == SINGLE_QUOTE && !dq)
+		if (s[i] == SGL_QUOTE && !dq)
 			sq = !sq;
-		else if (s[i] == DOUBLE_QUOTE && !sq)
+		else if (s[i] == DBL_QUOTE && !sq)
 			dq = !dq;
 		i++;
 	}

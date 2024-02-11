@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 16:27:09 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 17:02:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # include <stdlib.h>
 # include "libft.h"
 # include <fcntl.h>
-
-# define DOUBLE_QUOTE 34
-# define SINGLE_QUOTE 39
 
 typedef struct	s_tokens
 {
@@ -32,7 +29,7 @@ typedef struct	s_data
 	char	*user_input;
 	t_token	*tokens;
 	int		command_count;
-	char	***commands;
+	char	***cmds;
 	char	**cmd_paths;
 	char	*std_input;
 	char	*std_output;

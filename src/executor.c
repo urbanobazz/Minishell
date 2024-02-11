@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 17:46:10 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 17:02:24 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 		dup2(output_fd, STDOUT_FILENO);
 		close(output_fd);
 	}
-	execve(data->cmd_paths[i], data->commands[i], NULL);
+	execve(data->cmd_paths[i], data->cmds[i], NULL);
 }
 
 void execute_shell_command_with_redirection(t_data *data, int i)

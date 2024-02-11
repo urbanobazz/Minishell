@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 12:14:27 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 17:53:21 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,20 @@ void init_command_array(t_data *data)
 		token_list = token_list->next;
 	}
 	data->command_count -= not_command_count;
-	data->commands = (char ***)malloc(sizeof(char **) * data->command_count);
+	data->cmds = (char ***)malloc(sizeof(char **) * data->command_count);
 	data->cmd_paths = (char **)malloc(sizeof(char *) * data->command_count);
-	if (!data->commands || !data->cmd_paths)
+	if (!data->cmds || !data->cmd_paths)
 		error_and_quit(data, "Not enough memory to create commands array");
+}
+
+char	**split_commands(char *str, t_data *data)
+{
+	char	**arr;
+
+	arr = split_skip_quotes(str, ' ');
+	if (!arr)
+		error_and_quit(data, "Not enough memory to split commands");
+	return (arr);
 }
 
 void parse_tokens(t_data *data)
@@ -51,7 +61,7 @@ void parse_tokens(t_data *data)
 		if (is_operator(token_list->token[0]))
 		{
 			if (token_list->token[0] == '|')
-				data->commands[i++] = split_skip_quotes(token_list->next->token, ' ');
+				data->cmds[i++] = split_commands(token_list->next->token, data);
 			else if (token_list->token[0] == '<')
 				data->std_input = token_list->next->token;
 			else if (token_list->token[0] == '>')
@@ -59,8 +69,41 @@ void parse_tokens(t_data *data)
 			token_list = token_list->next;
 		}
 		else
-			data->commands[i++] = split_skip_quotes(token_list->token, ' ');
+			data->cmds[i++] = split_commands(token_list->token, data);
 		token_list = token_list->next;
+	}
+}
+
+void	expand_variables(char **str)
+{
+	(void)str;
+}
+
+void expand_and_remove_quotes(t_data *data)
+{
+	int i;
+	int j;
+	char *tmp;
+
+	i = 0;
+	while (i < data->command_count)
+	{
+		j = 0;
+		while (data->cmds[i][j])
+		{
+			tmp = data->cmds[i][j];
+			if (tmp[0] == DBL_QUOTE)
+				expand_variables(&data->cmds[i][j]);
+			if (tmp[0] == DBL_QUOTE || tmp[0] == SGL_QUOTE)
+			{
+				data->cmds[i][j] = ft_substr(tmp, 1, ft_strlen(tmp) - 2);
+				if (!data->cmds[i][j])
+					error_and_quit(data, "Not enough memory to remove quotes");
+				free(tmp);
+			}
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -75,7 +118,7 @@ void parse_command_paths(t_data *data)
 		j = 0;
 		while (data->env_paths[j])
 		{
-			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->commands[i][0]);
+			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->cmds[i][0]);
 			if (!data->cmd_paths[i])
 				error_and_quit(data, "Not enough memory to create command path");
 			if (access(data->cmd_paths[i], X_OK) == 0)
@@ -94,5 +137,6 @@ void parser(t_data *data)
 {
 	init_command_array(data);
 	parse_tokens(data);
+	expand_and_remove_quotes(data);
 	parse_command_paths(data);
 }
