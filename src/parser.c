@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 17:51:29 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:37:29 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void init_command_array(t_data *data)
 		else if (token_list->token[0] == '<' || token_list->token[0] == '>')
 			not_command_count += 2;
 		if (token_list->token[0] == '<' && token_list->token[1] == '<')
+		{
 			data->heredoc_mode = 1;
+			find_heredoc_delimeter(data, token_list);
+		}
 		else if (token_list->token[0] == '>' && token_list->token[1] == '>')
 			data->append_mode = 1;
 		token_list = token_list->next;
@@ -52,6 +55,11 @@ void parse_tokens(t_data *data)
 		{
 			if (token_list->token[0] == '|')
 				data->commands[i++] = ft_split(token_list->next->token, ' ');
+			else if (token_list->token[0] == '<' && token_list->token[1] == '<')
+			{
+				data->std_input = get_heredoc_content(data);
+				ft_printf("heredoc content: %s\n", data->std_input);// debug
+			}
 			else if (token_list->token[0] == '<')
 				data->std_input = token_list->next->token;
 			else if (token_list->token[0] == '>')

@@ -57,15 +57,15 @@ SRC =	ft_atoi.c\
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(HFILE)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(HFILE)
 
 $(NAME): $(OBJS)
-	$(CCAR) $(NAME) $(OBJS)
+	@$(CCAR) $(NAME) $(OBJS)
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
