@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 22:13:21 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 23:28:10 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,24 @@ int	*get_variable_positions(t_data *data, char *str)
 			str++;
 		}
 	}
-	pos[j] = 0;
+	pos[j] = -1;
 	return (pos);
-}
-
-char	*find_variable(char **paths, char *var)
-{
-	
 }
 
 void	join_variables(t_data *data, char **arr, char **str)
 {
-	
+	char	*tmp;
+
+	free(*str);
+	while (*arr)
+	{
+		tmp = *str;
+		*str = ft_strjoin(*str, *arr++);
+		if (!str)
+			error_and_quit(data, "Not enough memory to expand variables");
+		if(*tmp)
+			free(tmp);
+	}
 }
 
 void	expand_variables(t_data *data, char **str)
@@ -80,7 +86,12 @@ void	expand_variables(t_data *data, char **str)
 	while(pos[i] != -1)
 	{
 		tmp = arr[pos[i]];
-		arr[i] = find_variable(data->env_paths, tmp);
+		arr[i] = getenv(tmp);
+		if (!arr[i])
+			error_and_restart(data, "Variable name not found");
+		arr[i] = ft_strdup(arr[i]);
+		if (!arr[i])
+			error_and_restart(data, "Not enough memory to expand variables");
 		free(tmp);
 		i++;
 	}
@@ -101,14 +112,14 @@ void expand_variables_and_remove_quotes(t_data *data)
 		while (data->cmds[i][j])
 		{
 			tmp = data->cmds[i][j];
-			if (tmp[0] == DBL_QUOTE)
-				expand_variables(&data->cmds[i][j]);
+			if (tmp[0] != SGL_QUOTE)
+				expand_variables(data, &data->cmds[i][j]);
 			if (tmp[0] == DBL_QUOTE || tmp[0] == SGL_QUOTE)
 			{
 				data->cmds[i][j] = ft_substr(tmp, 1, ft_strlen(tmp) - 2);
 				if (!data->cmds[i][j])
 					error_and_quit(data, "Not enough memory to remove quotes");
-				free(tmp);
+				// free(tmp);
 			}
 			j++;
 		}
