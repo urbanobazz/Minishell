@@ -3,78 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 11:00:36 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/14 09:07:05 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/14 14:38:18 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/17 16:40:18 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Function name
-// ft_itoa
-
-// Prototype
-// char *ft_itoa(int n);
-
-// Turn in file
-// -
-
-// Parameters
-// n: the integer to convert.
-
-// Return value
-// The string representing the integer.
-// NULL if the allocation fails.
-
-// External functs.
-// malloc
-
-// Description
-// Allocates (with malloc(3)) and returns a string
-// representing the integer received as an argument.
-// Negative numbers must be handled.
-
 #include "libft.h"
 
-int	get_number_length(int n)
-{
-	int	i;
+char	*convert_to_string(long nb, int len, int sign);
+int		get_size(int nb, int sign);
 
+char	*ft_itoa(int nbr)
+{
+	long	nb;
+	int		len;
+	int		negative;
+
+	nb = nbr;
+	len = 0;
+	negative = 0;
+	if (nb < 0)
+	{
+		nb *= -1;
+		negative = 1;
+	}
+	len = get_size(nbr, negative);
+	return (convert_to_string(nb, len, negative));
+}
+
+int	get_size(int nb, int sign)
+{
+	int	len;
+	int	n;
+
+	n = nb;
+	len = 0;
 	if (n == 0)
-		return (1);
-	i = 0;
-	if (n < 0)
-		i++;
+		len++;
 	while (n != 0)
 	{
 		n /= 10;
-		i++;
+		len++;
 	}
-	return (i);
+	len = len + sign;
+	return (len);
 }
 
-char	*ft_itoa(int n)
+char	*convert_to_string(long nb, int len, int sign)
 {
-	int		nlen;
-	char	*arr;
-	long	nbr;
+	char	*str;
 
-	nbr = n;
-	nlen = get_number_length(nbr);
-	arr = malloc(nlen + 1);
-	if (!arr)
-		return (0);
-	arr[nlen--] = '\0';
-	if (nbr < 0)
+	str = (char *)malloc(sizeof(char) * (len) + 1);
+	if (str == NULL)
+		return (NULL);
+	str[len--] = '\0';
+	while (len >= 0)
 	{
-		nbr = -nbr;
-		arr[0] = '-';
+		str[len--] = nb % 10 + '0';
+		nb = nb / 10;
 	}
-	while (nbr >= 10)
-	{
-		arr[nlen--] = nbr % 10 + '0';
-		nbr /= 10;
-	}
-	arr[nlen--] = nbr % 10 + '0';
-	return (arr);
+	if (sign)
+		str[0] = '-';
+	return (str);
 }

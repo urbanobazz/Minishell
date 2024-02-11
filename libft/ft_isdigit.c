@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 15:34:41 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/06 16:27:55 by lodemetz         ###   ########.fr       */
+/*   Created: 2023/11/09 18:15:20 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/13 13:46:17 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_isdigit(int c)
+int	ft_isdigit(int arg)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	return (arg >= '0' && arg <= '9');
 }

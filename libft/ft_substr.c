@@ -3,79 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 10:27:06 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/13 14:07:05 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/15 14:19:47 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/15 18:01:36 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Function name
-// ft_substr
-
-// Prototype
-// char *ft_substr(char const *s, unsigned int start, size_t len);
-
-// Turn in files
-// -
-
-// Parameters
-// s: The string from which to create the substring.
-// start: The start index of the substring in the
-// string ’s’.
-// len: The maximum length of the substring.
-
-// Return value
-// The substring.
-// NULL if the allocation fails.
-
-// External functs.
-// malloc
-
-// Description
-// Allocates (with malloc(3)) and returns a substring
-// from the string ’s’.
-// The substring begins at index ’start’ and is of
-// maximum size ’len’.
-
 #include "libft.h"
-
-unsigned int	calc_alloc(char const *s, unsigned int start, size_t len)
-{
-	size_t	slen;
-
-	slen = ft_strlen(s);
-	if (slen <= start)
-		return (0);
-	else if (slen - start >= len)
-		return (len);
-	else
-		return (slen - start);
-}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	unsigned int	sublen ;
-	char			*sub;
-	unsigned int	i;
+	char	*sub_str;
+	size_t	size;
 
-	sublen = calc_alloc(s, start, len);
-	if (sublen <= 0)
-		return (ft_calloc(1, 1));
-	sub = malloc(sublen + 1);
-	if (!sub)
-		return (0);
-	i = 0;
-	while (i < sublen)
-	{
-		sub[i] = s[i + start];
-		i++;
-	}
-	sub[i] = '\0';
-	return (sub);
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	size = ft_strlen(s + start);
+	if (size < len)
+		len = size;
+	sub_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!sub_str)
+		return (NULL);
+	ft_strlcpy(sub_str, s + start, len + 1);
+	return (sub_str);
 }
-// int main ()
-// {
-// 	char *subst = ft_substr("hola", 2, 30);
-// 	return (0);
-// }

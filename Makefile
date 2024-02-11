@@ -8,7 +8,8 @@ SRCS    := 	src/main.c \
 		   	src/lexer.c \
 		   	src/error.c \
 			src/parser.c \
-			src/executor.c
+			src/executor.c \
+			src/list_utils.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
@@ -26,9 +27,11 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -rf $(OBJDIR)
+	@make clean -C ./libft
 
 fclean: clean
 	@rm -rf $(NAME)
+	@make fclean -C ./libft
 
 re: fclean all
 

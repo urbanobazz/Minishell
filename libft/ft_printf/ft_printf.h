@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 11:18:54 by ubazzane          #+#    #+#             */
-/*   Updated: 2023/11/25 15:24:24 by ubazzane         ###   ########.fr       */
+/*   Created: 2023/11/26 11:46:57 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/12/08 16:11:32 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-char	*ft_strchr(const char *string, int c)
-{
-	unsigned char	uc;
+# include <unistd.h>
+# include <stdarg.h>
+# include <stdio.h>
 
-	uc = (unsigned char)c;
-	if (!string)
-		return (NULL);
-	while (*string)
-	{
-		if (*string == uc)
-			return ((char *)string);
-		string++;
-	}
-	if (uc == '\0')
-		return ((char *)string);
-	return (NULL);
-}
+int		ft_printf(const char *str, ...);
+int		ft_putchar(char c);
+int		ft_putstr(char *str);
+int		ft_putnbr(long n);
+int		ft_puthex(unsigned long nbr, char format);
+int		ft_putptr(void *ptr);
+size_t	ft_strlen(const char *str);
+
+#endif

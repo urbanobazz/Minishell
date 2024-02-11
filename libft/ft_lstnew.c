@@ -3,47 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 12:23:58 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/15 11:40:09 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/18 10:10:45 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/20 10:35:57 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Function name 
-// ft_lstnew
-
-// Prototype 
-// t_list *ft_lstnew(void *content);
-
-// Turn in files 
-// -
-
-// Parameters content: 
-// The content to create the node with.
-
-// Return value 
-// The new node
-
-// External functs. 
-// malloc
-
-// Description 
-// Allocates (with malloc(3)) and returns a new node.
-// The member variable ’content’ is initialized with
-// the value of the parameter ’content’. The variable
-// ’next’ is initialized to NULL.
 
 #include "libft.h"
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*newlst;
+	t_list	*new_node;
 
-	newlst = (t_list *)malloc(sizeof(t_list));
-	if (!newlst)
-		return (0);
-	newlst->content = content;
-	newlst->next = 0;
-	return (newlst);
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return (NULL);
+	new_node -> content = content;
+	new_node -> next = NULL;
+	return (new_node);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane < ubazzane@student.42berlin.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 09:45:51 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/13 16:00:48 by louis.demet      ###   ########.fr       */
+/*   Created: 2023/11/09 17:51:41 by ubazzane          #+#    #+#             */
+/*   Updated: 2023/11/17 18:40:46 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,11 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	unsigned char	*arr;
-	unsigned int	i;
+	void	*ptr;
 
-	if (nmemb == 0 || size == 0)
-	{
-		nmemb = 1;
-		size = 1;
-	}
-	arr = malloc(nmemb * size);
-	if (!arr)
-		return (0);
-	i = 0;
-	while (i < nmemb * size)
-		arr[i++] = '\0';
-	return (arr);
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, nmemb * size);
+	return (ptr);
 }

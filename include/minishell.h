@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/10 19:52:58 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 11:13:19 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ void	parser(t_data *data);
 
 // executor.c
 void	executor(t_data *data);
+
+// utils.c
+void	*get_last_token(t_token *lst);
+void	add_token(t_token **lst, t_token *new);
+void	create_token(t_data *data, char *token);
+int		ft_token_lstsize(t_token *lst);
 
 // main.c
 void	minishell(void);
