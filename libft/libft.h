@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:27:30 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/11 16:27:13 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/11 17:17:37 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include "./ft_printf/ft_printf.h"
 # include "./get_next_line/get_next_line.h"
 
-# define DOUBLE_QUOTE 34
-# define SINGLE_QUOTE 39
+# define DBL_QUOTE 34
+# define SGL_QUOTE 39
 
 //Part 1: libc functions
 int		ft_isalpha(int arg);
@@ -61,6 +61,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 int		ft_strcmp(const char *s1, const char *s2);
 char	**split_skip_quotes(char const *s, char c);
+int		is_operator(char c);
 
 //Bonus: Node struct
 typedef struct s_list

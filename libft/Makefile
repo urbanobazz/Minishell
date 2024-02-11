@@ -53,7 +53,8 @@ SRC =	ft_atoi.c\
 		./ft_printf/ft_putsth.c\
 		./ft_printf/ft_printf_utils.c\
 		./get_next_line/get_next_line.c\
-		split_skip_quotes.c
+		split_skip_quotes.c\
+		ft_isoperator.c
 OBJS = $(SRC:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
