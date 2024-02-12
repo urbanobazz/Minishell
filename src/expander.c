@@ -6,104 +6,66 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 23:28:10 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/12 21:52:16 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		count_variables(char	*str)
-{
-	int	count;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-	count = 0;
-	while (*str)
+char	*find_next_variable(const char *str)
+{
+	const char	*p;
+
+	p = str;
+	while (*p)
 	{
-		if (*str == '$')
-			count++;
-		str++;
+		if (*p == '$' && *(p + 1) != '\0' && (ft_isalnum(*(p + 1)) || *(p + 1) == '_'))
+			return (char *)p;
+		p++;
 	}
-	return (count);
+	return (0);
 }
 
-int	*get_variable_positions(t_data *data, char *str)
+char *replace_variables(const char *str)
 {
-	int	i;
-	int	j;
-	int	*pos;
-	int	var_count;
+	char *result = strdup(str);
+	char *var_start;
+	while ((var_start = find_next_variable(result)) != NULL) {
+		// Extract the variable name
+		char *end = var_start + 1;
+		while (isalnum(*end) || *end == '_') end++;
 
-	i = 0;
-	j = 0;
-	var_count = count_variables(str);
-	pos = malloc(sizeof(int) * (var_count + 1));
-	if (!pos)
-		error_and_quit(data, "Not enough memory to expand variables");
-	while (j < var_count)
-	{
-		if (*str != '$')
-			i++;
-		while (*str && *str != '$')
-			str++;
-		if (*str == '$')
-		{
-			pos[j++] = i++;
-			str++;
-		}
+		size_t var_name_length = end - var_start - 1;
+		char var_name[var_name_length + 1];
+		strncpy(var_name, var_start + 1, var_name_length);
+		var_name[var_name_length] = '\0';
+
+		// Get the variable's value
+		char *value = getenv(var_name);
+		if (!value) value = "";
+
+		// Replace the variable in the result string
+		size_t new_length = strlen(result) - var_name_length + strlen(value) - 1;
+		char *new_result = malloc(new_length + 1);
+		strncpy(new_result, result, var_start - result);
+		strcpy(new_result + (var_start - result), value);
+		strcpy(new_result + (var_start - result) + strlen(value), end);
+
+		free(result);
+		result = new_result;
 	}
-	pos[j] = -1;
-	return (pos);
-}
 
-void	join_variables(t_data *data, char **arr, char **str)
-{
-	char	*tmp;
-
-	free(*str);
-	while (*arr)
-	{
-		tmp = *str;
-		*str = ft_strjoin(*str, *arr++);
-		if (!str)
-			error_and_quit(data, "Not enough memory to expand variables");
-		if(*tmp)
-			free(tmp);
-	}
-}
-
-void	expand_variables(t_data *data, char **str)
-{
-	char	**arr;
-	int		i;
-	int		*pos;
-	char	*tmp;
-
-	i = 0;
-	pos = get_variable_positions(data, *str);
-	arr = ft_split(*str, '$');
-	if (!arr)
-		error_and_quit(data, "Not enough memory to expand variables");
-	while(pos[i] != -1)
-	{
-		tmp = arr[pos[i]];
-		arr[i] = getenv(tmp);
-		if (!arr[i])
-			error_and_restart(data, "Variable name not found");
-		arr[i] = ft_strdup(arr[i]);
-		if (!arr[i])
-			error_and_restart(data, "Not enough memory to expand variables");
-		free(tmp);
-		i++;
-	}
-	join_variables(data, arr, str);
-	free_split(arr);
+	return result;
 }
 
 void expand_variables_and_remove_quotes(t_data *data)
 {
 	int i;
 	int j;
-	char *tmp;
 
 	i = 0;
 	while (i < data->command_count)
@@ -111,15 +73,13 @@ void expand_variables_and_remove_quotes(t_data *data)
 		j = 0;
 		while (data->cmds[i][j])
 		{
-			tmp = data->cmds[i][j];
-			if (tmp[0] != SGL_QUOTE)
-				expand_variables(data, &data->cmds[i][j]);
-			if (tmp[0] == DBL_QUOTE || tmp[0] == SGL_QUOTE)
+			if (data->cmds[i][j][0] != SGL_QUOTE)
+				data->cmds[i][j] = replace_variables(data->cmds[i][j]);
+			if (data->cmds[i][j][0] == DBL_QUOTE || data->cmds[i][j][0] == SGL_QUOTE)
 			{
-				data->cmds[i][j] = ft_substr(tmp, 1, ft_strlen(tmp) - 2);
+				data->cmds[i][j] = ft_substr(data->cmds[i][j], 1, ft_strlen(data->cmds[i][j]) - 2);
 				if (!data->cmds[i][j])
 					error_and_quit(data, "Not enough memory to remove quotes");
-				// free(tmp);
 			}
 			j++;
 		}
