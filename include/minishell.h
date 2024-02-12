@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 17:02:44 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/12 13:59:55 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct	s_data
 	int		**pipes;
 	char	**env_paths;
 	pid_t	*processes;
-	int		heredoc_mode;
+	int		heredoc_mode; // probably not needed
+	char	*heredoc_delimeter;
 	int		append_mode;
 } t_data;
 
@@ -64,6 +65,10 @@ void	*get_last_token(t_token *lst);
 void	add_token(t_token **lst, t_token *new);
 void	create_token(t_data *data, char *token);
 int		ft_token_lstsize(t_token *lst);
+
+//heredoc.c
+void	find_heredoc_delimeter(t_data *data, t_token *token_list);
+char	*write_heredoc(t_data *data);
 
 // main.c
 void	minishell(void);

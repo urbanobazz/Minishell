@@ -60,16 +60,16 @@ OBJS = $(SRC:%.c=$(OBJDIR)/%.o)
 all: $(NAME)
 
 $(OBJDIR)/%.o: %.c
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $< -o $@ -I$(HDIR)
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(HDIR)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
 
 clean:
-	rm -rf $(OBJDIR)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
