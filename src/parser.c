@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/12 14:02:26 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:40:23 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ void expand_variables_and_remove_quotes(t_data *data)
 			{
 				data->cmds[i][j] = ft_substr(tmp, 1, ft_strlen(tmp) - 2);
 				if (!data->cmds[i][j])
+				{
+					free(tmp);
 					error_and_quit(data, "Not enough memory to remove quotes");
+				}
 				free(tmp);
 			}
 			j++;

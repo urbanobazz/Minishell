@@ -6,14 +6,14 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/12 16:22:01 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:00:04 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	free_tokens(t_token **tokens, void (*del)(void*));
-static void	free_double_poiter(char **arr);
+void		free_double_poiter(char **arr);
 static void	free_int_double_pointer(t_data *data, int **arr);
 static void	free_triple_pointer(char ***arr);
 
@@ -61,7 +61,7 @@ static void	free_tokens(t_token **tokens, void (*del)(void*))
 	free(*tokens);
 }
 
-static void	free_double_poiter(char **arr)
+void	free_double_poiter(char **arr)
 {
 	int i;
 

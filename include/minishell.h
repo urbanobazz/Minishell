@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/12 16:08:55 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:41:58 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
 # include <stdlib.h>
 # include "libft.h"
 # include <fcntl.h>
@@ -68,6 +70,7 @@ int		ft_token_lstsize(t_token *lst);
 
 //free_data.c
 void	free_data(t_data *data);
+void	free_double_poiter(char **arr);
 
 //heredoc.c
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
