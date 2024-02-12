@@ -9,6 +9,24 @@
 			"args": [],
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "build minishell"
+		},
+		{
+			"name": "Debug minishell (GDB)",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/minishell",
+			"args": [],
+			"cwd": "${workspaceFolder}",
+			"preLaunchTask": "build minishell",
+			"MIMode": "gdb",
+			"miDebuggerPath": "/usr/bin/gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
 		}
 	]
 }
