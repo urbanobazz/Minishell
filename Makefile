@@ -10,7 +10,8 @@ SRCS    :=	src/main.c \
 			src/parser.c \
 			src/executor.c \
 			src/list_utils.c \
-			src/heredoc.c
+			src/heredoc.c \
+			src/free_data.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
