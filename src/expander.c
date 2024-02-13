@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 07:29:34 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 13:41:08 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*find_next_variable(const char *str)
 	p = str;
 	while (*p)
 	{
-		if (*p == '$' && *(p + 1) != '\0' && (ft_isalnum(*(p + 1)) || *(p + 1) == '_'))
+		if (*p == '$' && *(p + 1) != '\0' && (ft_isalnum(*(p + 1)) 
+			|| *(p + 1) == '_'))
 			return (char *)p;
 		p++;
 	}

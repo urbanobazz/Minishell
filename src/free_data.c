@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/12 19:00:04 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:48:22 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	free_tokens(t_token **tokens, void (*del)(void*));
-void		free_double_poiter(char **arr);
+void		free_double_pointer(char **arr);
 static void	free_int_double_pointer(t_data *data, int **arr);
 static void	free_triple_pointer(char ***arr);
 
@@ -28,7 +28,7 @@ void	free_data(t_data *data)
 		if (data->cmds)
 			free_triple_pointer(data->cmds);
 		if (data->cmd_paths)
-			free_double_poiter(data->cmd_paths);
+			free_double_pointer(data->cmd_paths);
 		if (data->std_input)
 			free(data->std_input);
 		if (data->std_output)
@@ -36,7 +36,7 @@ void	free_data(t_data *data)
 		if (data->pipes)
 			free_int_double_pointer(data, data->pipes);
 		if (data->env_paths)
-			free_double_poiter(data->env_paths);
+			free_double_pointer(data->env_paths);
 		if (data->processes)
 			free(data->processes);
 		if (data->heredoc_delimeter)
@@ -61,7 +61,7 @@ static void	free_tokens(t_token **tokens, void (*del)(void*))
 	free(*tokens);
 }
 
-void	free_double_poiter(char **arr)
+void	free_double_pointer(char **arr)
 {
 	int i;
 
@@ -76,7 +76,7 @@ static void	free_triple_pointer(char ***arr)
 
 	i = 0;
 	while (arr[i])
-		free_double_poiter(arr[i++]);
+		free_double_pointer(arr[i++]);
 	free(arr);
 }
 
