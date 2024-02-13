@@ -10,7 +10,8 @@ SRCS    :=	src/main.c \
 			src/parser.c \
 			src/executor.c \
 			src/list_utils.c \
-			src/expander.c
+			src/expander.c \
+			src/heredoc.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
@@ -23,7 +24,7 @@ $(OBJDIR)/%.o: %.c
 	@$(CC) -o $@ -c $< $(INCLUDE) && printf "Compiling: $(notdir $<)\n"
 
 $(NAME): $(OBJS)
-	@$(MAKE) -C ./libft
+	@$(MAKE) -C ./libft && make clean -C ./libft
 	@$(CC) $(OBJS) $(INCLUDE) -o $(NAME) $(LIBS)
 
 clean:

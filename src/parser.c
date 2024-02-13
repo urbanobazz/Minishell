@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 18:17:42 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 07:31:42 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void init_command_array(t_data *data)
 		else if (token_list->token[0] == '<' || token_list->token[0] == '>')
 			not_command_count += 2;
 		if (token_list->token[0] == '<' && token_list->token[1] == '<')
-			data->heredoc_mode = 1;
+			find_heredoc_delimeter(data, token_list);
 		else if (token_list->token[0] == '>' && token_list->token[1] == '>')
 			data->append_mode = 1;
 		token_list = token_list->next;
@@ -62,6 +62,8 @@ void split_and_store_commands(t_data *data)
 		{
 			if (token_list->token[0] == '|')
 				data->cmds[i++] = split_commands(token_list->next->token, data);
+			else if (token_list->token[0] == '<' && token_list->token[1] == '<')
+				data->std_input = write_heredoc(data);
 			else if (token_list->token[0] == '<')
 				data->std_input = token_list->next->token;
 			else if (token_list->token[0] == '>')
