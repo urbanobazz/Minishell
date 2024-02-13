@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 15:40:28 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:37:54 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,22 +98,22 @@ void run_subprocesses(t_data *data)
 				execute_shell_command_with_redirection(data, i);
 			else if (data->processes[i] < 0)
 				error_and_quit(data, "Not enough memory to fork subprocess");
+			else
+			{
+				if (i > 0)
+					close(data->pipes[i - 1][0]);
+				if (i != data->command_count - 1)
+					close(data->pipes[i][1]);
+			}
 		}
 		i++;
 	}
 }
 
-void close_pipes_and_wait(t_data *data)
+void wait_for_subprocesses(t_data *data)
 {
 	int i;
 
-	i = 0;
-	while (i < data->command_count - 1)
-	{
-		close(data->pipes[i][0]);
-		close(data->pipes[i][1]);
-		i++;
-	}
 	i = 0;
 	while (i < data->command_count)
 		waitpid(data->processes[i++], NULL, 0);
@@ -124,5 +124,5 @@ void executor(t_data *data)
 	init_pipes(data);
 	init_redirections(data);
 	run_subprocesses(data);
-	close_pipes_and_wait(data);
+	wait_for_subprocesses(data);
 }
