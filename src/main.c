@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 23:41:16 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 13:37:50 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	init_environment_paths(t_data *data)
 		tmp = data->env_paths[i];
 		data->env_paths[i] = ft_strjoin(data->env_paths[i], "/");
 			if (!data->env_paths[i])
+			{
+				free(tmp);
 				error_and_quit(data, "Not enough memory to create environment path");
+			}
 		free(tmp);
 		i++;
 	}

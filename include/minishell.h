@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 07:31:36 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 13:37:45 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ void	*get_last_token(t_token *lst);
 void	add_token(t_token **lst, t_token *new);
 void	create_token(t_data *data, char *token);
 int		ft_token_lstsize(t_token *lst);
+
+//free_data.c
+void	free_data(t_data *data);
+void	free_double_poiter(char **arr);
 
 //heredoc.c
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
