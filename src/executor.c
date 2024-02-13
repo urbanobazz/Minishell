@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 17:02:24 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 15:40:28 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,14 @@ void run_subprocesses(t_data *data)
 		error_and_quit(data, "Not enough memory to create subprocess array");
 	while (i < data->command_count)
 	{
-		data->processes[i] = fork();
-		if (data->processes[i] == 0)
-			execute_shell_command_with_redirection(data, i);
-		else if (data->processes[i] < 0)
-			error_and_quit(data, "Not enough memory to fork subprocess");
+		if(!find_and_trigger_builtin(data, data->cmds[i]))
+		{
+			data->processes[i] = fork();
+			if (data->processes[i] == 0)
+				execute_shell_command_with_redirection(data, i);
+			else if (data->processes[i] < 0)
+				error_and_quit(data, "Not enough memory to fork subprocess");
+		}
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/13 13:48:22 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:42:25 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ static void	free_int_double_pointer(t_data *data, int **arr)
 	i = 0;
 	while (i < data->command_count - 1)
 		free(arr[i++]);
-	free(arr);
+	if (arr)
+		free(arr);
 }

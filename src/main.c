@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 13:37:50 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:35:40 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ t_data	*init_data()
 void	get_user_input(t_data *data)
 {
 	data->user_input = readline("minishell: ");
-	if (data->user_input && ft_strcmp(data->user_input, "exit") == 0)
-	{
-		free_data(data);
-		exit(EXIT_SUCCESS);
-	}
 	add_history(data->user_input);
 }
 

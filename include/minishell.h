@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 13:37:45 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:10:01 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ void	free_double_poiter(char **arr);
 //heredoc.c
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
 char	*write_heredoc(t_data *data);
+
+//builtins.c
+int	find_and_trigger_builtin(t_data *data, char **cmds);
+int	is_builtin(char *cmd);
 
 // main.c
 void	minishell(void);

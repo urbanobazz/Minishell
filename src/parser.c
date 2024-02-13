@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 14:10:22 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:12:32 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void find_command_paths(t_data *data)
 			data->cmd_paths[i] = 0;
 			j++;
 		}
-		if (!data->cmd_paths[i])
+		if (!data->cmd_paths[i] && !is_builtin(data->cmds[i][0]))
 			error_and_restart(data, "Command not found");
 		i++;
 	}
