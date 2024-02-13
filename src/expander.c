@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/12 23:19:09 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 07:29:34 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,36 @@ char	*get_variable_value(char *var_start, int var_name_length)
 	value = getenv(var_name);
 	if (!value)
 		value = "";
+	free(var_name);
 	return (value);
+}
+
+char *replace_next_variable(char *result, char *value, char *var_end, char *var_start)
+{
+	char	*new_result;
+
+	new_result = ft_substr(result, 0, var_start - result);
+	new_result = ft_strjoin(new_result, value);
+	new_result = ft_strjoin(new_result, var_end);
+	return (new_result);
 }
 
 char *replace_variables(const char *str)
 {
 	char	*result;
 	char	*var_start;
-	int		new_length;
-	char	*new_result;
+	char	*var_end;
 	char	*value;
-	int		var_name_length;
-	char	*end;
 
 	result = strdup(str);
-	while ((var_start = find_next_variable(result)) != NULL)
+	while (find_next_variable(result))
 	{
-		end = var_start + 1;
-		while (isalnum(*end) || *end == '_')
-			end++;
-		var_name_length = end - var_start - 1;
-		value = get_variable_value(var_start, var_name_length);
-		new_length = ft_strlen(result) - var_name_length + ft_strlen(value) - 1;
-		new_result = malloc(new_length + 1);
-		strncpy(new_result, result, var_start - result);
-		strcpy(new_result + (var_start - result), value);
-		strcpy(new_result + (var_start - result) + ft_strlen(value), end);
-		free(result);
-		result = new_result;
+		var_start = find_next_variable(result);
+		var_end = var_start + 1;
+		while (isalnum(*var_end) || *var_end == '_')
+			var_end++;
+		value = get_variable_value(var_start, var_end - var_start - 1);
+		result = replace_next_variable(result, value, var_end, var_start);
 	}
 
 	return (result);
