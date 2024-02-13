@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:14:38 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/13 18:58:33 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/13 20:51:42 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,18 @@ void	ft_cd(t_data *data, char **cmds)
 		error_and_restart(data, "No such file or directory");
 }
 
+void	ft_pwd(void)
+{
+	ft_printf(getenv("PWD"));
+}
+
 int	is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "pwd") == 0)
 		return (1);
 	return (0);
 }
@@ -46,6 +53,8 @@ int	find_and_trigger_builtin(t_data *data, char **cmds)
 			ft_exit(data);
 		if (ft_strcmp(cmds[0], "cd") == 0)
 			ft_cd(data, cmds);
+		if (ft_strcmp(cmds[0], "pwd") == 0)
+			ft_pwd();
 	}
 	return (0);
 }
