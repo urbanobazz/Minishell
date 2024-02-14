@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 13:17:52 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:31:49 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include "libft.h"
 # include <fcntl.h>
+# include <signal.h>
 
 typedef struct	s_tokens
 {
@@ -83,5 +84,9 @@ void	write_heredoc(t_data *data);
 // main.c
 void	minishell(void);
 int		main(int argc, char **argv);
+
+// signals.c
+void	init_signals(void);
+void	init_heredoc_signals(void);
 
 #endif

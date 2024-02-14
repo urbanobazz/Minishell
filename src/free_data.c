@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/14 15:22:21 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:10:31 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_data(t_data *data)
 			free(data->processes);
 		if (data->heredoc_delimeter)
 			free(data->heredoc_delimeter);
-		if (data->heredoc_file)
+		if (data->heredoc_file)// maybe chnage this to access()
 			unlink(data->heredoc_file);
 	}
 	free(data);

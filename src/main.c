@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 13:16:38 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:36:42 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 1)
 		return (0);
+	init_signals();
 	minishell();
 	return (1);
 }
