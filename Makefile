@@ -5,15 +5,18 @@ INCLUDE :=	-I ./include \
 LIBS    := 	-lreadline \
 			-L ./libft -lft
 SRCS    :=	src/main.c \
-			src/lexer.c \
-			src/error.c \
-			src/parser.c \
-			src/executor.c \
-			src/list_utils.c \
-			src/expander.c \
-			src/heredoc.c \
-			src/free_data.c \
-			src/builtins.c
+			src/core/lexer.c \
+			src/core/parser.c \
+			src/core/heredoc.c \
+			src/core/expander.c \
+			src/core/executor.c \
+			src/builtins/switch.c \
+			src/builtins/nav.c \
+			src/builtins/env.c \
+			src/utils/error.c \
+			src/utils/free.c \
+			src/utils/list.c \
+			src/utils/init.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
@@ -21,6 +24,9 @@ all: $(OBJDIR) $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/src
+	@mkdir -p $(OBJDIR)/src/core
+	@mkdir -p $(OBJDIR)/src/builtins
+	@mkdir -p $(OBJDIR)/src/utils
 
 $(OBJDIR)/%.o: %.c
 	@$(CC) -o $@ -c $< $(INCLUDE) && printf "Compiling: $(notdir $<)\n"
