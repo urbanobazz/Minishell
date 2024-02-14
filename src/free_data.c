@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/14 13:41:03 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:22:21 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	free_data(t_data *data)
 			free(data->processes);
 		if (data->heredoc_delimeter)
 			free(data->heredoc_delimeter);
+		if (data->heredoc_file)
+			unlink(data->heredoc_file);
 	}
 	free(data);
 }
