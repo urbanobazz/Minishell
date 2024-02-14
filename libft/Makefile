@@ -49,6 +49,8 @@ SRC =	ft_atoi.c\
 		ft_lstiter.c\
 		ft_lstmap.c\
 		ft_strcmp.c\
+		ft_arrlen.c\
+		ft_arrdup.c\
 		./ft_printf/ft_printf.c\
 		./ft_printf/ft_putsth.c\
 		./ft_printf/ft_printf_utils.c\

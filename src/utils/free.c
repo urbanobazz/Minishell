@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_data.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/13 15:42:25 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:55:47 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,24 @@ static void	free_triple_pointer(char ***arr);
 
 void	free_data(t_data *data)
 {
-	if (data)
-	{
-		if (data->user_input)
-			free(data->user_input);
-		if (data->tokens)
-			free_tokens(&data->tokens, free);
-		if (data->cmds)
-			free_triple_pointer(data->cmds);
-		if (data->cmd_paths)
-			free_double_pointer(data->cmd_paths);
-		if (data->std_input)
-			free(data->std_input);
-		if (data->std_output)
-			free(data->std_output);
-		if (data->pipes)
-			free_int_double_pointer(data, data->pipes);
-		if (data->env_paths)
-			free_double_pointer(data->env_paths);
-		if (data->processes)
-			free(data->processes);
-		if (data->heredoc_delimeter)
-			free(data->heredoc_delimeter);
-	}
-	free(data);
+	if (data->user_input)
+		free(data->user_input);
+	if (data->tokens)
+		free_tokens(&data->tokens, free);
+	if (data->cmds)
+		free_triple_pointer(data->cmds);
+	if (data->cmd_paths)
+		free_double_pointer(data->cmd_paths);
+	if (data->std_input)
+		free(data->std_input);
+	if (data->std_output)
+		free(data->std_output);
+	if (data->pipes)
+		free_int_double_pointer(data, data->pipes);
+	if (data->processes)
+		free(data->processes);
+	if (data->heredoc_delimeter)
+		free(data->heredoc_delimeter);
 }
 
 static void	free_tokens(t_token **tokens, void (*del)(void*))

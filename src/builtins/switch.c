@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:31 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 11:46:50 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/14 22:22:18 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
 	return (0);
 }
 
@@ -40,7 +42,9 @@ int	find_and_trigger_builtin(t_data *data, char **cmds)
 		if (ft_strcmp(cmds[0], "echo") == 0)
 			return (ft_echo(cmds));
 		if (ft_strcmp(cmds[0], "env") == 0)
-			return (ft_env());
+			return (ft_env(data));
+		if (ft_strcmp(cmds[0], "unset") == 0)
+			return (ft_unset(data, cmds));
 	}
 	return (0);
 }

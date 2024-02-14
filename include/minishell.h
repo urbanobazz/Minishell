@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 11:46:30 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/14 23:01:37 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_tokens
 
 typedef struct	s_data
 {
+	char	**env;
 	char	*user_input;
 	t_token	*tokens;
 	int		command_count;
@@ -40,58 +41,46 @@ typedef struct	s_data
 	int		**pipes;
 	char	**env_paths;
 	pid_t	*processes;
-	int		heredoc_mode; // probably not needed
 	char	*heredoc_delimeter;
 	int		append_mode;
 } t_data;
 
-// main.c
-void	minishell(void);
+// MAIN
+void	minishell(t_data *data);
 int		main(int argc, char **argv);
 
 // CORE
-// lexer.c
 void	lexer(t_data *data);
 int		is_operator(char c);
-// parser.c
 void	parser(t_data *data);
-//heredoc.c
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
 char	*write_heredoc(t_data *data);
-// expander.c
 void	expand_variables_and_remove_quotes(t_data *data);
-// executor.c
 void	executor(t_data *data);
 
 // BUILTINS
-//switch.c
-int	find_and_trigger_builtin(t_data *data, char **cmds);
-int	is_builtin(char *cmd);
-//nav.c
+int		find_and_trigger_builtin(t_data *data, char **cmds);
+int		is_builtin(char *cmd);
 void	ft_exit(t_data *data);
 int		ft_cd(t_data *data, char **cmds);
 int		ft_pwd(t_data *data, char **cmds);
 int		ft_echo(char **cmds);
-//env.c
-int	ft_env(void);
+int		ft_env(t_data *data);
+int		ft_unset(t_data *data, char **cmds);
 
 //UTILS
-// utils.c
 void	*get_last_token(t_token *lst);
 void	add_token(t_token **lst, t_token *new);
 void	create_token(t_data *data, char *token);
 int		ft_token_lstsize(t_token *lst);
-// error.c
 void	error_and_quit(t_data *data, char *message);
-void	free_data(t_data *data);
-void	free_split(char **arr);
-void	free_data_and_restart(t_data *data);
 void	error_and_restart(t_data *data, char *message);
-//free_data.c
+void	free_env(t_data *data);
+void	free_data_and_restart(t_data *data);
 void	free_data(t_data *data);
-void	free_double_poiter(char **arr);
-//init.c
+void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);
 t_data	*init_data();
+void	reset_data(t_data *data);
 
 #endif
