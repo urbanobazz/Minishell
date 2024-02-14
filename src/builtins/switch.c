@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_main.c                                    :+:      :+:    :+:   */
+/*   switch.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:31 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 11:05:41 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/14 11:46:50 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	is_builtin(char *cmd)
 	if (ft_strcmp(cmd, "pwd") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
 	return (0);
 }
@@ -37,6 +39,8 @@ int	find_and_trigger_builtin(t_data *data, char **cmds)
 			return (ft_pwd(data, cmds));
 		if (ft_strcmp(cmds[0], "echo") == 0)
 			return (ft_echo(cmds));
+		if (ft_strcmp(cmds[0], "env") == 0)
+			return (ft_env());
 	}
 	return (0);
 }

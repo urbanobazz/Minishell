@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 11:26:01 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/14 11:46:30 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	ft_exit(t_data *data);
 int		ft_cd(t_data *data, char **cmds);
 int		ft_pwd(t_data *data, char **cmds);
 int		ft_echo(char **cmds);
+//env.c
+int	ft_env(void);
 
 //UTILS
 // utils.c
