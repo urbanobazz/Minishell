@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 13:37:45 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:17:52 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct	s_data
 	pid_t	*processes;
 	int		heredoc_mode; // probably not needed
 	char	*heredoc_delimeter;
+	char	*heredoc_file;
 	int		append_mode;
 } t_data;
 
@@ -77,7 +78,7 @@ void	free_double_poiter(char **arr);
 
 //heredoc.c
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
-char	*write_heredoc(t_data *data);
+void	write_heredoc(t_data *data);
 
 // main.c
 void	minishell(void);

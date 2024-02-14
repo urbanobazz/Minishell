@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 14:10:22 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:21:40 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void split_and_store_commands(t_data *data)
 			if (token_list->token[0] == '|')
 				data->cmds[i++] = split_commands(token_list->next->token, data);
 			else if (token_list->token[0] == '<' && token_list->token[1] == '<')
-				data->std_input = write_heredoc(data);
+				write_heredoc(data);
 			else if (token_list->token[0] == '<')
 				data->std_input = token_list->next->token;
 			else if (token_list->token[0] == '>')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 17:02:24 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/14 13:35:07 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void init_pipes(t_data *data)
 
 void init_redirections(t_data *data)
 {
-	if (data->std_input)
+	if (data->heredoc_mode)
+		data->infile_fd = open(data->heredoc_file, O_RDONLY);
+	else if (data->std_input)
 		data->infile_fd = open(data->std_input, O_RDONLY);
 	else
 		data->infile_fd = 0;

@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/14 12:54:46 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:21:26 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	find_heredoc_delimeter(t_data *data, t_token *token_list)
 	else
 		error_and_quit(data, "No heredoc delimeter found");
 }
-char	*write_heredoc(t_data *data)
+void	write_heredoc(t_data *data)
 {
 	char	*line;
 	int		fd;
-	char	*heredoc_file;
 
-	heredoc_file = ".heredoc";
-	fd = open(heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	data->heredoc_mode += 1;
+	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		error_and_quit(data, "Failed to open heredoc file for writing");
 	while (1)
@@ -47,5 +46,4 @@ char	*write_heredoc(t_data *data)
 		free(line);
 	}
 	close(fd);
-	return (heredoc_file);
 }
