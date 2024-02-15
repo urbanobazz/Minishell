@@ -13,6 +13,7 @@ SRCS    :=	src/main.c \
 			src/builtins/switch.c \
 			src/builtins/nav.c \
 			src/builtins/env.c \
+			src/builtins/set.c \
 			src/utils/error.c \
 			src/utils/free.c \
 			src/utils/list.c \

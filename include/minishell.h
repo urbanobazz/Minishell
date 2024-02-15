@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:20:10 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 12:34:07 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		ft_unset(t_data *data, char **cmds);
 int		ft_export(t_data *data, char **cmds);
 void	export_single_var(t_data *data, char *cmd);
 char 	*ft_getenv(t_data *data, char *cmd);
+int		is_valid_name(char *cmd);
+void	unset_single_var(t_data *data, char *cmd);
 
 //UTILS
 void	*get_last_token(t_token *lst);
