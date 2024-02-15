@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 13:35:07 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:46:14 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ void init_pipes(t_data *data)
 
 void init_redirections(t_data *data)
 {
-	if (data->heredoc_mode)
-		data->infile_fd = open(data->heredoc_file, O_RDONLY);
-	else if (data->std_input)
+	if (data->std_input)
 		data->infile_fd = open(data->std_input, O_RDONLY);
 	else
 		data->infile_fd = 0;
@@ -93,26 +91,29 @@ void run_subprocesses(t_data *data)
 		error_and_quit(data, "Not enough memory to create subprocess array");
 	while (i < data->command_count)
 	{
-		data->processes[i] = fork();
-		if (data->processes[i] == 0)
-			execute_shell_command_with_redirection(data, i);
-		else if (data->processes[i] < 0)
-			error_and_quit(data, "Not enough memory to fork subprocess");
+		if(!find_and_trigger_builtin(data, data->cmds[i]))
+		{
+			data->processes[i] = fork();
+			if (data->processes[i] == 0)
+				execute_shell_command_with_redirection(data, i);
+			else if (data->processes[i] < 0)
+				error_and_quit(data, "Not enough memory to fork subprocess");
+			else
+			{
+				if (i > 0)
+					close(data->pipes[i - 1][0]);
+				if (i != data->command_count - 1)
+					close(data->pipes[i][1]);
+			}
+		}
 		i++;
 	}
 }
 
-void close_pipes_and_wait(t_data *data)
+void wait_for_subprocesses(t_data *data)
 {
 	int i;
 
-	i = 0;
-	while (i < data->command_count - 1)
-	{
-		close(data->pipes[i][0]);
-		close(data->pipes[i][1]);
-		i++;
-	}
 	i = 0;
 	while (i < data->command_count)
 		waitpid(data->processes[i++], NULL, 0);
@@ -123,5 +124,5 @@ void executor(t_data *data)
 	init_pipes(data);
 	init_redirections(data);
 	run_subprocesses(data);
-	close_pipes_and_wait(data);
+	wait_for_subprocesses(data);
 }

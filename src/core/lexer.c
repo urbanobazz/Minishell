@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/11 17:16:52 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/13 19:30:08 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	toggle_quote_state(char c, int *sq, int *dq)
 		*dq = !(*dq);
 }
 
-void	process_segment(t_data *data, char *str, int *i, int len)
+void	process_segment(t_data *data, char *str, size_t *i, int len)
 {
 	create_token(data, ft_substr(str, *i, len));
 	*i += len;
@@ -37,7 +37,7 @@ void	lexer(t_data *data)
 {
 	int		len;
 	char	*str;
-	int		i;
+	size_t	i;
 	int		sq;
 	int		dq;
 	
@@ -45,7 +45,7 @@ void	lexer(t_data *data)
 	sq = 0;
 	dq = 0;
 	str = data->user_input;
-	while (str[i])
+	while (i < ft_strlen(str))
 	{
 		len = 0;
 		while ((!is_operator(str[i + len]) || sq || dq) && str[i + len])

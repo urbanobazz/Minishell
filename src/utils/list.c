@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:48:44 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/12 16:20:08 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:29:49 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	create_token(t_data *data, char *token)
 	if (!new)
 		error_and_quit(data, "Not enough memory to create token");
 	new->token = ft_strtrim(token, " ");
+	if (!new->token)
+		error_and_quit(data, "Not enough memory to create token");
 	new->next = 0;
 	free(token);
 	add_token(&data->tokens, new);

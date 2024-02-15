@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 13:21:40 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:50:55 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void split_and_store_commands(t_data *data)
 			else if (token_list->token[0] == '<' && token_list->token[1] == '<')
 				write_heredoc(data);
 			else if (token_list->token[0] == '<')
-				data->std_input = token_list->next->token;
+				data->std_input = ft_strdup(token_list->next->token);
 			else if (token_list->token[0] == '>')
-				data->std_output = token_list->next->token;
+				data->std_output = ft_strdup(token_list->next->token);
 			token_list = token_list->next;
 		}
 		else
@@ -97,7 +97,7 @@ void find_command_paths(t_data *data)
 			data->cmd_paths[i] = 0;
 			j++;
 		}
-		if (!data->cmd_paths[i])
+		if (!data->cmd_paths[i] && !is_builtin(data->cmds[i][0]))
 			error_and_restart(data, "Command not found");
 		i++;
 	}

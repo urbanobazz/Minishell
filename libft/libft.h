@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:27:30 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/11 17:17:37 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/14 18:50:19 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	ft_putnbr_fd(int n, int fd);
 int		ft_strcmp(const char *s1, const char *s2);
 char	**split_skip_quotes(char const *s, char c);
 int		is_operator(char c);
+int		ft_arrlen(char **arr);
+char	**ft_arrdup(char **arr);
 
 //Bonus: Node struct
 typedef struct s_list
