@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:32:42 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/14 17:44:38 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:56:02 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,61 @@
 /*	SIGINT - CTRL C
 	SIGQUIT - CTRL BACKSLSH
 	SIGTST - CTRL Z
-	CTRL D - ??? */
+	CTRL D - EOF */
 
-void	new_prompt(void)
-{
-	ft_printf("\n");
-	rl_on_new_line();
-	//rl_replace_line("", 0);
-	rl_redisplay();
-}
-void	signal_handler(int sig)
+void	interactive_handler(int sig)
 {
 	if (sig == SIGINT)
-		minishell();
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		write(1, "\n", STDERR_FILENO);
+		rl_redisplay();
+	}
 	else if (sig == SIGQUIT)
 		SIG_IGN;
 }
-void	heredoc_signal_handler(int sig)
+void	non_interactive_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		unlink(".heredoc");
-		exit(EXIT_SUCCESS);
+		write(1, "\n", 1);
+		rl_on_new_line();
 	}
 	else if (sig == SIGQUIT)
 	{
-		unlink(".heredoc");
-		exit(EXIT_SUCCESS);
+		ft_printf("Quit (core dumped)");
+		write(1, "\n", 2);
+		rl_on_new_line();
 	}
 }
 
-void	init_signals(void)
+void	interactive_signals(void)
 {
 	struct sigaction	sig;
 
-	sig.sa_handler = signal_handler;
+	sig.sa_handler = interactive_handler;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig, NULL);
 }
-void	init_heredoc_signals(void)
+
+void	non_interactive_signals(void)
 {
 	struct sigaction	sig;
 
-	sig.sa_handler = heredoc_signal_handler;
+	sig.sa_handler = non_interactive_handler;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig, NULL);
 }
+
+/* void	heredoc_h(int sig)
+{
+	minishell();
+	(void)sig;
+}
+
+void	heredoc_signals(void)
+{
+	signal(SIGINT, heredoc_h);
+	signal(SIGQUIT, SIG_IGN);
+} */

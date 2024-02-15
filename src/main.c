@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:18:42 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 17:36:42 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:11:49 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,16 @@ t_data	*init_data()
 
 void	get_user_input(t_data *data)
 {
+	interactive_signals();
 	data->user_input = readline("minishell: ");
-	if (data->user_input && ft_strcmp(data->user_input, "exit") == 0)
+	if ((data->user_input && ft_strcmp(data->user_input, "exit") == 0)
+		|| !data->user_input)
 	{
+		write(1, "Exit\n", 5);
 		free_data(data);
 		exit(EXIT_SUCCESS);
 	}
+	non_interactive_signals();
 	add_history(data->user_input);
 }
 
@@ -80,7 +84,6 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 1)
 		return (0);
-	init_signals();
 	minishell();
 	return (1);
 }

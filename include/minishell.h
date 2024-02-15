@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 17:31:49 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:53:48 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <signal.h>
+# include <bits/sigaction.h>
+# include <bits/types/siginfo_t.h>
 
 typedef struct	s_tokens
 {
@@ -86,7 +88,8 @@ void	minishell(void);
 int		main(int argc, char **argv);
 
 // signals.c
-void	init_signals(void);
-void	init_heredoc_signals(void);
+void	non_interactive_signals(void);
+void	interactive_signals(void);
+//void	heredoc_signals(void);
 
 #endif
