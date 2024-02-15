@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 13:41:08 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:22:59 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ char	*find_next_variable(const char *str)
 	return (0);
 }
 
-char	*get_variable_value(char *var_start, int var_name_length)
+char	*get_variable_value(t_data *data, char *var_start, int var_name_length)
 {
 	char	*var_name;
 	char	*value;
 
 	var_name = ft_substr(var_start + 1, 0, var_name_length);
-	value = getenv(var_name);
+	value = ft_getenv(data, var_name);
 	if (!value)
 		value = "";
 	free(var_name);
@@ -54,7 +54,7 @@ char *replace_next_variable(char *result, char *value, char *var_end, char *var_
 	return (new_result);
 }
 
-char *replace_variables(const char *str)
+char *replace_variables(t_data *data, const char *str)
 {
 	char	*result;
 	char	*var_start;
@@ -68,7 +68,7 @@ char *replace_variables(const char *str)
 		var_end = var_start + 1;
 		while (isalnum(*var_end) || *var_end == '_')
 			var_end++;
-		value = get_variable_value(var_start, var_end - var_start - 1);
+		value = get_variable_value(data, var_start, var_end - var_start - 1);
 		result = replace_next_variable(result, value, var_end, var_start);
 	}
 
@@ -87,10 +87,12 @@ void expand_variables_and_remove_quotes(t_data *data)
 		while (data->cmds[i][j])
 		{
 			if (data->cmds[i][j][0] != SGL_QUOTE)
-				data->cmds[i][j] = replace_variables(data->cmds[i][j]);
+				data->cmds[i][j] = replace_variables(data, data->cmds[i][j]);
 			if (data->cmds[i][j][0] == DBL_QUOTE || data->cmds[i][j][0] == SGL_QUOTE)
 			{
-				data->cmds[i][j] = ft_substr(data->cmds[i][j], 1, ft_strlen(data->cmds[i][j]) - 2);
+				data->cmds[i][j] = ft_substr(data->cmds[i][j],
+											1, 
+											ft_strlen(data->cmds[i][j]) - 2);
 				if (!data->cmds[i][j])
 					error_and_quit(data, "Not enough memory to remove quotes");
 			}

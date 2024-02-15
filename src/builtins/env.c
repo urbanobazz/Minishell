@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:47 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 11:55:19 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 12:20:27 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ int	ft_env(t_data *data)
 	while (data->env[i])
 		ft_printf("%s\n", data->env[i++]);
 	return (1);
+}
+
+char	*ft_getenv(t_data *data, char *cmd)
+{
+	int			i;
+	char		*eq;
+
+	i = 0;
+	while (data->env[i])
+	{
+		eq = strchr(data->env[i], '=');
+		if (ft_strncmp(data->env[i], cmd, eq - data->env[i]) == 0)
+			return (eq + 1);
+		i++;
+	}
+	return (0);
 }
 
 int	is_env_match(t_data *data, char *cmd)
