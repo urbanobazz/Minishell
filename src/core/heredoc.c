@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/14 13:21:26 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:50:08 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	write_heredoc(t_data *data)
 	char	*line;
 	int		fd;
 
-	data->heredoc_mode += 1;
+	data->heredoc_mode = 1;
 	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		error_and_quit(data, "Failed to open heredoc file for writing");

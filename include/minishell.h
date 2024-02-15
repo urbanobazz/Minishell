@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:45:14 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 12:50:16 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	lexer(t_data *data);
 int		is_operator(char c);
 void	parser(t_data *data);
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
-char	*write_heredoc(t_data *data);
+void	write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
 void	executor(t_data *data);
 
