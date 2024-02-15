@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:31:09 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:32:13 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:31:50 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	set_single_var(t_data *data, char *cmd, char *var)
 	data->env = new;
 }
 
-void	export_single_var(t_data *data, char *cmd)
+int	export_single_var(t_data *data, char *cmd)
 {
 	char	*eq;
 	char	*var;
@@ -52,10 +52,11 @@ void	export_single_var(t_data *data, char *cmd)
 		if (!var)
 			error_and_quit(data, "Not enough data for environment variables");
 		if (!is_valid_name(var))
-			error_and_restart(data, "Invalid variable name");
+			return (ft_error(data, "Invalid variable name"));
 		set_single_var(data, cmd, var);
 		free(var);
 	}
+	return (1);
 }
 
 char	*ft_getenv(t_data *data, char *cmd)

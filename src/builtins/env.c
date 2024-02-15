@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:47 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:31:52 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 20:20:42 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_unset(t_data *data, char **cmds)
 	while(cmds[i])
 	{
 		if (!is_valid_name(cmds[i]))
-			error_and_restart(data, "Invalid variable name");
+			return (ft_error(data, "Invalid variable name"));
 		unset_single_var(data, cmds[i]);
 		i++;
 	}
@@ -43,6 +43,7 @@ int	ft_export(t_data *data, char **cmds)
 
 	i = 1;
 	while(cmds[i])
-		export_single_var(data, cmds[i++]);
+		if (!export_single_var(data, cmds[i++]))
+			return (0);
 	return (1);
 }

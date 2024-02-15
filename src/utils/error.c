@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/14 22:56:33 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:39:07 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,11 @@ void	free_env(t_data *data)
 	}
 }
 
-void	free_data_and_restart(t_data *data)
-{
-	free_data(data);
-	minishell(data);
-}
-
-void	error_and_restart(t_data *data, char *message)
+int	ft_error(t_data *data, char *message)
 {
 	ft_printf("Error: %s\n", message);
-	free_data_and_restart(data);
+	free_data(data);
+	return (0);
 }
 
 void	error_and_quit(t_data *data, char *message)

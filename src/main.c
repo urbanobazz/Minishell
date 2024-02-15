@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/15 19:04:10 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:39:25 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	minishell(t_data *data)
 		if (!get_user_input(data))
 			break ;
 		lexer(data);
-		parser(data);
-		executor(data);
+		if (!parser(data))
+			continue ;
+		if (!executor(data))
+			continue ;
 		free_data(data);
 	}
 }

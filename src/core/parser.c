@@ -6,13 +6,13 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:50:55 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:33:28 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void init_command_array(t_data *data)
+void	init_command_array(t_data *data)
 {
 	t_token *token_list;
 	int not_command_count;
@@ -49,7 +49,7 @@ char	**split_commands(char *str, t_data *data)
 	return (arr);
 }
 
-void split_and_store_commands(t_data *data)
+void	split_and_store_commands(t_data *data)
 {
 	t_token *token_list;
 	int i;
@@ -77,7 +77,7 @@ void split_and_store_commands(t_data *data)
 	data->cmds[i] = 0;
 }
 
-void find_command_paths(t_data *data)
+int	find_command_paths(t_data *data)
 {
 	int i;
 	int j;
@@ -98,16 +98,17 @@ void find_command_paths(t_data *data)
 			j++;
 		}
 		if (!data->cmd_paths[i] && !is_builtin(data->cmds[i][0]))
-			error_and_restart(data, "Command not found");
+			return (ft_error(data, "Command not found"));
 		i++;
 	}
 	data->cmd_paths[i] = 0;
+	return (1);
 }
 
-void parser(t_data *data)
+int	parser(t_data *data)
 {
 	init_command_array(data);
 	split_and_store_commands(data);
 	expand_variables_and_remove_quotes(data);
-	find_command_paths(data);
+	return (find_command_paths(data));
 }

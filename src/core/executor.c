@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:46:14 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:57:18 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void init_pipes(t_data *data)
 	}
 }
 
-void init_redirections(t_data *data)
+int init_redirections(t_data *data)
 {
 	if (data->std_input)
 		data->infile_fd = open(data->std_input, O_RDONLY);
@@ -41,7 +41,8 @@ void init_redirections(t_data *data)
 	else
 		data->outfile_fd = 1;
 	if (data->infile_fd == -1 || data->outfile_fd == -1)
-		error_and_restart(data, "Input or output file does not exist");
+		return (ft_error(data, "Input or output file does not exist"));
+	return (1);
 }
 
 void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
@@ -81,9 +82,26 @@ void execute_shell_command_with_redirection(t_data *data, int i)
 	execute_cmd(data, i, infile_fd, outfile_fd);
 }
 
-void run_subprocesses(t_data *data)
+void	fork_subprocess(t_data *data, int i)
+{
+	data->processes[i] = fork();
+	if (data->processes[i] == 0)
+		execute_shell_command_with_redirection(data, i);
+	else if (data->processes[i] < 0)
+		error_and_quit(data, "Not enough memory to fork subprocess");
+	else
+	{
+		if (i > 0)
+			close(data->pipes[i - 1][0]);
+		if (i != data->command_count - 1)
+			close(data->pipes[i][1]);
+	}
+}
+
+int run_subprocesses(t_data *data)
 {
 	int i;
+	int	ret;
 
 	i = 0;
 	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
@@ -91,23 +109,14 @@ void run_subprocesses(t_data *data)
 		error_and_quit(data, "Not enough memory to create subprocess array");
 	while (i < data->command_count)
 	{
-		if(!find_and_trigger_builtin(data, data->cmds[i]))
-		{
-			data->processes[i] = fork();
-			if (data->processes[i] == 0)
-				execute_shell_command_with_redirection(data, i);
-			else if (data->processes[i] < 0)
-				error_and_quit(data, "Not enough memory to fork subprocess");
-			else
-			{
-				if (i > 0)
-					close(data->pipes[i - 1][0]);
-				if (i != data->command_count - 1)
-					close(data->pipes[i][1]);
-			}
-		}
+		ret = find_and_trigger_builtin(data, data->cmds[i]);
+		if (!ret)
+			return (0);
+		if(ret == -1)
+			fork_subprocess(data, i);
 		i++;
 	}
+	return (1);
 }
 
 void wait_for_subprocesses(t_data *data)
@@ -119,10 +128,13 @@ void wait_for_subprocesses(t_data *data)
 		waitpid(data->processes[i++], NULL, 0);
 }
 
-void executor(t_data *data)
+int executor(t_data *data)
 {
 	init_pipes(data);
-	init_redirections(data);
-	run_subprocesses(data);
+	if(!init_redirections(data))
+		return (0);
+	if (!run_subprocesses(data))
+		return (0);
 	wait_for_subprocesses(data);
+	return (1);
 }

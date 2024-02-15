@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:50:16 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:57:37 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int		main(int argc, char **argv);
 // CORE
 void	lexer(t_data *data);
 int		is_operator(char c);
-void	parser(t_data *data);
+int		parser(t_data *data);
 void	find_heredoc_delimeter(t_data *data, t_token *token_list);
 void	write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
-void	executor(t_data *data);
+int		executor(t_data *data);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);
@@ -70,7 +70,7 @@ int		ft_echo(char **cmds);
 int		ft_env(t_data *data);
 int		ft_unset(t_data *data, char **cmds);
 int		ft_export(t_data *data, char **cmds);
-void	export_single_var(t_data *data, char *cmd);
+int		export_single_var(t_data *data, char *cmd);
 char 	*ft_getenv(t_data *data, char *cmd);
 int		is_valid_name(char *cmd);
 void	unset_single_var(t_data *data, char *cmd);
@@ -81,9 +81,8 @@ void	add_token(t_token **lst, t_token *new);
 void	create_token(t_data *data, char *token);
 int		ft_token_lstsize(t_token *lst);
 void	error_and_quit(t_data *data, char *message);
-void	error_and_restart(t_data *data, char *message);
+int		ft_error(t_data *data, char *message);
 void	free_env(t_data *data);
-void	free_data_and_restart(t_data *data);
 void	free_data(t_data *data);
 void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:14:38 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/15 12:04:39 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 19:38:26 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_cd(t_data *data, char **cmds)
 	else
 	{
 		if (chdir(cmds[1]) != 0)
-			error_and_restart(data, "No such file or directory");
+			return (ft_error(data, "No such file or directory"));
 	}
 	getcwd(cwd, sizeof(cwd));
 	var = ft_strjoin("PWD=", cwd);
@@ -48,7 +48,7 @@ int	ft_pwd(t_data *data, char **cmds)
 	char	cwd[1024];
 
 	if (cmds[1])
-		error_and_restart(data, "Too many arguments");
+		return (ft_error(data, "Too many arguments"));
 	ft_printf("%s\n", getcwd(cwd, sizeof(cwd)));
 	return (1);
 }
