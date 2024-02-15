@@ -3,41 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/12 16:12:53 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/14 22:56:33 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_split(char **arr)
+void	free_env(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while(arr[i])
-		free(arr[i++]);
-	free(arr);
+	if (data)
+	{
+		if (data->env)
+			free_double_pointer(data->env);
+		if (data->env_paths)
+			free_double_pointer(data->env_paths);
+		free(data);
+	}
 }
 
 void	free_data_and_restart(t_data *data)
 {
 	free_data(data);
-	minishell();
+	minishell(data);
 }
 
 void	error_and_restart(t_data *data, char *message)
 {
 	ft_printf("Error: %s\n", message);
-	free_data(data);
-	minishell();
+	free_data_and_restart(data);
 }
 
 void	error_and_quit(t_data *data, char *message)
 {
 	ft_printf("Error: %s\n", message);
 	free_data(data);
+	free_env(data);
 	exit(EXIT_FAILURE);
 }
