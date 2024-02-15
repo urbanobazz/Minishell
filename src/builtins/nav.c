@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:14:38 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/14 22:35:47 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 12:04:39 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,25 @@ void	ft_exit(t_data *data)
 
 int	ft_cd(t_data *data, char **cmds)
 {
+	char	*var;
+	char	cwd[1024];
+
 	if (!cmds[1] || ft_strcmp(cmds[1], "~") == 0)
 	{
 		chdir(getenv("HOME"));
 		return (1);
 	}
-	else if (chdir(cmds[1]) != 0)
-		error_and_restart(data, "No such file or directory");
+	else
+	{
+		if (chdir(cmds[1]) != 0)
+			error_and_restart(data, "No such file or directory");
+	}
+	getcwd(cwd, sizeof(cwd));
+	var = ft_strjoin("PWD=", cwd);
+	if (!var)
+		error_and_quit(data, "Not enough memory to update PWD");
+	export_single_var(data, var);
+	free(var);
 	return (1);
 }
 
@@ -63,4 +75,3 @@ int	ft_echo(char **cmds)
 		ft_printf("\n");
 	return (1);
 }
-

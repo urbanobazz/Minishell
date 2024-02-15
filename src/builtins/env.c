@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:47 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 08:59:45 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/15 11:55:19 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,27 +124,30 @@ void	set_single_var(t_data *data, char *cmd, char *var)
 	data->env = new;
 }
 
-int	ft_export(t_data *data, char **cmds)
+void	export_single_var(t_data *data, char *cmd)
 {
-	int		i;
 	char	*eq;
 	char	*var;
 
+	eq = ft_strchr(cmd, '=');
+	if (eq)
+	{
+		var = ft_substr(cmd, 0, eq - cmd);
+		if (!var)
+			error_and_quit(data, "Not enough data for environment variables");
+		if (!is_valid_name(var))
+			error_and_restart(data, "Invalid variable name");
+		set_single_var(data, cmd, var);
+		free(var);
+	}
+}
+
+int	ft_export(t_data *data, char **cmds)
+{
+	int		i;
+
 	i = 1;
 	while(cmds[i])
-	{
-		eq = ft_strchr(cmds[i], '=');
-		if (eq)
-		{
-			var = ft_substr(cmds[i], 0, eq - cmds[i]);
-			if (!var)
-				error_and_quit(data, "Not enough data for environment variables");
-			if (!is_valid_name(var))
-				error_and_restart(data, "Invalid variable name");
-			set_single_var(data, cmds[i], var);
-			free(var);
-		}
-		i++;
-	}
+		export_single_var(data, cmds[i++]);
 	return (1);
 }
