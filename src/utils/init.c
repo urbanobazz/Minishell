@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 13:33:55 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:41:11 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	reset_data(t_data *data)
 	data->std_output = 0;
 	data->append_mode = 0;
 	data->heredoc_file = ".heredoc";
-	data->heredoc_mode = 1;
+	data->heredoc_mode = 0;
 }
 
 t_data	*init_data(void)
