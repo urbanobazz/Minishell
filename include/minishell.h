@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 20:11:18 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/15 20:14:45 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,6 @@ void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);
 t_data	*init_data();
 void	reset_data(t_data *data);
-
-// main.c
-void	minishell(void);
-int		main(int argc, char **argv);
 
 // signals.c
 void	non_interactive_signals(void);

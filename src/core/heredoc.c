@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/15 20:13:17 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:45:30 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	write_heredoc(t_data *data)
 		if (!line)
 		{
 			close(fd);
-			error_and_quit(data, "Heredoc content not found");
+			error_and_restart(data, "Heredoc content not found");
 		}
 		if (!ft_strcmp(line, data->heredoc_delimeter))
 		{
