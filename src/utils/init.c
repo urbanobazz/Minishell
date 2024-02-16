@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 11:55:09 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:33:55 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	init_environment_paths(t_data *data)
 	{
 		tmp = data->env_paths[i];
 		data->env_paths[i] = ft_strjoin(data->env_paths[i], "/");
-			if (!data->env_paths[i])
-			{
-				free(tmp);
-				error_and_quit(data, 2);
-			}
+		if (!data->env_paths[i])
+		{
+			free(tmp);
+			error_and_quit(data, 2);
+		}
 		free(tmp);
 		i++;
 	}
@@ -37,7 +37,7 @@ void	init_environment_paths(t_data *data)
 }
 
 void	init_env(t_data *data)
-{	
+{
 	extern char	**environ;
 
 	data->env = ft_arrdup(environ);
@@ -50,6 +50,8 @@ void	reset_data(t_data *data)
 	data->std_input = 0;
 	data->std_output = 0;
 	data->append_mode = 0;
+	data->heredoc_file = ".heredoc";
+	data->heredoc_mode = 1;
 }
 
 t_data	*init_data(void)
@@ -59,7 +61,8 @@ t_data	*init_data(void)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 	{
-		ft_putstr_fd("Error: Not enough memory to create main data structure\n", STDERR_FILENO);
+		ft_putstr_fd("Error: Not enough memory to create main data structure\n"\
+					, STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	init_env(data);

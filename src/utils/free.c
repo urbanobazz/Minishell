@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/15 12:46:52 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:03:47 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	free_data(t_data *data)
 		free_int_double_pointer(data, data->pipes);
 	if (data->processes)
 		free(data->processes);
-	if (data->heredoc_delimeter)
-		free(data->heredoc_delimeter);
+	if (data->heredoc_delimiter)
+		free(data->heredoc_delimiter);
 }
 
 static void	free_tokens(t_token **tokens, void (*del)(void*))

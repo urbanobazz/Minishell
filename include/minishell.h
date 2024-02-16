@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 12:47:19 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:03:47 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_data
 	char	**env_paths;
 	pid_t	*processes;
 	int		heredoc_mode;
-	char	*heredoc_delimeter;
+	char	*heredoc_delimiter;
 	char	*heredoc_file;
 	int		append_mode;
 	int		err_code;
@@ -62,7 +62,7 @@ int		main(int argc, char **argv);
 void	lexer(t_data *data);
 int		is_operator(char c);
 int		parser(t_data *data);
-void	find_heredoc_delimeter(t_data *data, t_token *token_list);
+void	find_heredoc_delimiter(t_data *data, t_token *token_list);
 void	write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
 int		executor(t_data *data);

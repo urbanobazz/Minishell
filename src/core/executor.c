@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 12:52:40 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:25:26 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void init_pipes(t_data *data)
 
 int init_redirections(t_data *data)
 {
-	if (data->std_input)
+	if (data->heredoc_mode)
+		data->infile_fd = open(data->heredoc_file, O_RDONLY);
+	else if (data->std_input)
 		data->infile_fd = open(data->std_input, O_RDONLY);
 	else
 		data->infile_fd = 0;

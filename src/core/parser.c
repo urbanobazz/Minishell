@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 12:53:05 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:07:53 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_command_array(t_data *data)
 		else if (token_list->token[0] == '<' || token_list->token[0] == '>')
 			not_command_count += 2;
 		if (token_list->token[0] == '<' && token_list->token[1] == '<')
-			find_heredoc_delimeter(data, token_list);
+			find_heredoc_delimiter(data, token_list);
 		else if (token_list->token[0] == '>' && token_list->token[1] == '>')
 			data->append_mode = 1;
 		token_list = token_list->next;

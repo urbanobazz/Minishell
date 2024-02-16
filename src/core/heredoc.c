@@ -6,18 +6,18 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/16 12:52:08 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 13:27:41 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	find_heredoc_delimeter(t_data *data, t_token *token_list)
+void	find_heredoc_delimiter(t_data *data, t_token *token_list)
 {
 	if (token_list->next)
-		data->heredoc_delimeter = ft_strdup(token_list->next->token);
+		data->heredoc_delimiter = ft_strdup(token_list->next->token);
 	else
-		error_and_quit(data, 3);
+		error_and_quit(data, 8);
 }
 void	write_heredoc(t_data *data)
 {
@@ -36,7 +36,7 @@ void	write_heredoc(t_data *data)
 			close(fd);
 			error_and_quit(data, 3);
 		}
-		if (!ft_strcmp(line, data->heredoc_delimeter))
+		if (!ft_strcmp(line, data->heredoc_delimiter))
 		{
 			free(line);
 			break;
