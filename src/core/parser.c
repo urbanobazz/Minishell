@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 19:33:28 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 12:53:05 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_command_array(t_data *data)
 	data->cmds = (char ***)malloc(sizeof(char **) * data->command_count + 1);
 	data->cmd_paths = (char **)malloc(sizeof(char *) * data->command_count + 1);
 	if (!data->cmds || !data->cmd_paths)
-		error_and_quit(data, "Not enough memory to create commands array");
+		error_and_quit(data, 2);
 }
 
 char	**split_commands(char *str, t_data *data)
@@ -45,7 +45,7 @@ char	**split_commands(char *str, t_data *data)
 
 	arr = split_skip_quotes(str, ' ');
 	if (!arr)
-		error_and_quit(data, "Not enough memory to split commands");
+		error_and_quit(data, 2);
 	return (arr);
 }
 
@@ -90,7 +90,7 @@ int	find_command_paths(t_data *data)
 		{
 			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->cmds[i][0]);
 			if (!data->cmd_paths[i])
-				error_and_quit(data, "Not enough memory to create command path");
+				error_and_quit(data, 2);
 			if (access(data->cmd_paths[i], X_OK) == 0)
 				break;
 			free(data->cmd_paths[i]);
@@ -98,11 +98,11 @@ int	find_command_paths(t_data *data)
 			j++;
 		}
 		if (!data->cmd_paths[i] && !is_builtin(data->cmds[i][0]))
-			return (ft_error(data, "Command not found"));
+			return (ft_error(data, 7));
 		i++;
 	}
 	data->cmd_paths[i] = 0;
-	return (1);
+	return (SUCCESS);
 }
 
 int	parser(t_data *data)

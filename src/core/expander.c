@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 12:22:59 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 12:45:39 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_next_variable(const char *str)
 			return (char *)p;
 		p++;
 	}
-	return (0);
+	return (FAILURE);
 }
 
 char	*get_variable_value(t_data *data, char *var_start, int var_name_length)
@@ -94,7 +94,7 @@ void expand_variables_and_remove_quotes(t_data *data)
 											1, 
 											ft_strlen(data->cmds[i][j]) - 2);
 				if (!data->cmds[i][j])
-					error_and_quit(data, "Not enough memory to remove quotes");
+					error_and_quit(data, 2);
 			}
 			j++;
 		}

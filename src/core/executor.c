@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 19:57:18 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 12:52:40 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void init_pipes(t_data *data)
 	{
 		data->pipes[i] = (int *)malloc(sizeof(int) * 2);
 		if (!data->pipes[i])
-			error_and_quit(data, "Not enough memory to create pipe");
+			error_and_quit(data, 2);
 		pipe(data->pipes[i]);
 		i++;
 	}
@@ -41,8 +41,8 @@ int init_redirections(t_data *data)
 	else
 		data->outfile_fd = 1;
 	if (data->infile_fd == -1 || data->outfile_fd == -1)
-		return (ft_error(data, "Input or output file does not exist"));
-	return (1);
+		return (ft_error(data, 5));
+	return (SUCCESS);
 }
 
 void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
@@ -82,13 +82,13 @@ void execute_shell_command_with_redirection(t_data *data, int i)
 	execute_cmd(data, i, infile_fd, outfile_fd);
 }
 
-void	fork_subprocess(t_data *data, int i)
+void fork_subprocess(t_data *data, int i)
 {
 	data->processes[i] = fork();
 	if (data->processes[i] == 0)
 		execute_shell_command_with_redirection(data, i);
 	else if (data->processes[i] < 0)
-		error_and_quit(data, "Not enough memory to fork subprocess");
+		error_and_quit(data, 2);
 	else
 	{
 		if (i > 0)
@@ -101,22 +101,22 @@ void	fork_subprocess(t_data *data, int i)
 int run_subprocesses(t_data *data)
 {
 	int i;
-	int	ret;
+	int ret;
 
 	i = 0;
 	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
 	if (!data->processes)
-		error_and_quit(data, "Not enough memory to create subprocess array");
+		error_and_quit(data, 2);
 	while (i < data->command_count)
 	{
 		ret = find_and_trigger_builtin(data, data->cmds[i]);
 		if (!ret)
-			return (0);
-		if(ret == -1)
+			return (FAILURE);
+		if (ret == NOT_BUILTIN)
 			fork_subprocess(data, i);
 		i++;
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 void wait_for_subprocesses(t_data *data)
@@ -131,10 +131,10 @@ void wait_for_subprocesses(t_data *data)
 int executor(t_data *data)
 {
 	init_pipes(data);
-	if(!init_redirections(data))
-		return (0);
+	if (!init_redirections(data))
+		return (FAILURE);
 	if (!run_subprocesses(data))
-		return (0);
+		return (FAILURE);
 	wait_for_subprocesses(data);
-	return (1);
+	return (SUCCESS);
 }

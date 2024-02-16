@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/15 19:57:37 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 12:47:19 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@
 # include "libft.h"
 # include <fcntl.h>
 
+# define SUCCESS 1
+# define FAILURE 0
+# define YES 1
+# define NO 0
+# define NOT_BUILTIN -1
+
 typedef struct	s_tokens
 {
-	char	*token;
-	struct	s_tokens *next;
+	char				*token;
+	struct	s_tokens 	*next;
 } t_token;
 
 typedef struct	s_data
@@ -45,6 +51,7 @@ typedef struct	s_data
 	char	*heredoc_delimeter;
 	char	*heredoc_file;
 	int		append_mode;
+	int		err_code;
 } t_data;
 
 // MAIN
@@ -72,7 +79,7 @@ int		ft_unset(t_data *data, char **cmds);
 int		ft_export(t_data *data, char **cmds);
 int		export_single_var(t_data *data, char *cmd);
 char 	*ft_getenv(t_data *data, char *cmd);
-int		is_valid_name(char *cmd);
+int		is_name_valid(char *cmd);
 void	unset_single_var(t_data *data, char *cmd);
 
 //UTILS
@@ -80,8 +87,8 @@ void	*get_last_token(t_token *lst);
 void	add_token(t_token **lst, t_token *new);
 void	create_token(t_data *data, char *token);
 int		ft_token_lstsize(t_token *lst);
-void	error_and_quit(t_data *data, char *message);
-int		ft_error(t_data *data, char *message);
+void	error_and_quit(t_data *data, int err);
+int		ft_error(t_data *data, int err);
 void	free_env(t_data *data);
 void	free_data(t_data *data);
 void	free_double_pointer(char **arr);
