@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/16 12:45:39 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 17:02:12 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 int get_user_input(t_data *data)
 {
-
+	interactive_signals();
 	data->user_input = readline("minishell: ");
 	if (!data->user_input)
+	{
+		write(1, "Exit\n", 5);
 		return (FAILURE);
+	}
+	non_interactive_signals();
 	add_history(data->user_input);
 	return (SUCCESS);
 }

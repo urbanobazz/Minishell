@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 13:03:47 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 17:31:36 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
+# include <bits/sigaction.h>
+# include <bits/types/siginfo_t.h>
 # include <sys/wait.h>
 # include <stdlib.h>
 # include "libft.h"
@@ -95,6 +98,10 @@ void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);
 t_data	*init_data();
 void	reset_data(t_data *data);
+
+//signals
+void	interactive_signals(void);
+void	non_interactive_signals(void);
 
 
 #endif

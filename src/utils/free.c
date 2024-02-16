@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/16 13:03:47 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 16:40:31 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	free_data(t_data *data)
 		free(data->processes);
 	if (data->heredoc_delimiter)
 		free(data->heredoc_delimiter);
+	if (data->heredoc_file)
+		unlink(data->heredoc_file);
 }
 
 static void	free_tokens(t_token **tokens, void (*del)(void*))

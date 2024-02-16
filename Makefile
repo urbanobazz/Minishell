@@ -17,7 +17,8 @@ SRCS    :=	src/main.c \
 			src/utils/error.c \
 			src/utils/free.c \
 			src/utils/list.c \
-			src/utils/init.c
+			src/utils/init.c \
+			src/signals.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 

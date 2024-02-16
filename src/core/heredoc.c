@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/16 13:27:41 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/16 17:31:40 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ void	write_heredoc(t_data *data)
 		error_and_quit(data, 5);
 	while (1)
 	{
+		interactive_signals();
 		line = readline("> ");
 		if (!line)
 		{
 			close(fd);
-			error_and_quit(data, 3);
+			error_and_quit(data, 3);//Must restart the shell.
 		}
+		non_interactive_signals();
 		if (!ft_strcmp(line, data->heredoc_delimiter))
 		{
 			free(line);
