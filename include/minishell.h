@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/17 17:56:17 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/17 18:10:21 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ typedef struct	s_tokens
 
 typedef struct	s_data
 {
+	// persistent
 	char	**env;
+	int		err_code;
+	char	**env_paths;
+	// cyclical
 	char	*user_input;
 	t_token	*tokens;
 	int		command_count;
@@ -45,13 +49,11 @@ typedef struct	s_data
 	int		infile_fd;
 	int		outfile_fd;
 	int		**pipes;
-	char	**env_paths;
 	pid_t	*processes;
 	int		heredoc_mode;
 	char	*heredoc_delimiter;
 	char	*heredoc_file;
 	int		append_mode;
-	int		err_code;
 } t_data;
 
 // MAIN
