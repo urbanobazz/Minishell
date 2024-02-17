@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/13 19:30:08 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:56:31 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	process_segment(t_data *data, char *str, size_t *i, int len)
 	}
 }
 
-void	lexer(t_data *data)
+int	lexer(t_data *data)
 {
 	int		len;
 	char	*str;
@@ -56,4 +56,7 @@ void	lexer(t_data *data)
 		process_segment(data, str, &i, len);
 		i++;
 	}
+	if (sq || dq)
+		return (ft_error(data, 9));
+	return (SUCCESS);
 }
