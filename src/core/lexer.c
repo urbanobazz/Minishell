@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/17 17:56:31 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/17 18:31:10 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@ int	lexer(t_data *data)
 	{
 		len = 0;
 		while ((!is_operator(str[i + len]) || sq || dq) && str[i + len])
-		{
-			toggle_quote_state(str[i + len], &sq, &dq);
-			len++;
-		}
-		process_segment(data, str, &i, len);
+			toggle_quote_state(str[i + len++], &sq, &dq);
+		if (len > 0)
+			process_segment(data, str, &i, len);
 		i++;
 	}
 	if (sq || dq)
