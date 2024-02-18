@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 17:31:36 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:24:17 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_data
 	char	**env_paths;
 	pid_t	*processes;
 	int		heredoc_mode;
-	char	*heredoc_delimiter;
+	t_list	*heredoc_delimiters;
 	char	*heredoc_file;
 	int		append_mode;
 	int		err_code;

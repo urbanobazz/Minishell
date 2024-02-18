@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/16 17:31:40 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:18:23 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,34 @@
 
 void	find_heredoc_delimiter(t_data *data, t_token *token_list)
 {
+	t_list	*new;
+
 	if (token_list->next)
-		data->heredoc_delimiter = ft_strdup(token_list->next->token);
+	{
+		new = ft_lstnew(strdup(token_list->next->token));
+		ft_lstadd_back(&data->heredoc_delimiters, new);
+	}
 	else
 		error_and_quit(data, 8);
 }
+
+int is_delimeter(t_data *data, char *str)
+{
+	t_list	*temp;
+	char	*delimiter;
+
+	temp = data->heredoc_delimiters;
+	delimiter = temp->content;
+	if (!ft_strcmp(str, delimiter))
+	{
+		data->heredoc_delimiters = temp->next;
+		ft_lstdelone(temp, free);
+		return (1);
+	}
+	else
+		return (0);
+}
+
 void	write_heredoc(t_data *data)
 {
 	char	*line;
@@ -38,7 +61,7 @@ void	write_heredoc(t_data *data)
 			error_and_quit(data, 3);//Must restart the shell.
 		}
 		non_interactive_signals();
-		if (!ft_strcmp(line, data->heredoc_delimiter))
+		if (is_delimeter(data, line))
 		{
 			free(line);
 			break;

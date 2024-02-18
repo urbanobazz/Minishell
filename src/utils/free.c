@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/16 16:40:31 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:40:42 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	free_data(t_data *data)
 		free_int_double_pointer(data, data->pipes);
 	if (data->processes)
 		free(data->processes);
-	if (data->heredoc_delimiter)
-		free(data->heredoc_delimiter);
+	if (data->heredoc_delimiters)
+		ft_lstclear(&data->heredoc_delimiters, free);
 	if (data->heredoc_file)
 		unlink(data->heredoc_file);
 }
