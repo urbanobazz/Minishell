@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 17:44:05 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 18:48:31 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int is_delimiter(t_data *data, char *str)
 
 	temp = data->heredoc_delimiters;
 	delimiter = temp->content;
-	if (!ft_strcmp(str, delimiter))
+	if (str[0] == '\n')
+		return (0);
+	if (!ft_strncmp(str, delimiter, ft_strlen(str) - 1))
 	{
 		data->heredoc_delimiters = temp->next;
 		ft_lstdelone(temp, free);
@@ -54,11 +56,13 @@ int write_heredoc(t_data *data)
 	heredoc_interrupt_signal();
 	while (1)
 	{
-		line = readline("> ");
+		write (1, "> ", 2);
+		line = get_next_line(0);
 		if (!line || end_heredoc)
 		{
 			close(fd);
 			non_interactive_signals();
+			write(1, "\n", 1);
 			return (ft_error(data, 10));
 		}
 		if (is_delimiter(data, line))
@@ -67,7 +71,6 @@ int write_heredoc(t_data *data)
 			break;
 		}
 		write(fd, line, strlen(line));
-		write(fd, "\n", 1);
 		free(line);
 	}
 	non_interactive_signals();
