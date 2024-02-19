@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/17 18:31:10 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:13:20 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	toggle_quote_state(char c, int *sq, int *dq)
 
 void	process_segment(t_data *data, char *str, size_t *i, int len)
 {
-	create_token(data, ft_substr(str, *i, len));
+	if (len)
+		create_token(data, ft_substr(str, *i, len));
 	*i += len;
 	if (is_operator(str[*i]))
 	{
@@ -50,8 +51,7 @@ int	lexer(t_data *data)
 		len = 0;
 		while ((!is_operator(str[i + len]) || sq || dq) && str[i + len])
 			toggle_quote_state(str[i + len++], &sq, &dq);
-		if (len > 0)
-			process_segment(data, str, &i, len);
+		process_segment(data, str, &i, len);
 		i++;
 	}
 	if (sq || dq)
