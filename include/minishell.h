@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 17:09:44 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:07:59 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ void	find_heredoc_delimiter(t_data *data, t_token *token_list);
 int		write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
 int		executor(t_data *data);
+void	interactive_signals(void);
+void	non_interactive_signals(void);
+void	heredoc_interrupt_signal(void);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);
@@ -106,11 +109,5 @@ void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);
 t_data	*init_data();
 void	reset_data(t_data *data);
-
-//signals
-void	interactive_signals(void);
-void	non_interactive_signals(void);
-void	heredoc_interrupt_signal(void);
-
 
 #endif

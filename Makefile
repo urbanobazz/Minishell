@@ -11,6 +11,7 @@ SRCS    :=	src/main.c \
 			src/core/heredoc.c \
 			src/core/expander.c \
 			src/core/executor.c \
+			src/core/signals.c \
 			src/builtins/switch.c \
 			src/builtins/nav.c \
 			src/builtins/env.c \
@@ -18,8 +19,7 @@ SRCS    :=	src/main.c \
 			src/utils/error.c \
 			src/utils/free.c \
 			src/utils/list.c \
-			src/utils/init.c \
-			src/signals.c
+			src/utils/init.c
 OBJDIR  := 	obj
 OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
