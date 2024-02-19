@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 21:07:59 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:33:03 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);
 t_data	*init_data();
 void	reset_data(t_data *data);
+char	**split_commands(char *str, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 15:53:48 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:32:36 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,24 @@ void	init_command_array(t_data *data)
 		error_and_quit(data, 2);
 }
 
-char	**split_commands(char *str, t_data *data)
+int handle_operator(t_data *data, t_token **token_list, int *i)
 {
-	char	**arr;
+	if (!token_list || !*token_list)
+		return FAILURE;
 
-	arr = split_skip_quotes(str, ' ');
-	if (!arr)
-		error_and_quit(data, 2);
-	return (arr);
+	if ((*token_list)->token[0] == '|') {
+		data->cmds[(*i)++] = split_commands((*token_list)->next->token, data);
+	} else if ((*token_list)->token[0] == '<' && (*token_list)->token[1] == '<') {
+		if (!write_heredoc(data))
+			return (FAILURE);
+	} else if ((*token_list)->token[0] == '<') {
+		data->std_input = ft_strdup((*token_list)->next->token);
+	} else if ((*token_list)->token[0] == '>') {
+		data->std_output = ft_strdup((*token_list)->next->token);
+	}
+	*token_list = (*token_list)->next;
+
+	return (SUCCESS);
 }
 
 int	split_and_store_commands(t_data *data)
@@ -59,20 +69,7 @@ int	split_and_store_commands(t_data *data)
 	while (token_list)
 	{
 		if (is_operator(token_list->token[0]))
-		{
-			if (token_list->token[0] == '|')
-				data->cmds[i++] = split_commands(token_list->next->token, data);
-			else if (token_list->token[0] == '<' && token_list->token[1] == '<')
-			{
-				if (!write_heredoc(data))
-					return (FAILURE);
-			}
-			else if (token_list->token[0] == '<')
-				data->std_input = ft_strdup(token_list->next->token);
-			else if (token_list->token[0] == '>')
-				data->std_output = ft_strdup(token_list->next->token);
-			token_list = token_list->next;
-		}
+			handle_operator(data, &token_list, &i);
 		else
 			data->cmds[i++] = split_commands(token_list->token, data);
 		token_list = token_list->next;

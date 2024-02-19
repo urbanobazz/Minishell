@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:48:44 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/16 11:55:23 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:32:50 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,14 @@ int	ft_token_lstsize(t_token *lst)
 		lst = lst->next;
 	}
 	return (i);
+}
+
+char	**split_commands(char *str, t_data *data)
+{
+	char	**arr;
+
+	arr = split_skip_quotes(str, ' ');
+	if (!arr)
+		error_and_quit(data, 2);
+	return (arr);
 }
