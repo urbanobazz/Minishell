@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 15:49:48 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 16:15:19 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	write_heredoc(t_data *data)
 		if (!line)
 		{
 			close(fd);
-			return ft_error(data, 3);
+			return ft_error(data, 10);
 		}
 		non_interactive_signals();
 		if (is_delimeter(data, line))
