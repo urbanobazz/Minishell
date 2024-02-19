@@ -1,5 +1,5 @@
 NAME    := 	minishell
-CC      :=	cc -Wextra -Wall -Werror -g
+CC      :=	cc -Wextra -Wall -Werror -g -fsanitize=address
 INCLUDE :=	-I ./include \
 			-I ./libft \
 			-I/opt/homebrew/opt/readline/include

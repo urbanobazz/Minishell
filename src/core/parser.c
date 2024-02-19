@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 21:32:36 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 22:09:07 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ void	init_command_array(t_data *data)
 		token_list = token_list->next;
 	}
 	data->command_count -= not_command_count;
-	data->cmds = (char ***)malloc(sizeof(char **) * data->command_count + 1);
-	data->cmd_paths = (char **)malloc(sizeof(char *) * data->command_count + 1);
+	data->cmds = (char ***)malloc(sizeof(char **) * (data->command_count + 1));
+	data->cmd_paths = (char **)malloc(sizeof(char *) * \
+													(data->command_count + 1));
 	if (!data->cmds || !data->cmd_paths)
 		error_and_quit(data, 2);
 }
