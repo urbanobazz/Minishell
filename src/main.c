@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/19 17:12:57 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:02:47 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int get_user_input(t_data *data)
 	data->user_input = readline("minishell: ");
 	if (!data->user_input)
 	{
-		write(1, "Exit\n", 5);
+		write(1, "exit\n", 5);
 		return (FAILURE);
 	}
 	non_interactive_signals();

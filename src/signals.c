@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:32:42 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 17:14:15 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 21:01:49 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	heredoc_sig(int sig)
 		end_heredoc = 1;
 		rl_replace_line("", 0);
 		rl_redisplay();
-		rl_done = 1;
 	}
 }
 
