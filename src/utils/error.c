@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 15:58:48 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 17:26:43 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	error_and_quit(t_data *data, int err)
 int	ft_error(t_data *data, int err)
 {
 	data->err_code = err;
-	ft_putstr_fd("Error: ", STDERR_FILENO);
+	if (err != 10)
+		ft_putstr_fd("Error: ", STDERR_FILENO);
 	if (err == 1)
 		ft_putstr_fd("unspecified error\n", STDERR_FILENO);
 	else if (err == 2)
@@ -53,10 +54,6 @@ int	ft_error(t_data *data, int err)
 		ft_putstr_fd("heredoc delimiter not found\n", STDERR_FILENO);
 	else if (err == 9)
 		ft_putstr_fd("uneven number of quotes\n", STDERR_FILENO);
-	else if (err == 10)
-		(void)err;
-	else
-		ft_putstr_fd("unknown error\n", STDERR_FILENO);
 	free_data(data);
 	return (FAILURE);
 }

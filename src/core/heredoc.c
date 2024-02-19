@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 17:01:18 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 17:44:05 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ int write_heredoc(t_data *data)
 	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		error_and_quit(data, 5);
+	heredoc_interrupt_signal();
 	while (1)
 	{
-		heredoc_interrupt_signal();
 		line = readline("> ");
-		non_interactive_signals();
-		if (!line || !end_heredoc)
+		if (!line || end_heredoc)
 		{
 			close(fd);
+			non_interactive_signals();
 			return (ft_error(data, 10));
 		}
 		if (is_delimiter(data, line))
@@ -70,6 +70,7 @@ int write_heredoc(t_data *data)
 		write(fd, "\n", 1);
 		free(line);
 	}
+	non_interactive_signals();
 	close(fd);
 	return (SUCCESS);
 }
