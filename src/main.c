@@ -6,11 +6,13 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/19 15:42:44 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 17:12:57 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	end_heredoc;
 
 int get_user_input(t_data *data)
 {

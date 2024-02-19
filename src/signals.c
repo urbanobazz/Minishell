@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:32:42 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 15:54:11 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 17:00:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,13 @@ void	new_prompt(int sig)
 
 void	heredoc_sig(int sig)
 {
-	(void)sig;
+	if (sig == SIGINT)
+	{
+		end_heredoc = 1;
+		rl_replace_line("", 0);
+		rl_redisplay();
+		rl_done = 1;
+	}
 }
 
 void	non_interactive_handler(int sig)
@@ -66,4 +72,15 @@ void	non_interactive_signals(void)
 	sig.sa_handler = non_interactive_handler;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig, NULL);
+}
+
+void	heredoc_interrupt_signal(void)
+{
+	struct sigaction	sig;
+	struct sigaction	sig_ign;
+
+	sig.sa_handler = heredoc_sig;
+	sig_ign.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sig, NULL);
+	sigaction(SIGQUIT, &sig_ign, NULL);
 }

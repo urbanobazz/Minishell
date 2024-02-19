@@ -6,13 +6,14 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 15:53:31 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 17:09:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
@@ -26,12 +27,13 @@
 # include <bits/types/siginfo_t.h>
 #endif
 
-
 # define SUCCESS 1
 # define FAILURE 0
 # define YES 1
 # define NO 0
 # define NOT_BUILTIN -1
+
+extern int end_heredoc;
 
 typedef struct	s_tokens
 {
@@ -108,6 +110,7 @@ void	reset_data(t_data *data);
 //signals
 void	interactive_signals(void);
 void	non_interactive_signals(void);
+void	heredoc_interrupt_signal(void);
 
 
 #endif

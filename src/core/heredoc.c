@@ -6,15 +6,15 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 16:15:19 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 17:01:18 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	find_heredoc_delimiter(t_data *data, t_token *token_list)
+void find_heredoc_delimiter(t_data *data, t_token *token_list)
 {
-	t_list	*new;
+	t_list *new;
 
 	if (token_list->next)
 	{
@@ -25,10 +25,10 @@ void	find_heredoc_delimiter(t_data *data, t_token *token_list)
 		error_and_quit(data, 8);
 }
 
-int is_delimeter(t_data *data, char *str)
+int is_delimiter(t_data *data, char *str)
 {
-	t_list	*temp;
-	char	*delimiter;
+	t_list *temp;
+	char *delimiter;
 
 	temp = data->heredoc_delimiters;
 	delimiter = temp->content;
@@ -42,10 +42,10 @@ int is_delimeter(t_data *data, char *str)
 		return (0);
 }
 
-int	write_heredoc(t_data *data)
+int write_heredoc(t_data *data)
 {
-	char	*line;
-	int		fd;
+	char *line;
+	int fd;
 
 	data->heredoc_mode = 1;
 	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -53,15 +53,15 @@ int	write_heredoc(t_data *data)
 		error_and_quit(data, 5);
 	while (1)
 	{
-		interactive_signals();
+		heredoc_interrupt_signal();
 		line = readline("> ");
-		if (!line)
+		non_interactive_signals();
+		if (!line || !end_heredoc)
 		{
 			close(fd);
-			return ft_error(data, 10);
+			return (ft_error(data, 10));
 		}
-		non_interactive_signals();
-		if (is_delimeter(data, line))
+		if (is_delimiter(data, line))
 		{
 			free(line);
 			break;

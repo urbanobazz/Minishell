@@ -1,8 +1,9 @@
 NAME    := 	minishell
-CC      := 	cc -Wextra -Wall -Werror -g
+CC      :=	cc -Wextra -Wall -Werror -g
 INCLUDE :=	-I ./include \
-			-I ./libft
-LIBS    := 	-lreadline \
+			-I ./libft \
+			-I/opt/homebrew/opt/readline/include
+LIBS    :=	-L/opt/homebrew/opt/readline/lib -lreadline \
 			-L ./libft -lft
 SRCS    :=	src/main.c \
 			src/core/lexer.c \
