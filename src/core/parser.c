@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 13:07:53 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 15:53:48 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**split_commands(char *str, t_data *data)
 	return (arr);
 }
 
-void	split_and_store_commands(t_data *data)
+int	split_and_store_commands(t_data *data)
 {
 	t_token *token_list;
 	int i;
@@ -63,7 +63,10 @@ void	split_and_store_commands(t_data *data)
 			if (token_list->token[0] == '|')
 				data->cmds[i++] = split_commands(token_list->next->token, data);
 			else if (token_list->token[0] == '<' && token_list->token[1] == '<')
-				write_heredoc(data);
+			{
+				if (!write_heredoc(data))
+					return (FAILURE);
+			}
 			else if (token_list->token[0] == '<')
 				data->std_input = ft_strdup(token_list->next->token);
 			else if (token_list->token[0] == '>')
@@ -75,6 +78,7 @@ void	split_and_store_commands(t_data *data)
 		token_list = token_list->next;
 	}
 	data->cmds[i] = 0;
+	return (SUCCESS);
 }
 
 int	find_command_paths(t_data *data)
@@ -108,7 +112,8 @@ int	find_command_paths(t_data *data)
 int	parser(t_data *data)
 {
 	init_command_array(data);
-	split_and_store_commands(data);
+	if (!split_and_store_commands(data))
+		return (FAILURE);
 	expand_variables_and_remove_quotes(data);
 	return (find_command_paths(data));
 }

@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/17 18:14:14 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 15:54:03 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	reset_data(t_data *data)
 	data->std_output = 0;
 	data->pipes = 0;
 	data->processes = 0;
-	data->heredoc_delimiter = 0;
+	data->heredoc_delimiters = 0;
 	data->append_mode = 0;
 	data->heredoc_file = ".heredoc";
 	data->heredoc_mode = 0;

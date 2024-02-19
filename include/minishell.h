@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 15:42:30 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/19 15:53:31 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include <bits/sigaction.h>
-# include <bits/types/siginfo_t.h>
 # include <sys/wait.h>
 # include <stdlib.h>
 # include "libft.h"
 # include <fcntl.h>
+
+#ifdef __linux__
+# include <bits/sigaction.h>
+# include <bits/types/siginfo_t.h>
+#endif
+
 
 # define SUCCESS 1
 # define FAILURE 0
@@ -68,7 +72,7 @@ int		lexer(t_data *data);
 int		is_operator(char c);
 int		parser(t_data *data);
 void	find_heredoc_delimiter(t_data *data, t_token *token_list);
-void	write_heredoc(t_data *data);
+int		write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
 int		executor(t_data *data);
 

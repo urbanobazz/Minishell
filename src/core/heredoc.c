@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/18 18:18:23 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:49:48 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int is_delimeter(t_data *data, char *str)
 		return (0);
 }
 
-void	write_heredoc(t_data *data)
+int	write_heredoc(t_data *data)
 {
 	char	*line;
 	int		fd;
@@ -58,7 +58,7 @@ void	write_heredoc(t_data *data)
 		if (!line)
 		{
 			close(fd);
-			error_and_quit(data, 3);//Must restart the shell.
+			return ft_error(data, 3);
 		}
 		non_interactive_signals();
 		if (is_delimeter(data, line))
@@ -71,4 +71,5 @@ void	write_heredoc(t_data *data)
 		free(line);
 	}
 	close(fd);
+	return (SUCCESS);
 }
