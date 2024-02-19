@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 18:48:31 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/19 20:59:10 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,41 @@ int is_delimiter(t_data *data, char *str)
 		return (0);
 }
 
-int write_heredoc(t_data *data)
+int open_heredoc_file(t_data *data)
 {
-	char *line;
 	int fd;
 
 	data->heredoc_mode = 1;
 	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		error_and_quit(data, 5);
+	return fd;
+}
+
+int write_heredoc(t_data *data)
+{
+	char *line;
+	int fd;
+
+	fd = open_heredoc_file(data);
 	heredoc_interrupt_signal();
 	while (1)
 	{
 		write (1, "> ", 2);
 		line = get_next_line(0);
-		if (!line || end_heredoc)
-		{
-			close(fd);
-			non_interactive_signals();
-			write(1, "\n", 1);
-			return (ft_error(data, 10));
-		}
-		if (is_delimiter(data, line))
-		{
-			free(line);
+		if (!line || end_heredoc || is_delimiter(data, line))
 			break;
-		}
 		write(fd, line, strlen(line));
 		free(line);
 	}
 	non_interactive_signals();
 	close(fd);
+	if (!line || end_heredoc)
+	{
+		if (line)
+			free(line);
+		write(1, "\n", 1);
+		return (ft_error(data, 10));
+	}
 	return (SUCCESS);
 }
