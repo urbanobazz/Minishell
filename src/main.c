@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/16 17:02:12 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:42:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void minishell(t_data *data)
 		reset_data(data);
 		if (!get_user_input(data))
 			break;
-		lexer(data);
+		if (!lexer(data))
+			continue ;
 		if (!parser(data))
 			continue;
 		if (!executor(data))

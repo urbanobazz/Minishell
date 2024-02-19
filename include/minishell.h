@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/18 18:24:17 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:42:30 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ typedef struct	s_tokens
 
 typedef struct	s_data
 {
+	// persistent
 	char	**env;
+	int		err_code;
+	char	**env_paths;
+	// cyclical
 	char	*user_input;
 	t_token	*tokens;
 	int		command_count;
@@ -48,13 +52,11 @@ typedef struct	s_data
 	int		infile_fd;
 	int		outfile_fd;
 	int		**pipes;
-	char	**env_paths;
 	pid_t	*processes;
 	int		heredoc_mode;
 	t_list	*heredoc_delimiters;
 	char	*heredoc_file;
 	int		append_mode;
-	int		err_code;
 } t_data;
 
 // MAIN
@@ -62,7 +64,7 @@ void	minishell(t_data *data);
 int		main(int argc, char **argv);
 
 // CORE
-void	lexer(t_data *data);
+int		lexer(t_data *data);
 int		is_operator(char c);
 int		parser(t_data *data);
 void	find_heredoc_delimiter(t_data *data, t_token *token_list);
