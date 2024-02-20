@@ -61,7 +61,7 @@ char	*replace_next_variable(char *result, char *value, char *var_end,
 	return (tmp1);
 }
 
-char	*replace_variables(t_data *data, const char *str)
+char	*replace_variables(t_data *data, char **str)
 {
 	char	*result;
 	char	*var_start;
@@ -69,7 +69,8 @@ char	*replace_variables(t_data *data, const char *str)
 	char	*value;
 	char	*tmp;
 
-	result = ft_strdup(str);
+	result = ft_strdup(*str);
+	free(*str);
 	while (find_next_variable(result))
 	{
 		var_start = find_next_variable(result);
@@ -91,8 +92,9 @@ char	*replace_variables(t_data *data, const char *str)
 
 void	expand_variables_and_remove_quotes(t_data *data)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = 0;
 	while (i < data->command_count)
@@ -101,15 +103,15 @@ void	expand_variables_and_remove_quotes(t_data *data)
 		while (data->cmds[i][j])
 		{
 			if (data->cmds[i][j][0] != SGL_QUOTE)
-				data->cmds[i][j] = replace_variables(data, data->cmds[i][j]);
+				data->cmds[i][j] = replace_variables(data, &data->cmds[i][j]);
 			if (data->cmds[i][j][0] == DBL_QUOTE
 				|| data->cmds[i][j][0] == SGL_QUOTE)
 			{
-				data->cmds[i][j] = ft_substr(data->cmds[i][j], \
-											1, \
-											ft_strlen(data->cmds[i][j]) - 2);
-				if (!data->cmds[i][j])
+				tmp = ft_substr(data->cmds[i][j], 1, ft_strlen(data->cmds[i][j]) - 2);
+				if (!tmp)
 					error_and_quit(data, 2);
+				free(data->cmds[i][j]);
+				data->cmds[i][j] = tmp;
 			}
 			j++;
 		}

@@ -90,7 +90,8 @@ int	find_command_paths(t_data *data)
 		j = 0;
 		while (data->env_paths[j])
 		{
-			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->cmds[i][0]);
+			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], \
+															data->cmds[i][0]);
 			if (!data->cmd_paths[i])
 				error_and_quit(data, 2);
 			if (access(data->cmd_paths[i], X_OK) == 0)

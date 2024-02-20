@@ -38,9 +38,9 @@ void minishell(t_data *data)
 		if (!lexer(data))
 			continue ;
 		if (!parser(data))
-			continue;
+			continue ;
 		if (!executor(data))
-			continue;
+			continue ;
 		free_data(data);
 	}
 	free_env(data);
