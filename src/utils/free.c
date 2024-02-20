@@ -41,20 +41,23 @@ void	free_data(t_data *data)
 		unlink(data->heredoc_file);
 }
 
-static void	free_tokens(t_token **tokens, void (*del)(void*))
+static void free_tokens(t_token **tokens, void (*del)(void*))
 {
-	t_token	*temp;
+	t_token *temp;
+	t_token *next;
 
-	if (!*tokens || !del)
+	if (!tokens || !del)
 		return ;
+
 	temp = *tokens;
 	while (temp != NULL)
 	{
-		temp = temp -> next;
-		(*del)((*tokens)->token);
-		*tokens = temp;
+		next = temp->next;
+		(*del)(temp->token);
+		free(temp);
+		temp = next;
 	}
-	free(*tokens);
+	*tokens = NULL;
 }
 
 void	free_double_pointer(char **arr)
