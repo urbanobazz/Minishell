@@ -12,16 +12,17 @@
 
 #include <unistd.h>
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void *ft_memchr(const void *s, int c, size_t n)
 {
-	size_t	i;
-
+	size_t i;
+	unsigned char *uc_s = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
-		if (((unsigned char *)s)[i] == (unsigned char) c)
-			return ((void *)((unsigned char *)&s[i]));
+		if (uc_s[i] == (unsigned char)c)
+			return (void *)(&uc_s[i]);
 		i++;
 	}
-	return (0);
+	return 0;
 }
+
