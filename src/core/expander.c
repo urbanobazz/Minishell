@@ -50,12 +50,15 @@ char	*get_variable_value(t_data *data, char *var_start, int var_name_length)
 char	*replace_next_variable(char *result, char *value, char *var_end,
 	char *var_start)
 {
-	char	*new_result;
+	char	*tmp1;
+	char	*tmp2;
 
-	new_result = ft_substr(result, 0, var_start - result);
-	new_result = ft_strjoin(new_result, value);
-	new_result = ft_strjoin(new_result, var_end);
-	return (new_result);
+	tmp1 = ft_substr(result, 0, var_start - result);
+	tmp2 = ft_strjoin(tmp1, value);
+	free(tmp1);
+	tmp1 = ft_strjoin(tmp2, var_end);
+	free(tmp2);
+	return (tmp1);
 }
 
 char	*replace_variables(t_data *data, const char *str)
@@ -65,7 +68,7 @@ char	*replace_variables(t_data *data, const char *str)
 	char	*var_end;
 	char	*value;
 
-	result = strdup(str);
+	result = ft_strdup(str);
 	while (find_next_variable(result))
 	{
 		var_start = find_next_variable(result);
