@@ -106,7 +106,7 @@ int run_subprocesses(t_data *data)
 	int ret;
 
 	i = 0;
-	data->processes = (pid_t *)malloc(sizeof(pid_t) * data->command_count);
+	data->processes = ft_calloc(sizeof(pid_t), data->command_count);
 	if (!data->processes)
 		error_and_quit(data, 2);
 	while (i < data->command_count)
