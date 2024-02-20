@@ -14,7 +14,7 @@
 
 static void	free_tokens(t_token **tokens, void (*del)(void*));
 void		free_double_pointer(char **arr);
-static void	free_int_double_pointer(t_data *data, int **arr);
+static void	free_pipes(t_data *data, int **arr);
 static void	free_triple_pointer(char ***arr);
 
 void	free_data(t_data *data)
@@ -32,7 +32,7 @@ void	free_data(t_data *data)
 	if (data->std_output)
 		free(data->std_output);
 	if (data->pipes)
-		free_int_double_pointer(data, data->pipes);
+		free_pipes(data, data->pipes);
 	if (data->processes)
 		free(data->processes);
 	if (data->heredoc_delimiters)
@@ -79,7 +79,7 @@ static void	free_triple_pointer(char ***arr)
 	free(arr);
 }
 
-static void	free_int_double_pointer(t_data *data, int **arr)
+static void	free_pipes(t_data *data, int **arr)
 {
 	int i;
 

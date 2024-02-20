@@ -17,14 +17,17 @@ void init_pipes(t_data *data)
 	int i;
 
 	i = 0;
-	data->pipes = (int **)malloc(sizeof(int *) * data->command_count - 1);
-	while (i < data->command_count - 1)
+	if (data->command_count > 0)
 	{
-		data->pipes[i] = (int *)malloc(sizeof(int) * 2);
-		if (!data->pipes[i])
-			error_and_quit(data, 2);
-		pipe(data->pipes[i]);
-		i++;
+		data->pipes = (int **)malloc(sizeof(int *) * data->command_count - 1);
+		while (i < data->command_count - 1)
+		{
+			data->pipes[i] = (int *)malloc(sizeof(int) * 2);
+			if (!data->pipes[i])
+				error_and_quit(data, 2);
+			pipe(data->pipes[i]);
+			i++;
+		}
 	}
 }
 
