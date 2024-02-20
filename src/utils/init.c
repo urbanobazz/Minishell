@@ -33,7 +33,6 @@ void	init_environment_paths(t_data *data)
 		free(tmp);
 		i++;
 	}
-
 }
 
 void	init_env(t_data *data)

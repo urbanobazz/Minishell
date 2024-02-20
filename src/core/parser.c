@@ -79,27 +79,37 @@ int	split_and_store_commands(t_data *data)
 	return (SUCCESS);
 }
 
+void	cycle_command_paths(t_data *data, int i)
+{
+	int	j;
+
+	j = 0;
+	free(data->cmd_paths[i]);
+	while (data->env_paths[j])
+	{
+		data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->cmds[i][0]);
+		if (!data->cmd_paths[i])
+			error_and_quit(data, 2);
+		if (access(data->cmd_paths[i], X_OK) == 0)
+			break;
+		free(data->cmd_paths[i]);
+		data->cmd_paths[i] = 0;
+		j++;
+	}
+}
+
 int	find_command_paths(t_data *data)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (i < data->command_count)
 	{
-		j = 0;
-		while (data->env_paths[j])
-		{
-			data->cmd_paths[i] = ft_strjoin(data->env_paths[j], \
-															data->cmds[i][0]);
-			if (!data->cmd_paths[i])
-				error_and_quit(data, 2);
-			if (access(data->cmd_paths[i], X_OK) == 0)
-				break;
-			free(data->cmd_paths[i]);
-			data->cmd_paths[i] = 0;
-			j++;
-		}
+		data->cmd_paths[i] = ft_strdup(data->cmds[i][0]);
+		if (!data->cmd_paths[i])
+			return (ft_error(data, 2));
+		if (access(data->cmd_paths[i], X_OK) != 0)
+			cycle_command_paths(data, i);
 		if (!data->cmd_paths[i] && !is_builtin(data->cmds[i][0]))
 			return (ft_error(data, 7));
 		i++;
