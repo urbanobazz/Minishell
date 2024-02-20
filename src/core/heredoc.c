@@ -73,10 +73,10 @@ int write_heredoc(t_data *data)
 	}
 	non_interactive_signals();
 	close(fd);
+	if (line)
+		free(line);
 	if (!line || end_heredoc)
 	{
-		if (line)
-			free(line);
 		write(1, "\n", 1);
 		return (ft_error(data, 10));
 	}
