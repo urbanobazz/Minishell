@@ -43,6 +43,7 @@ void minishell(t_data *data)
 			continue;
 		free_data(data);
 	}
+	free_env(data);
 }
 
 int main(int argc, char **argv)
