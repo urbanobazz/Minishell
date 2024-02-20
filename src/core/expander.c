@@ -67,6 +67,7 @@ char	*replace_variables(t_data *data, const char *str)
 	char	*var_start;
 	char	*var_end;
 	char	*value;
+	char	*tmp;
 
 	result = ft_strdup(str);
 	while (find_next_variable(result))
@@ -81,9 +82,10 @@ char	*replace_variables(t_data *data, const char *str)
 				var_end++;
 		}
 		value = get_variable_value(data, var_start, var_end - var_start - 1);
-		result = replace_next_variable(result, value, var_end, var_start);
+		tmp = result;
+		result = replace_next_variable(tmp, value, var_end, var_start);
+		free(tmp);
 	}
-
 	return (result);
 }
 
