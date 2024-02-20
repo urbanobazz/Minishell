@@ -54,8 +54,14 @@ void	interactive_signals(void)
 	struct sigaction	sig;
 	struct sigaction	sig_ign;
 
+	memset(&sig, 0, sizeof(struct sigaction));
+	memset(&sig_ign, 0, sizeof(struct sigaction));
 	sig.sa_handler = new_prompt;
+	sigemptyset(&sig.sa_mask);
+	sig.sa_flags = 0;
 	sig_ign.sa_handler = SIG_IGN;
+	sigemptyset(&sig_ign.sa_mask);
+	sig_ign.sa_flags = 0;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig_ign, NULL);
 }
@@ -64,7 +70,10 @@ void	non_interactive_signals(void)
 {
 	struct sigaction	sig;
 
+	memset(&sig, 0, sizeof(struct sigaction));
 	sig.sa_handler = non_interactive_handler;
+	sigemptyset(&sig.sa_mask);
+	sig.sa_flags = 0;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig, NULL);
 }
@@ -74,8 +83,14 @@ void	heredoc_interrupt_signal(void)
 	struct sigaction	sig;
 	struct sigaction	sig_ign;
 
+	memset(&sig, 0, sizeof(struct sigaction));
+	memset(&sig_ign, 0, sizeof(struct sigaction));
 	sig.sa_handler = heredoc_sig;
+	sigemptyset(&sig.sa_mask);
+	sig.sa_flags = 0;
 	sig_ign.sa_handler = SIG_IGN;
+	sigemptyset(&sig_ign.sa_mask);
+	sig_ign.sa_flags = 0;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig_ign, NULL);
 }
