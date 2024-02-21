@@ -33,9 +33,8 @@ void	init_command_array(t_data *data)
 		token_list = token_list->next;
 	}
 	data->command_count -= not_command_count;
-	data->cmds = (char ***)malloc(sizeof(char **) * (data->command_count + 1));
-	data->cmd_paths = (char **)malloc(sizeof(char *) * \
-													(data->command_count + 1));
+	data->cmds = (char ***)ft_calloc(sizeof(char **), data->command_count + 1);
+	data->cmd_paths = (char **)ft_calloc(sizeof(char *), data->command_count + 1);
 	if (!data->cmds || !data->cmd_paths)
 		error_and_quit(data, 2);
 }
@@ -56,7 +55,6 @@ int handle_operator(t_data *data, t_token **token_list, int *i)
 		data->std_output = ft_strdup((*token_list)->next->token);
 	}
 	*token_list = (*token_list)->next;
-
 	return (SUCCESS);
 }
 
@@ -70,7 +68,10 @@ int	split_and_store_commands(t_data *data)
 	while (token_list)
 	{
 		if (is_operator(token_list->token[0]))
-			handle_operator(data, &token_list, &i);
+		{
+			if (!handle_operator(data, &token_list, &i))
+				return (FAILURE);
+		}
 		else
 			data->cmds[i++] = split_commands(token_list->token, data);
 		token_list = token_list->next;
