@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/19 21:02:47 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 11:18:53 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void minishell(t_data *data)
 		if (!executor(data))
 			continue ;
 		free_data(data);
+		data->err_code = COMMAND_SUCCESS;
 	}
 	free_env(data);
 }

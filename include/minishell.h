@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 21:33:03 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 11:18:45 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define YES 1
 # define NO 0
 # define NOT_BUILTIN -1
+# define COMMAND_SUCCESS 0
 
 extern int end_heredoc;
 
