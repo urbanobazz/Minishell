@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 20:48:57 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	*replace_variables(t_data *data, char **str)
 		tmp = result;
 		result = replace_next_variable(tmp, value, var_end, var_start);
 		free(tmp);
+		free(value);
 	}
 	return (result);
 }
