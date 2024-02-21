@@ -31,7 +31,7 @@ void	new_prompt(int sig)
 void	heredoc_sig(int sig)
 {
 	if (sig == SIGINT)
-		end_heredoc = 1;
+		end_heredoc = sig;
 }
 
 void	non_interactive_handler(int sig)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 21:13:20 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 11:07:26 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ void	process_segment(t_data *data, char *str, size_t *i, int len)
 	}
 }
 
+int	is_str_whitespace(char *str)
+{
+	while (*str)
+	{
+		if (!ft_iswhitespace(*str))
+			return (NO);
+		str++;
+	}
+	return (YES);
+}
+
 int	lexer(t_data *data)
 {
 	int		len;
@@ -46,7 +57,7 @@ int	lexer(t_data *data)
 	sq = 0;
 	dq = 0;
 	str = data->user_input;
-	while (i < ft_strlen(str))
+	while (i < ft_strlen(str) && !is_str_whitespace(str + i))
 	{
 		len = 0;
 		while ((!is_operator(str[i + len]) || sq || dq) && str[i + len])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 11:27:30 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/14 18:50:19 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 11:08:07 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	**split_skip_quotes(char const *s, char c);
 int		is_operator(char c);
 int		ft_arrlen(char **arr);
 char	**ft_arrdup(char **arr);
+int		ft_iswhitespace(char c);
 
 //Bonus: Node struct
 typedef struct s_list
