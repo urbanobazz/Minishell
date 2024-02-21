@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:31:09 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 13:38:20 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:28:24 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ int export_single_var(t_data *data, char *cmd)
 		var = ft_substr(cmd, 0, eq - cmd);
 		if (!var)
 			error_and_quit(data, 2);
-		if (!is_name_valid(var))
+		if (!is_name_valid(var) || cmd[0] == '=')
+		{
+			free(var);
 			return (ft_error(data, 4));
+		}
 		set_single_var(data, cmd, var);
 		free(var);
 	}
