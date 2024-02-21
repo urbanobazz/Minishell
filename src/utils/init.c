@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 16:47:59 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 15:06:49 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	reset_data(t_data *data)
 	data->processes = 0;
 	data->heredoc_delimiters = 0;
 	data->append_mode = 0;
-	data->heredoc_file = ".heredoc";
+	data->heredoc_files = 0;
 	data->heredoc_mode = 0;
 	end_heredoc = 0;
 }

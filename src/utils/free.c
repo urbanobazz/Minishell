@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/18 17:40:42 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:05:42 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	free_data(t_data *data)
 		free(data->processes);
 	if (data->heredoc_delimiters)
 		ft_lstclear(&data->heredoc_delimiters, free);
-	if (data->heredoc_file)
-		unlink(data->heredoc_file);
+	if (data->heredoc_files)
+		get_next_heredoc(data->heredoc_files, 1);
 }
 
 static void free_tokens(t_token **tokens, void (*del)(void*))

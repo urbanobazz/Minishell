@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 11:18:45 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 15:04:45 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct	s_data
 	pid_t	*processes;
 	int		heredoc_mode;
 	t_list	*heredoc_delimiters;
-	char	*heredoc_file;
+	t_list	*heredoc_files;
 	int		append_mode;
 } t_data;
 
@@ -81,6 +81,7 @@ int		executor(t_data *data);
 void	interactive_signals(void);
 void	non_interactive_signals(void);
 void	heredoc_interrupt_signal(void);
+void	get_next_heredoc(t_list *lst, int del_whole_list);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);
