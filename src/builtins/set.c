@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:31:09 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 12:52:27 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 13:38:20 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void unset_single_var(t_data *data, char *cmd)
 		else
 			new[j++] = ft_strdup(data->env[i++]);
 	}
-	new[i] = 0;
+	new[j] = 0;
 	free_double_pointer(data->env);
 	data->env = new;
 }

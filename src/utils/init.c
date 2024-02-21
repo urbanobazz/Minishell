@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 16:47:59 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 13:43:35 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,16 @@ void	init_environment_paths(t_data *data)
 {
 	int		i;
 	char	*tmp;
+	char	*path;
 
 	i = 0;
-	data->env_paths = ft_split(getenv("PATH"), ':');
+	path = ft_getenv(data, "PATH");
+	if (!path)
+	{
+		data->env_paths = 0;
+		return ;
+	}
+	data->env_paths = ft_split(path, ':');
 	if (!data->env_paths)
 		error_and_quit(data, 2);
 	while (data->env_paths[i])
@@ -59,6 +66,7 @@ void	reset_data(t_data *data)
 	data->heredoc_file = ".heredoc";
 	data->heredoc_mode = 0;
 	end_heredoc = 0;
+	init_environment_paths(data);
 }
 
 t_data	*init_data(void)
@@ -73,7 +81,6 @@ t_data	*init_data(void)
 		exit(EXIT_FAILURE);
 	}
 	init_env(data);
-	init_environment_paths(data);
 	data->err_code = 0;
 	return (data);
 }

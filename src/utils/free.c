@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/18 17:40:42 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:36:01 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	free_data(t_data *data)
 		ft_lstclear(&data->heredoc_delimiters, free);
 	if (data->heredoc_file)
 		unlink(data->heredoc_file);
+	if (data->env_paths)
+		free_double_pointer(data->env_paths);
 }
 
 static void free_tokens(t_token **tokens, void (*del)(void*))

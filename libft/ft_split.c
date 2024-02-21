@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 15:08:13 by lodemetz          #+#    #+#             */
-/*   Updated: 2023/11/14 08:18:26 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 13:26:11 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ unsigned int	count_words(char const *s, char c)
 {
 	unsigned int	nwords;
 
+	if (!s)
+		return (0);
 	nwords = 0;
 	while (*s)
 	{

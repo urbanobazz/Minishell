@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 22:09:07 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 13:52:24 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	cycle_command_paths(t_data *data, int i)
 
 	j = 0;
 	free(data->cmd_paths[i]);
-	while (data->env_paths[j])
+	data->cmd_paths[i] = 0;
+	while (data->env_paths && data->env_paths[j])
 	{
 		data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->cmds[i][0]);
 		if (!data->cmd_paths[i])

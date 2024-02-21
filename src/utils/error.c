@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/19 17:26:43 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 12:35:43 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	free_env(t_data *data)
 	{
 		if (data->env)
 			free_double_pointer(data->env);
-		if (data->env_paths)
-			free_double_pointer(data->env_paths);
 		free(data);
 	}
 }
