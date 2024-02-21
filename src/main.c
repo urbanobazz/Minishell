@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/21 11:18:53 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 14:20:29 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int get_user_input(t_data *data)
 	if (!data->user_input)
 	{
 		write(1, "exit\n", 5);
-		return (FAILURE);
+		return (ft_error(data, 10));
 	}
 	non_interactive_signals();
 	add_history(data->user_input);
