@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 12:35:43 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	error_and_quit(t_data *data, int err)
 
 int	ft_error(t_data *data, int err)
 {
-	data->err_code = err;
+	data->exit_status = err;
 	if (err != 10)
 		ft_putstr_fd("Error: ", STDERR_FILENO);
 	if (err == 1)

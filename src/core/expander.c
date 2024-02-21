@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 14:24:48 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_variable_value(t_data *data, char *var_start, int var_name_length)
 
 	var_name = ft_substr(var_start + 1, 0, var_name_length);
 	if (var_name[0] == '?')
-		value = ft_itoa(data->err_code);
+		value = ft_itoa(data->exit_status);
 	else
 		value = ft_getenv(data, var_name);
 	if (!value)

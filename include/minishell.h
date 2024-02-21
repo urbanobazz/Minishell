@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 11:18:45 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct	s_data
 {
 	// persistent
 	char	**env;
-	int		err_code;
+	int		exit_status;
 	char	**env_paths;
 	// cyclical
 	char	*user_input;

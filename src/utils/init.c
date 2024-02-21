@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 14:06:03 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ t_data	*init_data(void)
 		exit(EXIT_FAILURE);
 	}
 	init_env(data);
-	data->err_code = 0;
+	data->exit_status = 0;
 	return (data);
 }

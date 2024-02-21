@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/21 14:20:29 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/21 20:42:57 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void minishell(t_data *data)
 		if (!executor(data))
 			continue ;
 		free_data(data);
-		data->err_code = COMMAND_SUCCESS;
 	}
 	free_env(data);
 }

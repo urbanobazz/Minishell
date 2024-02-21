@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 13:25:26 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 20:43:32 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,16 @@ int run_subprocesses(t_data *data)
 void wait_for_subprocesses(t_data *data)
 {
 	int i;
+	int status;
 
 	i = 0;
+	status = 0;
 	while (i < data->command_count)
-		waitpid(data->processes[i++], NULL, 0);
+	{
+		waitpid(data->processes[i++], &status, 0);
+		if (WIFEXITED(status))
+			data->exit_status = WEXITSTATUS(status);
+	}
 }
 
 int executor(t_data *data)
