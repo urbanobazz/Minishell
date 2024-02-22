@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:48:44 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 21:32:50 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/22 13:06:35 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	create_token(t_data *data, char *token)
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		error_and_quit(data, 2);
-	new->token = ft_strtrim(token, " ");
+	new->token = ft_strtrim(token, " \t\n\v\f\r");
 	if (!new->token)
 		error_and_quit(data, 2);
 	new->next = 0;
