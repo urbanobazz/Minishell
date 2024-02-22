@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 19:12:46 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/22 19:23:14 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-char	*remove_quotes(char *str);
 
 char	*find_next_variable(const char *str)
 {
@@ -126,14 +124,17 @@ char	*remove_quotes(char *str)
 {
 	char *tmp;
 	char *output;
+	char *c;
 
 	output = ft_strdup("");
 	while (*str)
 	{
 		if (*str != SGL_QUOTE && *str != DBL_QUOTE)
 		{
-			tmp = ft_strjoin(output, ft_substr(str, 0, 1));
+			c = ft_substr(str, 0, 1);
+			tmp = ft_strjoin(output, c);
 			free(output);
+			free(c);
 			output = tmp;
 		}
 		str++;
