@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:32:42 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/19 21:03:19 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/21 12:55:14 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	new_prompt(int sig)
 {
 	if (sig == SIGINT)
 	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
 		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
