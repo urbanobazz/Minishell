@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 13:59:57 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/22 14:16:40 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_get_next_word(char *str)
 	i = 0;
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
-	while (str[i] && ft_isalnum(str[i]))
+	while (str[i] && !ft_iswhitespace(str[i]))
 		i++;
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
