@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 15:04:45 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:34:00 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct	s_data
 	pid_t	*processes;
 	int		heredoc_mode;
 	t_list	*heredoc_delimiters;
-	t_list	*heredoc_files;
+	char	*heredoc_file;
 	int		append_mode;
 } t_data;
 
@@ -81,7 +81,6 @@ int		executor(t_data *data);
 void	interactive_signals(void);
 void	non_interactive_signals(void);
 void	heredoc_interrupt_signal(void);
-void	get_next_heredoc(t_list *lst, int del_whole_list);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);

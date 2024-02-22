@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/21 15:09:42 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:46:32 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,11 @@ int is_delimiter(t_data *data, char *str)
 int open_heredoc_file(t_data *data)
 {
 	int		fd;
-	char	*filename;
-	t_list	*new_file;
 
-	data->heredoc_mode += 1;
-	filename = ft_strjoin(".heredoc_", ft_itoa(data->heredoc_mode));
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	data->heredoc_mode = 1;
+	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		error_and_quit(data, 5);
-	new_file = ft_lstnew(filename);
-	ft_lstadd_back(&data->heredoc_files, new_file);
 	return fd;
 }
 
@@ -86,21 +81,4 @@ int write_heredoc(t_data *data)
 		return (ft_error(data, 10));
 	}
 	return (SUCCESS);
-}
-void	get_next_heredoc(t_list *lst, int del_whole_list)
-{
-	if (del_whole_list)
-	{
-		if (lst->next)
-		{
-			unlink(lst->content);
-			ft_lstdelone(lst, free);
-			get_next_heredoc(lst, 1);
-		}
-	}
-	else
-	{
-		unlink(lst->content);
-		ft_lstdelone(lst, free);
-	}
 }
