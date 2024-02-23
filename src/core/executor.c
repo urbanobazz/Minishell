@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/23 19:01:35 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/23 19:35:20 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void init_pipes(t_data *data)
 {
 	int i = 0;
 	if (data->command_count <= 0)
-		return ;
+		return;
 	data->pipes = (int **)malloc(sizeof(int *) * (data->command_count - 1));
 	if (!data->pipes)
 		error_and_quit(data, 11);
@@ -25,14 +25,14 @@ void init_pipes(t_data *data)
 		data->pipes[i] = (int *)malloc(sizeof(int) * 2);
 		if (!data->pipes[i])
 			error_and_quit(data, 2);
-		if (pipe(data->pipes[i]) == -1) {
+		if (pipe(data->pipes[i]) == -1)
+		{
 			error_and_quit(data, 11);
 		}
 		printf("1: Created pipe %d: read end = %d, write end = %d\n", i, data->pipes[i][0], data->pipes[i][1]);
 		i++;
 	}
 }
-
 
 int init_redirections(t_data *data)
 {
@@ -58,29 +58,32 @@ void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 	printf("4: in subprocess pid %i, preparing for execution, STDIN: %i, STDOUT: %i\n", getpid(), input_fd, output_fd);
 	if (input_fd != STDIN_FILENO)
 	{
-		if (dup2(input_fd, STDIN_FILENO) == -1) {
+		if (dup2(input_fd, STDIN_FILENO) == -1)
+		{
 			perror("[execute_cmd] dup2 input_fd failed");
 			exit(EXIT_FAILURE);
 		}
-		printf("5: in subprocess pid %i, duplicated and closed fd %i\n", getpid(), input_fd);
+		printf("5: in subprocess pid %i, duplicated fd %i\n", getpid(), input_fd);
+		printf("6: in subprocess pid %i, closed fd %i\n", getpid(), input_fd);
 		close(input_fd);
 	}
 	if (output_fd != STDOUT_FILENO)
 	{
-		if (dup2(output_fd, STDOUT_FILENO) == -1) {
+		if (dup2(output_fd, STDOUT_FILENO) == -1)
+		{
 			perror("[execute_cmd] dup2 output_fd failed");
 			exit(EXIT_FAILURE);
 		}
-		printf("5: in subprocess pid %i, duplicated and closed fd %i\n", getpid(), output_fd);
+		printf("5: in subprocess pid %i, duplicated fd %i\n", getpid(), output_fd);
+		printf("6: in subprocess pid %i, closed fd %i\n", getpid(), output_fd);
 		close(output_fd);
 	}
-	printf("6: in subprocess pid %i executing command with execve: %s, STDIN: %d, STDOUT: %d\n", getpid(), data->cmds[i][0], input_fd, output_fd);
-	execve(data->cmd_paths[i], data->cmds[i], NULL);
+	printf("7: in subprocess pid %i executing command with execve: %s, STDIN: %d, STDOUT: %d\n", getpid(), data->cmds[i][0], STDIN_FILENO, STDOUT_FILENO);
+	execve(data->cmd_paths[i], data->cmds[i], data->env);
 	// Note: If execve returns, it has failed
 	perror("[execute_cmd] execve failed");
 	error_and_quit(data, 12);
 }
-
 
 void execute_shell_command_with_redirection(t_data *data, int i)
 {
@@ -104,7 +107,6 @@ void execute_shell_command_with_redirection(t_data *data, int i)
 	}
 	execute_cmd(data, i, infile_fd, outfile_fd);
 }
-
 
 void fork_subprocess(t_data *data, int i)
 {
@@ -160,7 +162,7 @@ void wait_for_subprocesses(t_data *data)
 	while (i < data->command_count)
 	{
 		waitpid(data->processes[i++], &status, 0);
-		printf("7: Process %d (PID: %d) exited with status %d\n", i, data->processes[i], WEXITSTATUS(status));
+		printf("8: Process %d (PID: %d) exited with status %d\n", i, data->processes[i], WEXITSTATUS(status));
 		if (WIFEXITED(status))
 			data->exit_status = WEXITSTATUS(status);
 	}
