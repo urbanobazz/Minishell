@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:14:11 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ int	ft_error(t_data *data, int err)
 		ft_putstr_fd("heredoc delimiter not found\n", STDERR_FILENO);
 	else if (err == 9)
 		ft_putstr_fd("uneven number of quotes\n", STDERR_FILENO);
+	else if (err == 11)
+		ft_putstr_fd("pipe error\n", STDERR_FILENO);
+	else if (err == 12)
+		ft_putstr_fd("execve error\n", STDERR_FILENO);
 	free_data(data);
 	return (FAILURE);
 }

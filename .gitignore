@@ -7,3 +7,5 @@ outfile
 subject.pdf
 .heredoc
 output
+code.txt
+print_all.sh
