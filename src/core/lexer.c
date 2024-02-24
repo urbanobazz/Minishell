@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 16:27:16 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 19:30:40 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_get_next_word(char *str)
 	i = 0;
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
-	while (str[i] && !ft_iswhitespace(str[i]))
+	while (str[i] && !ft_iswhitespace(str[i]) && !is_operator(str[i]))
 		i++;
 	while (str[i] && ft_iswhitespace(str[i]))
 		i++;
