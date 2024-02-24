@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 12:52:15 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 16:08:53 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,16 @@ int init_redirections(t_data *data)
 		data->outfile_fd = open(data->std_output, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
 		data->outfile_fd = STDOUT_FILENO;
-	if (data->infile_fd == -1 || data->outfile_fd == -1)
-		return (ft_error(data, 5));
+	if (data->infile_fd == -1)
+	{
+		perror("Error");
+		data->infile_fd = STDIN_FILENO;
+	}
+	if (data->outfile_fd == -1)
+	{
+		perror("Error");
+		data->infile_fd = STDOUT_FILENO;
+	}
 	return (SUCCESS);
 }
 
