@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/21 20:42:57 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/24 11:23:17 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int get_user_input(t_data *data)
 		return (ft_error(data, 10));
 	}
 	non_interactive_signals();
-	add_history(data->user_input);
+	if (ft_strcmp(data->user_input, "\0"))
+		add_history(data->user_input);
 	return (SUCCESS);
 }
 
