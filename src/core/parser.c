@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 19:21:50 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 21:00:28 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_command_array(t_data *data)
 {
-	t_token *token_list;
-	int not_command_count;
+	t_token	*token_list;
+	int		not_command_count;
 
 	data->command_count = ft_token_lstsize(data->tokens);
 	token_list = data->tokens;
@@ -34,19 +34,20 @@ void	init_command_array(t_data *data)
 	}
 	data->command_count -= not_command_count;
 	data->cmds = (char ***)ft_calloc(sizeof(char **), data->command_count + 1);
-	data->cmd_paths = (char **)ft_calloc(sizeof(char *), data->command_count + 1);
+	data->cmd_paths = (char **)ft_calloc(sizeof(char *), \
+													data->command_count + 1);
 	if (!data->cmds || !data->cmd_paths)
 		error_and_quit(data, 2);
 }
 
-int handle_operator(t_data *data, t_token **token_list, int *i)
+int	handle_operator(t_data *data, t_token **token_list, int *i)
 {
 	if (!token_list || !*token_list)
 		return (FAILURE);
 	if ((*token_list)->token[0] == '|')
 		;
 	else if ((*token_list)->token[0] == '<' && (*token_list)->token[1] == '<' && !write_heredoc(data))
-			return (FAILURE);
+		return (FAILURE);
 	else if ((*token_list)->token[0] == '<' && (*token_list)->next)
 		data->std_input = ft_strdup((*token_list)->next->token);
 	else if ((*token_list)->token[0] == '>' && (*token_list)->next)
@@ -69,8 +70,8 @@ int handle_operator(t_data *data, t_token **token_list, int *i)
 
 int	split_and_store_commands(t_data *data)
 {
-	t_token *token_list;
-	int i;
+	t_token	*token_list;
+	int		i;
 
 	token_list = data->tokens;
 	i = 0;
@@ -102,7 +103,7 @@ void	cycle_command_paths(t_data *data, int i)
 		if (!data->cmd_paths[i])
 			error_and_quit(data, 2);
 		if (access(data->cmd_paths[i], X_OK) == 0)
-			break;
+			break ;
 		free(data->cmd_paths[i]);
 		data->cmd_paths[i] = 0;
 		j++;
@@ -111,7 +112,7 @@ void	cycle_command_paths(t_data *data, int i)
 
 int	find_command_paths(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->command_count)

@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 19:09:16 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 20:57:32 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@ void	expand_variables_and_remove_quotes(t_data *data)
 
 char	*remove_quotes(char *str)
 {
-	char *tmp;
-	char *output;
-	char *c;
+	char	*tmp;
+	char	*output;
+	char	*c;
 
 	output = ft_strdup("");
 	while (*str)

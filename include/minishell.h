@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 19:21:06 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/24 20:52:14 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include "libft.h"
 # include <fcntl.h>
 
-#ifdef __linux__
-# include <bits/sigaction.h>
-# include <bits/types/siginfo_t.h>
-#endif
+# ifdef __linux__
+#  include <bits/sigaction.h>
+#  include <bits/types/siginfo_t.h>
+# endif
 
 # define SUCCESS 1
 # define FAILURE 0
@@ -34,21 +34,19 @@
 # define NOT_BUILTIN -1
 # define COMMAND_SUCCESS 0
 
-extern int end_heredoc;
+extern int	end_heredoc;
 
-typedef struct	s_tokens
+typedef struct s_tokens
 {
 	char				*token;
-	struct	s_tokens 	*next;
-} t_token;
+	struct s_tokens		*next;
+}	t_token;
 
-typedef struct	s_data
+typedef struct s_data
 {
-	// persistent
 	char	**env;
 	int		exit_status;
 	char	**env_paths;
-	// cyclical
 	char	*user_input;
 	t_token	*tokens;
 	int		command_count;
@@ -64,7 +62,7 @@ typedef struct	s_data
 	t_list	*heredoc_delimiters;
 	char	*heredoc_file;
 	int		append_mode;
-} t_data;
+}	t_data;
 
 // MAIN
 void	minishell(t_data *data);
@@ -82,6 +80,11 @@ int		executor(t_data *data);
 void	interactive_signals(void);
 void	non_interactive_signals(void);
 void	heredoc_interrupt_signal(void);
+void	init_pipes(t_data *data);
+int		init_redirections(t_data *data);
+void	close_all_pipes(t_data *data);
+void	execute_shell_command_with_redirection(t_data *data, int i);
+void	execute_cmd(t_data *data, int i, int input_fd, int output_fd);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);
@@ -94,7 +97,7 @@ int		ft_env(t_data *data);
 int		ft_unset(t_data *data, char **cmds);
 int		ft_export(t_data *data, char **cmds);
 int		export_single_var(t_data *data, char *cmd);
-char 	*ft_getenv(t_data *data, char *cmd);
+char	*ft_getenv(t_data *data, char *cmd);
 int		is_name_valid(char *cmd);
 void	unset_single_var(t_data *data, char *cmd);
 
@@ -109,7 +112,7 @@ void	free_env(t_data *data);
 void	free_data(t_data *data);
 void	free_double_pointer(char **arr);
 void	init_environment_paths(t_data *data);
-t_data	*init_data();
+t_data	*init_data(void);
 void	reset_data(t_data *data);
 char	**split_commands(char *str, t_data *data);
 

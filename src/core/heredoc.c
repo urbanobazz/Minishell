@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/22 10:46:32 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/24 20:58:49 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void find_heredoc_delimiter(t_data *data, t_token *token_list)
+void	find_heredoc_delimiter(t_data *data, t_token *token_list)
 {
-	t_list *new;
+	t_list	*new;
 
 	if (token_list->next)
 	{
@@ -25,10 +25,10 @@ void find_heredoc_delimiter(t_data *data, t_token *token_list)
 		error_and_quit(data, 8);
 }
 
-int is_delimiter(t_data *data, char *str)
+int	is_delimiter(t_data *data, char *str)
 {
-	t_list *temp;
-	char *delimiter;
+	t_list	*temp;
+	char	*delimiter;
 
 	temp = data->heredoc_delimiters;
 	delimiter = temp->content;
@@ -44,7 +44,7 @@ int is_delimiter(t_data *data, char *str)
 		return (0);
 }
 
-int open_heredoc_file(t_data *data)
+int	open_heredoc_file(t_data *data)
 {
 	int		fd;
 
@@ -55,10 +55,10 @@ int open_heredoc_file(t_data *data)
 	return fd;
 }
 
-int write_heredoc(t_data *data)
+int	write_heredoc(t_data *data)
 {
-	char *line;
-	int fd;
+	char	*line;
+	int		fd;
 
 	fd = open_heredoc_file(data);
 	heredoc_interrupt_signal();
@@ -67,7 +67,7 @@ int write_heredoc(t_data *data)
 		write (1, "> ", 2);
 		line = get_next_line(0);
 		if (!line || end_heredoc || is_delimiter(data, line))
-			break;
+			break ;
 		write(fd, line, strlen(line));
 		free(line);
 	}

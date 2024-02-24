@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 16:14:57 by ubazzane          #+#    #+#             */
-/*   Updated: 2023/11/25 14:40:06 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/24 20:55:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void	reset_line_buffer(char	**line_buffer);
 
 char	*get_next_line(int fd)
 {
-	static char	*line_buffer; //contains remainder
-	char		*temp_buffer; //temporary storage space
+	static char	*line_buffer;
+	char		*temp_buffer;
 	char		*output;
-	int			read_bytes; //used to identify end of the line.
+	int			read_bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0) //Check if temp_buffer and fd are valid.
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	temp_buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!temp_buffer)
@@ -41,10 +41,6 @@ char	*get_next_line(int fd)
 	return (output);
 }
 
-/* This function reads the file/line into the temporary temp_buffer, checking for the end of the file in every iteration.
- if it could read, it will update the line to hold it's previous content plus what was read last.
- if nothing can be read(end of file found), it sets line to NULL and returns an error to outer function.*/
-
 static int	read_block(int fd, char **line, char *buffer)
 {
 	char	*temp;
@@ -54,7 +50,7 @@ static int	read_block(int fd, char **line, char *buffer)
 	bytes = read(fd, buffer, BUFFER_SIZE);
 	if (bytes == 0)
 		return (bytes);
-	if (bytes == -1 || buffer == NULL) // checks/handles end of the file
+	if (bytes == -1 || buffer == NULL)
 		return (free(*line), *line = NULL, -1);
 	temp = ft_strjoin(*line, buffer);
 	free(*line);
@@ -62,23 +58,19 @@ static int	read_block(int fd, char **line, char *buffer)
 	return (bytes);
 }
 
-/* This function takes the temp_buffer and extracts the line to be output (everything until the '/n').
-It then stores it in the output variable, to be later returned by the main function */
-
 static void	extract_output_line(char **output, char **line)
 {
 	char	*remainder;
 	int		len;
 
 	remainder = ft_strchr(*line, '\n');
-	len = ft_strlen(*line) - ft_strlen(remainder) + 2; //gets the length of output, till new line (+2 because strlen doesn't count it).
+	len = ft_strlen(*line) - ft_strlen(remainder) + 2;
 	*output = (char *)malloc(len * sizeof(char));
 	if (!output)
 		return ;
 	ft_strlcpy(*output, *line, len);
 }
 
-/* This function resets the line_buffer to hold only the remainder after the output string, if there is any. */
 static void	reset_line_buffer(char	**line_buffer)
 {
 	char	*remainder;
@@ -103,4 +95,3 @@ static void	reset_line_buffer(char	**line_buffer)
 		*line_buffer = NULL;
 	}
 }
-

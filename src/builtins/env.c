@@ -6,15 +6,15 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:47 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 12:49:40 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 21:12:03 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_env(t_data *data)
+int	ft_env(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->env[i])
@@ -22,9 +22,9 @@ int ft_env(t_data *data)
 	return (SUCCESS);
 }
 
-int ft_unset(t_data *data, char **cmds)
+int	ft_unset(t_data *data, char **cmds)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (cmds[i])
@@ -37,9 +37,9 @@ int ft_unset(t_data *data, char **cmds)
 	return (SUCCESS);
 }
 
-int ft_export(t_data *data, char **cmds)
+int	ft_export(t_data *data, char **cmds)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (cmds[i])

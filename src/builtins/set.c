@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:31:09 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 14:28:24 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/24 21:09:48 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void set_single_var(t_data *data, char *cmd, char *var)
+void	set_single_var(t_data *data, char *cmd, char *var)
 {
-	char **new;
-	int len;
-	int i;
-	int j;
+	char	**new;
+	int		len;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -40,10 +40,10 @@ void set_single_var(t_data *data, char *cmd, char *var)
 	data->env = new;
 }
 
-int export_single_var(t_data *data, char *cmd)
+int	export_single_var(t_data *data, char *cmd)
 {
-	char *eq;
-	char *var;
+	char	*eq;
+	char	*var;
 
 	eq = ft_strchr(cmd, '=');
 	if (eq)
@@ -62,10 +62,10 @@ int export_single_var(t_data *data, char *cmd)
 	return (SUCCESS);
 }
 
-char *ft_getenv(t_data *data, char *cmd)
+char	*ft_getenv(t_data *data, char *cmd)
 {
-	int i;
-	char *eq;
+	int		i;
+	char	*eq;
 
 	i = 0;
 	while (data->env[i])
@@ -78,9 +78,9 @@ char *ft_getenv(t_data *data, char *cmd)
 	return (FAILURE);
 }
 
-int is_name_valid(char *cmd)
+int	is_name_valid(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!cmd)
@@ -96,12 +96,12 @@ int is_name_valid(char *cmd)
 	return (YES);
 }
 
-void unset_single_var(t_data *data, char *cmd)
+void	unset_single_var(t_data *data, char *cmd)
 {
-	char **new;
-	int len;
-	int i;
-	int j;
+	char	**new;
+	int		len;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
