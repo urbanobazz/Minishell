@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 20:56:37 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 20:56:41 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 21:12:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	get_user_input(t_data *data)
 		return (ft_error(data, 10));
 	}
 	non_interactive_signals();
-	add_history(data->user_input);
+	if (ft_strcmp(data->user_input, "\0"))
+		add_history(data->user_input);
 	return (SUCCESS);
 }
 
