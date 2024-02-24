@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 19:23:14 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:09:16 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ char	*get_variable_value(t_data *data, char *var_start, int var_name_length)
 	if (var_name[0] == '?')
 		value = ft_itoa(data->exit_status);
 	else
-		value = ft_getenv(data, var_name);
+		value = ft_strdup(ft_getenv(data, var_name));
 	if (!value)
-		value = "";
+		value = ft_calloc(sizeof(char *), 1);
+	if (!value)
+		error_and_quit(data, 2);
 	free(var_name);
 	return (value);
 }

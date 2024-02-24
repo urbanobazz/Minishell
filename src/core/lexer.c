@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 14:16:40 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/24 16:27:16 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	lexer(t_data *data)
 	while (i < ft_strlen(str) && !is_str_whitespace(str + i))
 	{
 		len = 0;
+		while(ft_iswhitespace(str[i]))
+			i++;
 		while ((!is_operator(str[i + len]) || sq || dq) && str[i + len])
 			toggle_quote_state(str[i + len++], &sq, &dq);
 		process_segment(data, str, &i, len);
