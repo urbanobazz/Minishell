@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 20:48:57 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:23:14 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	expand_variables_and_remove_quotes(t_data *data)
 			if (data->cmds[i][j][0] == DBL_QUOTE
 				|| data->cmds[i][j][0] == SGL_QUOTE)
 			{
-				tmp = ft_substr(data->cmds[i][j], 1, ft_strlen(data->cmds[i][j]) - 2);
+				tmp = remove_quotes(data->cmds[i][j]);
 				if (!tmp)
 					error_and_quit(data, 2);
 				free(data->cmds[i][j]);
@@ -118,4 +118,26 @@ void	expand_variables_and_remove_quotes(t_data *data)
 		}
 		i++;
 	}
+}
+
+char	*remove_quotes(char *str)
+{
+	char *tmp;
+	char *output;
+	char *c;
+
+	output = ft_strdup("");
+	while (*str)
+	{
+		if (*str != SGL_QUOTE && *str != DBL_QUOTE)
+		{
+			c = ft_substr(str, 0, 1);
+			tmp = ft_strjoin(output, c);
+			free(output);
+			free(c);
+			output = tmp;
+		}
+		str++;
+	}
+	return (output);
 }

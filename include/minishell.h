@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/21 20:41:11 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/22 19:21:06 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int		parser(t_data *data);
 void	find_heredoc_delimiter(t_data *data, t_token *token_list);
 int		write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
+char	*remove_quotes(char *str);
 int		executor(t_data *data);
 void	interactive_signals(void);
 void	non_interactive_signals(void);
