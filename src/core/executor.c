@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/23 19:35:20 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 12:31:05 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,21 @@ int init_redirections(t_data *data)
 	return (SUCCESS);
 }
 
+void close_all_pipes(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->command_count - 1)
+	{
+		if (data->pipes[i][0] > 2)
+			close(data->pipes[i][0]);
+		if (data->pipes[i][0] > 2)
+			close(data->pipes[i][1]);
+		i++;
+	}
+}
+
 void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 {
 	printf("4: in subprocess pid %i, preparing for execution, STDIN: %i, STDOUT: %i\n", getpid(), input_fd, output_fd);
@@ -64,8 +79,8 @@ void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 			exit(EXIT_FAILURE);
 		}
 		printf("5: in subprocess pid %i, duplicated fd %i\n", getpid(), input_fd);
-		printf("6: in subprocess pid %i, closed fd %i\n", getpid(), input_fd);
-		close(input_fd);
+		// printf("6: in subprocess pid %i, closed fd %i\n", getpid(), input_fd);
+		// close(input_fd);
 	}
 	if (output_fd != STDOUT_FILENO)
 	{
@@ -75,13 +90,13 @@ void execute_cmd(t_data *data, int i, int input_fd, int output_fd)
 			exit(EXIT_FAILURE);
 		}
 		printf("5: in subprocess pid %i, duplicated fd %i\n", getpid(), output_fd);
-		printf("6: in subprocess pid %i, closed fd %i\n", getpid(), output_fd);
-		close(output_fd);
+		// printf("6: in subprocess pid %i, closed fd %i\n", getpid(), output_fd);
+		// close(output_fd);
 	}
 	printf("7: in subprocess pid %i executing command with execve: %s, STDIN: %d, STDOUT: %d\n", getpid(), data->cmds[i][0], STDIN_FILENO, STDOUT_FILENO);
+	close_all_pipes(data);
 	execve(data->cmd_paths[i], data->cmds[i], data->env);
 	// Note: If execve returns, it has failed
-	perror("[execute_cmd] execve failed");
 	error_and_quit(data, 12);
 }
 
