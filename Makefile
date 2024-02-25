@@ -1,17 +1,18 @@
-NAME    := 	minishell
-CC      :=	cc -Wextra -Wall -Werror -g #-fsanitize=address
+NAME	:= 	minishell
+CC		:=	cc -Wextra -Wall -Werror -g #-fsanitize=address
 INCLUDE :=	-I ./include \
 			-I ./libft \
 			-I/opt/homebrew/opt/readline/include
-LIBS    :=	-L/opt/homebrew/opt/readline/lib -lreadline \
+LIBS	:=	-L/opt/homebrew/opt/readline/lib -lreadline \
 			-L ./libft -lft
-SRCS    :=	src/main.c \
+SRCS	:=	src/main.c \
 			src/core/lexer.c \
 			src/core/parser.c \
 			src/core/heredoc.c \
 			src/core/expander.c \
 			src/core/executor.c \
 			src/core/signals.c \
+			src/core/signals_heredoc.c \
 			src/core/redirect.c \
 			src/builtins/switch.c \
 			src/builtins/nav.c \
@@ -21,8 +22,8 @@ SRCS    :=	src/main.c \
 			src/utils/free.c \
 			src/utils/list.c \
 			src/utils/init.c
-OBJDIR  := 	obj
-OBJS    := 	$(SRCS:%.c=$(OBJDIR)/%.o)
+OBJDIR	:= 	obj
+OBJS	:= 	$(SRCS:%.c=$(OBJDIR)/%.o)
 
 all: $(OBJDIR) $(NAME)
 

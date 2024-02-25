@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signals_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/14 15:32:42 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/25 13:14:48 by ubazzane         ###   ########.fr       */
+/*   Created: 2024/02/25 13:11:19 by ubazzane          #+#    #+#             */
+/*   Updated: 2024/02/25 13:14:33 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,20 @@
 	SIGTST - CTRL Z
 	CTRL D - EOF */
 
-void	new_prompt(int sig)
+void	heredoc_sig(int sig)
 {
 	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+		g_end_heredoc = sig;
 }
 
-void	non_interactive_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-	}
-	else if (sig == SIGQUIT)
-	{
-		ft_printf("Quit (core dumped)");
-		write(1, "\n", 2);
-		rl_on_new_line();
-	}
-}
-
-void	interactive_signals(void)
+void	heredoc_interrupt_signal(void)
 {
 	struct sigaction	sig;
 	struct sigaction	sig_ign;
 
 	memset(&sig, 0, sizeof(struct sigaction));
 	memset(&sig_ign, 0, sizeof(struct sigaction));
-	sig.sa_handler = new_prompt;
+	sig.sa_handler = heredoc_sig;
 	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = 0;
 	sig_ign.sa_handler = SIG_IGN;
@@ -58,16 +38,4 @@ void	interactive_signals(void)
 	sig_ign.sa_flags = 0;
 	sigaction(SIGINT, &sig, NULL);
 	sigaction(SIGQUIT, &sig_ign, NULL);
-}
-
-void	non_interactive_signals(void)
-{
-	struct sigaction	sig;
-
-	memset(&sig, 0, sizeof(struct sigaction));
-	sig.sa_handler = non_interactive_handler;
-	sigemptyset(&sig.sa_mask);
-	sig.sa_flags = 0;
-	sigaction(SIGINT, &sig, NULL);
-	sigaction(SIGQUIT, &sig, NULL);
 }
