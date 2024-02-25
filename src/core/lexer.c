@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 20:58:13 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 12:41:00 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	process_segment(t_data *data, char *str, size_t *i, int len)
 		(*i)++;
 	}
 	last_token = get_last_token(data->tokens);
-	if (len > 0 && last_token && (last_token->token[0] == '>' || last_token->token[0] == '<'))
+	if (len > 0 && last_token && (last_token->token[0] == '>'
+			|| last_token->token[0] == '<'))
 	{
 		next_word = ft_get_next_word(str + *i);
 		*i += ft_strlen(next_word);

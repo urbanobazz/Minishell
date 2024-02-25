@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 13:16:54 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:30:20 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_environment_paths(t_data *data)
 	char	*tmp;
 	char	*path;
 
-	i = 0;
+	i = -1;
 	path = ft_getenv(data, "PATH");
 	if (!path)
 	{
@@ -28,7 +28,7 @@ void	init_environment_paths(t_data *data)
 	data->env_paths = ft_split(path, ':');
 	if (!data->env_paths)
 		error_and_quit(data, 2);
-	while (data->env_paths[i])
+	while (data->env_paths[++i])
 	{
 		tmp = data->env_paths[i];
 		data->env_paths[i] = ft_strjoin(data->env_paths[i], "/");
@@ -38,7 +38,6 @@ void	init_environment_paths(t_data *data)
 			error_and_quit(data, 2);
 		}
 		free(tmp);
-		i++;
 	}
 }
 
@@ -65,7 +64,7 @@ void	reset_data(t_data *data)
 	data->append_mode = 0;
 	data->heredoc_file = ".heredoc";
 	data->heredoc_mode = 0;
-	end_heredoc = 0;
+	g_end_heredoc = 0;
 	init_environment_paths(data);
 }
 

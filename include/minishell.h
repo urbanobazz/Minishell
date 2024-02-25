@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 20:57:11 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 20:59:10 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stdlib.h>
+# include <string.h>
 # include "libft.h"
 # include <fcntl.h>
 
@@ -34,7 +35,7 @@
 # define NOT_BUILTIN -1
 # define COMMAND_SUCCESS 0
 
-extern int	end_heredoc;
+extern int	g_end_heredoc;
 
 typedef struct s_tokens
 {
@@ -75,7 +76,7 @@ int		parser(t_data *data);
 void	find_heredoc_delimiter(t_data *data, t_token *token_list);
 int		write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
-char	*remove_quotes(char *str);
+void	remove_quotes(char *str, char **output);
 int		executor(t_data *data);
 void	interactive_signals(void);
 void	non_interactive_signals(void);
