@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/24 20:58:49 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 12:47:46 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	open_heredoc_file(t_data *data)
 	fd = open(data->heredoc_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		error_and_quit(data, 5);
-	return fd;
+	return (fd);
 }
 
 int	write_heredoc(t_data *data)
@@ -66,7 +66,7 @@ int	write_heredoc(t_data *data)
 	{
 		write (1, "> ", 2);
 		line = get_next_line(0);
-		if (!line || end_heredoc || is_delimiter(data, line))
+		if (!line || g_end_heredoc || is_delimiter(data, line))
 			break ;
 		write(fd, line, strlen(line));
 		free(line);
@@ -75,7 +75,7 @@ int	write_heredoc(t_data *data)
 	close(fd);
 	if (line)
 		free(line);
-	if (!line || end_heredoc)
+	if (!line || g_end_heredoc)
 	{
 		write(1, "\n", 1);
 		return (ft_error(data, 10));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 21:00:28 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 12:43:23 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	handle_operator(t_data *data, t_token **token_list, int *i)
 		return (FAILURE);
 	if ((*token_list)->token[0] == '|')
 		;
-	else if ((*token_list)->token[0] == '<' && (*token_list)->token[1] == '<' && !write_heredoc(data))
+	else if ((*token_list)->token[0] == '<' && (*token_list)->token[1] == '<'
+		&& !write_heredoc(data))
 		return (FAILURE);
 	else if ((*token_list)->token[0] == '<' && (*token_list)->next)
 		data->std_input = ft_strdup((*token_list)->next->token);
@@ -56,14 +57,17 @@ int	handle_operator(t_data *data, t_token **token_list, int *i)
 			free(data->std_output);
 		data->std_output = ft_strdup((*token_list)->next->token);
 		if ((*token_list)->token[1] == '>')
-			data->outfile_fd = open(data->std_output, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			data->outfile_fd = open(data->std_output, O_CREAT | \
+			O_WRONLY | O_APPEND, 0644);
 		else
-			data->outfile_fd = open(data->std_output, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			data->outfile_fd = open(data->std_output, O_CREAT | \
+			O_WRONLY | O_TRUNC, 0644);
 		close(data->outfile_fd);
 	}
 	else
 		data->cmds[(*i)++] = split_commands((*token_list)->token, data);
-	if (((*token_list)->token[0] == '>' || (*token_list)->token[0] == '<') && (*token_list)->next)
+	if (((*token_list)->token[0] == '>' || (*token_list)->token[0] == '<')
+		&& (*token_list)->next)
 		*token_list = (*token_list)->next;
 	return (SUCCESS);
 }

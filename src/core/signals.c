@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:32:42 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/21 12:55:14 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:47:57 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	new_prompt(int sig)
 void	heredoc_sig(int sig)
 {
 	if (sig == SIGINT)
-		end_heredoc = sig;
+		g_end_heredoc = sig;
 }
 
 void	non_interactive_handler(int sig)

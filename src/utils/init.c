@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:25:17 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 13:16:54 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:48:15 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	reset_data(t_data *data)
 	data->append_mode = 0;
 	data->heredoc_file = ".heredoc";
 	data->heredoc_mode = 0;
-	end_heredoc = 0;
+	g_end_heredoc = 0;
 	init_environment_paths(data);
 }
 

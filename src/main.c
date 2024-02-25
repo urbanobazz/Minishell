@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 20:56:37 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 21:12:44 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 12:46:59 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	end_heredoc;
+int	g_end_heredoc;
 
 int	get_user_input(t_data *data)
 {
