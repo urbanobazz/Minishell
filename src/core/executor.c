@@ -6,28 +6,56 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 20:42:53 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 20:55:48 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_cmd(t_data *data, int i, int input_fd, int output_fd)
+int	run_builtin(t_data *data, int i)
 {
-	if (input_fd != STDIN_FILENO && dup2(input_fd, STDIN_FILENO) == -1)
+	int	tmp_fd[2];
+	int	io[2];
+
+	tmp_fd[0] = dup(STDIN_FILENO);
+	tmp_fd[1] = dup(STDOUT_FILENO);
+	if (tmp_fd[0] == -1 || tmp_fd[1] == -1)
+		return (FAILURE);
+	get_input_output(data, i, io);
+	if (io[0] != STDIN_FILENO && dup2(io[0], STDIN_FILENO) == -1)
 		error_and_quit(data, 11);
-	if (output_fd != STDOUT_FILENO && dup2(output_fd, STDOUT_FILENO) == -1)
+	if (io[1] != STDOUT_FILENO && dup2(io[1], STDOUT_FILENO) == -1)
 		error_and_quit(data, 11);
-	close_all_pipes(data);
-	execve(data->cmd_paths[i], data->cmds[i], data->env);
-	error_and_quit(data, 12);
+	if (!find_and_trigger_builtin(data, data->cmds[i]))
+		return (FAILURE);
+	if (i > 0)
+		close(data->pipes[i - 1][0]);
+	if (i < data->command_count - 1)
+		close(data->pipes[i][1]);
+	if (io[0] != STDIN_FILENO && dup2(tmp_fd[0], STDIN_FILENO) == -1)
+		error_and_quit(data, 11);
+	if (io[1] != STDOUT_FILENO && dup2(tmp_fd[1], STDOUT_FILENO) == -1)
+		error_and_quit(data, 11);
+	data->exit_status = 0;
+	return (SUCCESS);
 }
 
 void	fork_subprocess(t_data *data, int i)
 {
+	int	io[2];
+
 	data->processes[i] = fork();
 	if (data->processes[i] == 0)
-		execute_shell_command_with_redirection(data, i);
+	{
+		get_input_output(data, i, io);
+		if (io[0] != STDIN_FILENO && dup2(io[0], STDIN_FILENO) == -1)
+			error_and_quit(data, 11);
+		if (io[1] != STDOUT_FILENO && dup2(io[1], STDOUT_FILENO) == -1)
+			error_and_quit(data, 11);
+		close_all_pipes(data);
+		execve(data->cmd_paths[i], data->cmds[i], data->env);
+		error_and_quit(data, 12);
+	}
 	else if (data->processes[i] < 0)
 		error_and_quit(data, 11);
 	else
@@ -42,7 +70,6 @@ void	fork_subprocess(t_data *data, int i)
 int	run_subprocesses(t_data *data)
 {
 	int	i;
-	int	res;
 
 	i = 0;
 	data->processes = ft_calloc(sizeof(pid_t), data->command_count);
@@ -50,10 +77,12 @@ int	run_subprocesses(t_data *data)
 		error_and_quit(data, 2);
 	while (i < data->command_count)
 	{
-		res = find_and_trigger_builtin(data, data->cmds[i]);
-		if (!res)
-			return (FAILURE);
-		if (res == NOT_BUILTIN)
+		if (is_builtin(data->cmds[i][0]))
+		{
+			if(!run_builtin(data, i))
+				return (FAILURE);
+		}
+		else
 			fork_subprocess(data, i);
 		i++;
 	}

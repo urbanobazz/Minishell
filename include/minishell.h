@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 20:52:14 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 20:57:11 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void	heredoc_interrupt_signal(void);
 void	init_pipes(t_data *data);
 int		init_redirections(t_data *data);
 void	close_all_pipes(t_data *data);
-void	execute_shell_command_with_redirection(t_data *data, int i);
-void	execute_cmd(t_data *data, int i, int input_fd, int output_fd);
+void	get_input_output(t_data *data, int i, int io[2]);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);

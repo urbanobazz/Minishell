@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 20:40:34 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 20:42:59 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 20:48:48 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,24 +77,20 @@ void	close_all_pipes(t_data *data)
 	}
 }
 
-void	execute_shell_command_with_redirection(t_data *data, int i)
+void	get_input_output(t_data *data, int i, int io[2])
 {
-	int	infile_fd;
-	int	outfile_fd;
-
 	if (i == 0)
-		infile_fd = data->infile_fd;
+		io[0] = data->infile_fd;
 	else
 	{
-		infile_fd = data->pipes[i - 1][0];
+		io[0] = data->pipes[i - 1][0];
 		close(data->pipes[i - 1][1]);
 	}
 	if (i == data->command_count - 1)
-		outfile_fd = data->outfile_fd;
+		io[1] = data->outfile_fd;
 	else
 	{
-		outfile_fd = data->pipes[i][1];
+		io[1] = data->pipes[i][1];
 		close(data->pipes[i][0]);
 	}
-	execute_cmd(data, i, infile_fd, outfile_fd);
 }
