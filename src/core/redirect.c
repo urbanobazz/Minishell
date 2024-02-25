@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 20:40:34 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 20:48:48 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 21:16:14 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,9 @@ void	get_input_output(t_data *data, int i, int io[2])
 	if (i == 0)
 		io[0] = data->infile_fd;
 	else
-	{
 		io[0] = data->pipes[i - 1][0];
-		close(data->pipes[i - 1][1]);
-	}
 	if (i == data->command_count - 1)
 		io[1] = data->outfile_fd;
 	else
-	{
 		io[1] = data->pipes[i][1];
-		close(data->pipes[i][0]);
-	}
 }
