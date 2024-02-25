@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/22 13:15:04 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/24 21:01:17 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ void	free_data(t_data *data)
 		free_double_pointer(data->env_paths);
 }
 
-static void free_tokens(t_token **tokens, void (*del)(void*))
+static void	free_tokens(t_token **tokens, void (*del)(void*))
 {
-	t_token *temp;
-	t_token *next;
+	t_token	*temp;
+	t_token	*next;
 
 	if (!tokens || !del)
 		return ;
-
 	temp = *tokens;
 	while (temp != NULL)
 	{
@@ -64,16 +63,17 @@ static void free_tokens(t_token **tokens, void (*del)(void*))
 
 void	free_double_pointer(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
 }
+
 static void	free_triple_pointer(char ***arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -83,7 +83,7 @@ static void	free_triple_pointer(char ***arr)
 
 static void	free_pipes(t_data *data, int **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->command_count - 1)

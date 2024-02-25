@@ -6,13 +6,13 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:31 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/16 12:40:43 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 21:06:19 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_builtin(char *cmd)
+int	is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "exit") == 0)
 		return (YES);
@@ -31,7 +31,7 @@ int is_builtin(char *cmd)
 	return (NO);
 }
 
-int find_and_trigger_builtin(t_data *data, char **cmds)
+int	find_and_trigger_builtin(t_data *data, char **cmds)
 {
 	if (cmds[0])
 	{

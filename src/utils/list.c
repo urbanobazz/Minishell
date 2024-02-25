@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:48:44 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/22 13:06:35 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/24 21:06:09 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*get_last_token(t_token *lst)
 {
-	t_token *last;
+	t_token	*last;
 
 	last = lst;
 	while (lst)
@@ -27,12 +27,12 @@ void	*get_last_token(t_token *lst)
 
 void	add_token(t_token **lst, t_token *new)
 {
-	t_token *last;
+	t_token	*last;
 
 	if (!*lst)
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	last = get_last_token(*lst);
 	last->next = new;
@@ -40,7 +40,7 @@ void	add_token(t_token **lst, t_token *new)
 
 void	create_token(t_data *data, char *token)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
@@ -55,7 +55,7 @@ void	create_token(t_data *data, char *token)
 
 int	ft_token_lstsize(t_token *lst)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (lst)

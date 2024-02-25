@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 19:30:40 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 20:58:13 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	lexer(t_data *data)
 	size_t	i;
 	int		sq;
 	int		dq;
-	
+
 	i = 0;
 	sq = 0;
 	dq = 0;
@@ -89,7 +89,7 @@ int	lexer(t_data *data)
 	while (i < ft_strlen(str) && !is_str_whitespace(str + i))
 	{
 		len = 0;
-		while(ft_iswhitespace(str[i]))
+		while (ft_iswhitespace(str[i]))
 			i++;
 		while ((!is_operator(str[i + len]) || sq || dq) && str[i + len])
 			toggle_quote_state(str[i + len++], &sq, &dq);

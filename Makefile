@@ -12,6 +12,7 @@ SRCS    :=	src/main.c \
 			src/core/expander.c \
 			src/core/executor.c \
 			src/core/signals.c \
+			src/core/redirect.c \
 			src/builtins/switch.c \
 			src/builtins/nav.c \
 			src/builtins/env.c \

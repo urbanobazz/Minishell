@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/24 11:23:17 by ubazzane         ###   ########.fr       */
+/*   Created: 2024/02/24 20:56:37 by louis.demet       #+#    #+#             */
+/*   Updated: 2024/02/24 21:12:44 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	end_heredoc;
 
-int get_user_input(t_data *data)
+int	get_user_input(t_data *data)
 {
 	interactive_signals();
 	data->user_input = readline("minishell: ");
@@ -29,13 +29,13 @@ int get_user_input(t_data *data)
 	return (SUCCESS);
 }
 
-void minishell(t_data *data)
+void	minishell(t_data *data)
 {
 	while (1)
 	{
 		reset_data(data);
 		if (!get_user_input(data))
-			break;
+			break ;
 		if (!lexer(data))
 			continue ;
 		if (!parser(data))
@@ -47,7 +47,7 @@ void minishell(t_data *data)
 	free_env(data);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	(void)argv;
 	if (argc != 1)
