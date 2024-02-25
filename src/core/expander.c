@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 19:23:14 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 11:37:58 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	expand_variables_and_remove_quotes(t_data *data)
 		{
 			if (data->cmds[i][j][0] != SGL_QUOTE)
 				data->cmds[i][j] = replace_variables(data, &data->cmds[i][j]);
-			if (data->cmds[i][j][0] == DBL_QUOTE
-				|| data->cmds[i][j][0] == SGL_QUOTE)
+			if (ft_strchr(data->cmds[i][j], DBL_QUOTE)
+				|| ft_strchr(data->cmds[i][j], SGL_QUOTE))
 			{
 				tmp = remove_quotes(data->cmds[i][j]);
 				if (!tmp)
