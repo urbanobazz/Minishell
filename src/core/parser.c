@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 12:43:23 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:54:58 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ int	handle_operator(t_data *data, t_token **token_list, int *i)
 {
 	if (!token_list || !*token_list)
 		return (FAILURE);
-	if ((*token_list)->token[0] == '|')
-		;
-	else if ((*token_list)->token[0] == '<' && (*token_list)->token[1] == '<'
+	if ((*token_list)->token[0] == '<' && (*token_list)->token[1] == '<'
 		&& !write_heredoc(data))
 		return (FAILURE);
 	else if ((*token_list)->token[0] == '<' && (*token_list)->next)
