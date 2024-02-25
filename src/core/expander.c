@@ -6,15 +6,11 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 12:39:15 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:28:44 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 char	*find_next_variable(const char *str)
 {
@@ -80,10 +76,8 @@ char	*replace_variables(t_data *data, char **str)
 		if (*var_end == '?')
 			var_end++;
 		else
-		{
 			while (isalnum(*var_end) || *var_end == '_')
 				var_end++;
-		}
 		value = get_variable_value(data, var_start, var_end - var_start - 1);
 		tmp = result;
 		result = replace_next_variable(tmp, value, var_end, var_start);
@@ -110,7 +104,7 @@ void	expand_variables_and_remove_quotes(t_data *data)
 			if (ft_strchr(data->cmds[i][j], DBL_QUOTE)
 				|| ft_strchr(data->cmds[i][j], SGL_QUOTE))
 			{
-				tmp = remove_quotes(data->cmds[i][j]);
+				remove_quotes(data->cmds[i][j], &tmp);
 				if (!tmp)
 					error_and_quit(data, 2);
 				free(data->cmds[i][j]);
@@ -120,34 +114,4 @@ void	expand_variables_and_remove_quotes(t_data *data)
 		}
 		i++;
 	}
-}
-
-char	*remove_quotes(char *str)
-{
-	char	*tmp;
-	char	*output;
-	char	*c;
-	int		in_sgl_quote;
-	int		in_dbl_quote;
-
-	in_sgl_quote = 0;
-	in_dbl_quote = 0;
-	output = ft_strdup("");
-	while (*str)
-	{
-		if (*str == SGL_QUOTE && !in_dbl_quote)
-			in_sgl_quote = !in_sgl_quote;
-		else if (*str == DBL_QUOTE && !in_sgl_quote)
-			in_dbl_quote = !in_dbl_quote;
-		else
-		{
-			c = ft_substr(str, 0, 1);
-			tmp = ft_strjoin(output, c);
-			free(output);
-			free(c);
-			output = tmp;
-		}
-		str++;
-	}
-	return (output);
 }

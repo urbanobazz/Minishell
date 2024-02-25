@@ -10,6 +10,7 @@ SRCS	:=	src/main.c \
 			src/core/parser.c \
 			src/core/heredoc.c \
 			src/core/expander.c \
+			src/core/expander_quotes.c \
 			src/core/executor.c \
 			src/core/signals.c \
 			src/core/signals_heredoc.c \

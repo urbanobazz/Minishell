@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 12:46:09 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:23:16 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <stdlib.h>
+# include <string.h>
 # include "libft.h"
 # include <fcntl.h>
 
@@ -75,7 +76,7 @@ int		parser(t_data *data);
 void	find_heredoc_delimiter(t_data *data, t_token *token_list);
 int		write_heredoc(t_data *data);
 void	expand_variables_and_remove_quotes(t_data *data);
-char	*remove_quotes(char *str);
+void	remove_quotes(char *str, char **output);
 int		executor(t_data *data);
 void	interactive_signals(void);
 void	non_interactive_signals(void);
