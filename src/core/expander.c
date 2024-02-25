@@ -6,7 +6,7 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 11:37:58 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/25 11:47:47 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,17 @@ char	*remove_quotes(char *str)
 	char *tmp;
 	char *output;
 	char *c;
+	int in_sgl_quote = 0;
+	int in_dbl_quote = 0;
 
 	output = ft_strdup("");
 	while (*str)
 	{
-		if (*str != SGL_QUOTE && *str != DBL_QUOTE)
+		if (*str == SGL_QUOTE && !in_dbl_quote)
+			in_sgl_quote = !in_sgl_quote;
+		else if (*str == DBL_QUOTE && !in_sgl_quote)
+			in_dbl_quote = !in_dbl_quote;
+		else
 		{
 			c = ft_substr(str, 0, 1);
 			tmp = ft_strjoin(output, c);
