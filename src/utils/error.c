@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:19:11 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/22 23:14:11 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/25 13:39:35 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ void	error_and_quit(t_data *data, int err)
 	exit(EXIT_FAILURE);
 }
 
-int	ft_error(t_data *data, int err)
+void	display_error(int err)
 {
-	data->exit_status = err;
 	if (err != 10)
 		ft_putstr_fd("Error: ", STDERR_FILENO);
 	if (err == 1)
@@ -56,6 +55,12 @@ int	ft_error(t_data *data, int err)
 		ft_putstr_fd("pipe error\n", STDERR_FILENO);
 	else if (err == 12)
 		ft_putstr_fd("execve error\n", STDERR_FILENO);
+}
+
+int	ft_error(t_data *data, int err)
+{
+	data->exit_status = err;
+	display_error(err);
 	free_data(data);
 	return (FAILURE);
 }
