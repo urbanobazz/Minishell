@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 19:09:16 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 12:18:32 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	expand_variables_and_remove_quotes(t_data *data)
 		{
 			if (data->cmds[i][j][0] != SGL_QUOTE)
 				data->cmds[i][j] = replace_variables(data, &data->cmds[i][j]);
-			if (data->cmds[i][j][0] == DBL_QUOTE
-				|| data->cmds[i][j][0] == SGL_QUOTE)
+			if (ft_strchr(data->cmds[i][j], DBL_QUOTE)
+				|| ft_strchr(data->cmds[i][j], SGL_QUOTE))
 			{
 				tmp = remove_quotes(data->cmds[i][j]);
 				if (!tmp)
@@ -127,11 +127,17 @@ char	*remove_quotes(char *str)
 	char *tmp;
 	char *output;
 	char *c;
+	int in_sgl_quote = 0;
+	int in_dbl_quote = 0;
 
 	output = ft_strdup("");
 	while (*str)
 	{
-		if (*str != SGL_QUOTE && *str != DBL_QUOTE)
+		if (*str == SGL_QUOTE && !in_dbl_quote)
+			in_sgl_quote = !in_sgl_quote;
+		else if (*str == DBL_QUOTE && !in_sgl_quote)
+			in_dbl_quote = !in_dbl_quote;
+		else
 		{
 			c = ft_substr(str, 0, 1);
 			tmp = ft_strjoin(output, c);
