@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 14:14:38 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/24 21:05:49 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 23:03:41 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	ft_pwd(t_data *data, char **cmds)
 
 	if (cmds[1])
 		return (ft_error(data, 6));
-	ft_printf("%s\n", getcwd(cwd, sizeof(cwd)));
+	ft_putstr_fd(getcwd(cwd, sizeof(cwd)), STDOUT_FILENO);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	return (SUCCESS);
 }
 
@@ -67,11 +68,11 @@ int	ft_echo(char **cmds)
 	}
 	while (cmds[++i])
 	{
-		ft_printf(cmds[i]);
+		ft_putstr_fd(cmds[i], STDOUT_FILENO);
 		if (cmds[i + 1])
-			ft_printf(" ");
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (return_flag)
-		ft_printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (SUCCESS);
 }

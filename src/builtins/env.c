@@ -6,7 +6,7 @@
 /*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 11:05:47 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/24 21:12:03 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/24 23:05:51 by louis.demet      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	ft_env(t_data *data)
 
 	i = 0;
 	while (data->env[i])
-		ft_printf("%s\n", data->env[i++]);
+	{
+		ft_putstr_fd(data->env[i++], STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	}
 	return (SUCCESS);
 }
 
