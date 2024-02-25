@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 20:55:48 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 22:11:22 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	run_builtin(t_data *data, int i)
 		error_and_quit(data, 11);
 	if (io[1] != STDOUT_FILENO && dup2(tmp_fd[1], STDOUT_FILENO) == -1)
 		error_and_quit(data, 11);
+	close(tmp_fd[0]);
+	close(tmp_fd[1]);
 	data->exit_status = 0;
 	return (SUCCESS);
 }

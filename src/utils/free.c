@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/24 21:01:17 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/25 22:15:18 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	free_data(t_data *data)
 		unlink(data->heredoc_file);
 	if (data->env_paths)
 		free_double_pointer(data->env_paths);
+	if (data->infile_fd && data->infile_fd > 2)
+		close(data->infile_fd);
+	if (data->outfile_fd && data->outfile_fd > 2)
+		close(data->outfile_fd);
 }
 
 static void	free_tokens(t_token **tokens, void (*del)(void*))

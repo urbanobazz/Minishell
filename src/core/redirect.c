@@ -6,7 +6,7 @@
 /*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 20:40:34 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 21:16:14 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/25 22:08:21 by piuser           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	close_all_pipes(t_data *data)
 	{
 		if (data->pipes[i][0] > 2)
 			close(data->pipes[i][0]);
-		if (data->pipes[i][0] > 2)
+		if (data->pipes[i][1] > 2)
 			close(data->pipes[i][1]);
 		i++;
 	}
