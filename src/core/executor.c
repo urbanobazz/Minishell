@@ -6,11 +6,24 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 15:14:43 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:59:32 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	has_permissions(pid_t *processes, char *cmd, int i)
+{
+	if (ft_strcmp(cmd, ".") == 0|| ft_strcmp(cmd, "..") == 0 || ft_strcmp(cmd, "./") == 0)
+	{
+		ft_putstr_fd("minishell: permission denied: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd("\n", STDERR_FILENO);
+		processes[i] = -2;
+		return (NO);
+	}
+	return (YES);
+}
 
 int	run_builtin(t_data *data, int i)
 {
@@ -30,7 +43,8 @@ void	fork_subprocess(t_data *data, int i)
 {
 	int	io[2];
 
-	data->processes[i] = fork();
+	if (has_permissions(data->processes, data->cmds[i][0], i))
+		data->processes[i] = fork();
 	if (data->processes[i] == 0)
 	{
 		get_input_output(data, i, io);
@@ -42,7 +56,7 @@ void	fork_subprocess(t_data *data, int i)
 		execve(data->cmd_paths[i], data->cmds[i], data->env);
 		error_and_quit(data, 12);
 	}
-	else if (data->processes[i] < 0)
+	else if (data->processes[i] == -1)
 		error_and_quit(data, 11);
 	else
 	{
