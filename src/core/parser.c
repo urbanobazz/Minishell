@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 18:25:34 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:32:08 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,8 @@
 
 int	init_command_array(t_data *data)
 {
-	t_token	*token_list;
-	int		not_command_count;
-
-	data->command_count = ft_token_lstsize(data->tokens);
-	token_list = data->tokens;
-	not_command_count = 0;
-	while (token_list)
-	{
-		if (token_list->token[0] == '|')
-			not_command_count++;
-		else if (token_list->token[0] == '<' || token_list->token[0] == '>')
-			not_command_count += 2;
-		if (token_list->token[0] == '<' && token_list->token[1] == '<')
-			find_heredoc_delimiter(data, token_list);
-		else if (token_list->token[0] == '>' && token_list->token[1] == '>')
-			data->append_mode = 1;
-		token_list = token_list->next;
-	}
-	data->command_count -= not_command_count;
-	if (data->command_count < 0)
-		return (ft_error(data, 7));
+	if (!count_commands(data))
+		return (FAILURE);
 	data->cmds = (char ***)ft_calloc(sizeof(char **), data->command_count + 1);
 	data->cmd_paths = (char **)ft_calloc(sizeof(char *), \
 													data->command_count + 1);

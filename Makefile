@@ -16,7 +16,7 @@ SRCS	:=	src/main.c \
 			src/core/signals_heredoc.c \
 			src/core/redirect.c \
 			src/core/lexer_segment.c \
-			src/core/command_paths.c \
+			src/core/commands.c \
 			src/core/builtin_redirection.c \
 			src/core/permissions.c \
 			src/builtins/switch.c \

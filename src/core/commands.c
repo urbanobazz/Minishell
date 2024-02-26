@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_paths.c                                    :+:      :+:    :+:   */
+/*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:03:36 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/26 18:23:34 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:32:12 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,31 @@ int	find_command_paths(t_data *data)
 		i++;
 	}
 	data->cmd_paths[i] = 0;
+	return (SUCCESS);
+}
+
+int	count_commands(t_data *data)
+{
+	t_token	*token_list;
+	int		not_command_count;
+
+	data->command_count = ft_token_lstsize(data->tokens);
+	token_list = data->tokens;
+	not_command_count = 0;
+	while (token_list)
+	{
+		if (token_list->token[0] == '|')
+			not_command_count++;
+		else if (token_list->token[0] == '<' || token_list->token[0] == '>')
+			not_command_count += 2;
+		if (token_list->token[0] == '<' && token_list->token[1] == '<')
+			find_heredoc_delimiter(data, token_list);
+		else if (token_list->token[0] == '>' && token_list->token[1] == '>')
+			data->append_mode = 1;
+		token_list = token_list->next;
+	}
+	data->command_count -= not_command_count;
+	if (data->command_count < 0)
+		return (ft_error(data, 7));
 	return (SUCCESS);
 }
