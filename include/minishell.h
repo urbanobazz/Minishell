@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 15:19:32 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:05:05 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	cycle_command_paths(t_data *data, int i);
 int		find_command_paths(t_data *data);
 int		backup_redirection(t_data *data, int i, int io[2], int tmp_fd[2]);
 void	restore_redirection(t_data *data, int i, int io[2], int tmp_fd[2]);
+int		has_permissions(pid_t *processes, char *cmd, int i);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);
