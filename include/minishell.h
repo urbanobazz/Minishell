@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 14:53:55 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:04:28 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	close_all_pipes(t_data *data);
 void	get_input_output(t_data *data, int i, int io[2]);
 void	process_segment(t_data *data, char *str, size_t *i, int len);
 char	*ft_get_next_word(char *str);
+void	cycle_command_paths(t_data *data, int i);
+int		find_command_paths(t_data *data);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);

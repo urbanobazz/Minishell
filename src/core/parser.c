@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:53:25 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 21:05:46 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/26 15:03:44 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ void	init_command_array(t_data *data)
 		error_and_quit(data, 2);
 }
 
+void	handle_output_redirection(t_data *data, t_token **token_list)
+{
+	if (data->std_output)
+		free(data->std_output);
+	data->std_output = ft_strdup((*token_list)->next->token);
+	if ((*token_list)->token[1] == '>')
+		data->outfile_fd = open(data->std_output, O_CREAT | \
+		O_WRONLY | O_APPEND, 0644);
+	else
+		data->outfile_fd = open(data->std_output, O_CREAT | \
+		O_WRONLY | O_TRUNC, 0644);
+	close(data->outfile_fd);
+}
+
 int	handle_operator(t_data *data, t_token **token_list, int *i)
 {
 	if (!token_list || !*token_list)
@@ -52,18 +66,7 @@ int	handle_operator(t_data *data, t_token **token_list, int *i)
 	else if ((*token_list)->token[0] == '<' && (*token_list)->next)
 		data->std_input = ft_strdup((*token_list)->next->token);
 	else if ((*token_list)->token[0] == '>' && (*token_list)->next)
-	{
-		if (data->std_output)
-			free(data->std_output);
-		data->std_output = ft_strdup((*token_list)->next->token);
-		if ((*token_list)->token[1] == '>')
-			data->outfile_fd = open(data->std_output, O_CREAT | \
-			O_WRONLY | O_APPEND, 0644);
-		else
-			data->outfile_fd = open(data->std_output, O_CREAT | \
-			O_WRONLY | O_TRUNC, 0644);
-		close(data->outfile_fd);
-	}
+		handle_output_redirection(data, token_list);
 	else
 		data->cmds[(*i)++] = split_commands((*token_list)->token, data);
 	if (((*token_list)->token[0] == '>' || (*token_list)->token[0] == '<')
@@ -91,46 +94,6 @@ int	split_and_store_commands(t_data *data)
 		token_list = token_list->next;
 	}
 	data->cmds[i] = 0;
-	return (SUCCESS);
-}
-
-void	cycle_command_paths(t_data *data, int i)
-{
-	int	j;
-
-	j = 0;
-	free(data->cmd_paths[i]);
-	data->cmd_paths[i] = 0;
-	while (data->env_paths && data->env_paths[j])
-	{
-		data->cmd_paths[i] = ft_strjoin(data->env_paths[j], data->cmds[i][0]);
-		if (!data->cmd_paths[i])
-			error_and_quit(data, 2);
-		if (access(data->cmd_paths[i], X_OK) == 0)
-			break ;
-		free(data->cmd_paths[i]);
-		data->cmd_paths[i] = 0;
-		j++;
-	}
-}
-
-int	find_command_paths(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->command_count)
-	{
-		data->cmd_paths[i] = ft_strdup(data->cmds[i][0]);
-		if (!data->cmd_paths[i])
-			return (ft_error(data, 2));
-		if (access(data->cmd_paths[i], X_OK) != 0)
-			cycle_command_paths(data, i);
-		if (!data->cmd_paths[i] && !is_builtin(data->cmds[i][0]))
-			return (ft_error(data, 7));
-		i++;
-	}
-	data->cmd_paths[i] = 0;
 	return (SUCCESS);
 }
 
