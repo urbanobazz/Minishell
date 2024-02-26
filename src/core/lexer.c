@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 19:00:28 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 14:47:12 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:17:38 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,6 @@ void	toggle_quote_state(char c, int *sq, int *dq)
 	else if (c == DBL_QUOTE && !(*sq))
 		*dq = !(*dq);
 }
-
-// void	process_segment(t_data *data, char *str, size_t *i, int len)
-// {
-// 	char	*next_word;
-// 	t_token	*last_token;
-
-// 	next_word = 0;
-// 	if (is_operator(str[*i]))
-// 	{
-// 		if (is_operator(str[*i + 1]))
-// 			create_token(data, ft_substr(str, (*i)++, 2));
-// 		else
-// 			create_token(data, ft_substr(str, *i, 1));
-// 		(*i)++;
-// 	}
-// 	last_token = get_last_token(data->tokens);
-// 	if (len > 0 && last_token && (last_token->token[0] == '>'
-// 			|| last_token->token[0] == '<'))
-// 	{
-// 		next_word = ft_get_next_word(str + *i);
-// 		*i += ft_strlen(next_word);
-// 		len -= ft_strlen(next_word);
-// 		create_token(data, next_word);
-// 	}
-// 	if (len > 0)
-// 	{
-// 		create_token(data, ft_substr(str, *i, len));
-// 		*i += len;
-// 	}
-// }
 
 int	is_str_whitespace(char *str)
 {
