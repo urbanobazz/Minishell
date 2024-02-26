@@ -23,6 +23,7 @@ SRCS	:=	src/main.c \
 			src/builtins/set.c \
 			src/utils/error.c \
 			src/utils/free.c \
+			src/utils/free_utils.c \
 			src/utils/list.c \
 			src/utils/init.c
 OBJDIR	:= 	obj

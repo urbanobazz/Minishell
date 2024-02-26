@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:14:15 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/25 22:15:18 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:15:19 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_tokens(t_token **tokens, void (*del)(void*));
-void		free_double_pointer(char **arr);
-static void	free_pipes(t_data *data, int **arr);
-static void	free_triple_pointer(char ***arr);
+static void	free_data_two(t_data *data);
 
 void	free_data(t_data *data)
 {
@@ -33,6 +30,11 @@ void	free_data(t_data *data)
 		free(data->std_output);
 	if (data->pipes)
 		free_pipes(data, data->pipes);
+	free_data_two(data);
+}
+
+static void	free_data_two(t_data *data)
+{
 	if (data->processes)
 		free(data->processes);
 	if (data->heredoc_delimiters)
@@ -45,53 +47,4 @@ void	free_data(t_data *data)
 		close(data->infile_fd);
 	if (data->outfile_fd && data->outfile_fd > 2)
 		close(data->outfile_fd);
-}
-
-static void	free_tokens(t_token **tokens, void (*del)(void*))
-{
-	t_token	*temp;
-	t_token	*next;
-
-	if (!tokens || !del)
-		return ;
-	temp = *tokens;
-	while (temp != NULL)
-	{
-		next = temp->next;
-		(*del)(temp->token);
-		free(temp);
-		temp = next;
-	}
-	*tokens = NULL;
-}
-
-void	free_double_pointer(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
-
-static void	free_triple_pointer(char ***arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		free_double_pointer(arr[i++]);
-	free(arr);
-}
-
-static void	free_pipes(t_data *data, int **arr)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->command_count - 1)
-		free(arr[i++]);
-	if (arr)
-		free(arr);
 }

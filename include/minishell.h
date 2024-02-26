@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 15:04:28 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:13:57 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,9 @@ int		ft_error(t_data *data, int err);
 void	free_env(t_data *data);
 void	free_data(t_data *data);
 void	free_double_pointer(char **arr);
+void	free_triple_pointer(char ***arr);
+void	free_tokens(t_token **tokens, void (*del)(void*));
+void	free_pipes(t_data *data, int **arr);
 void	init_environment_paths(t_data *data);
 t_data	*init_data(void);
 void	reset_data(t_data *data);
