@@ -6,11 +6,13 @@
 /*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:57:08 by ubazzane          #+#    #+#             */
-/*   Updated: 2024/02/25 12:47:46 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:50:48 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	check_line(char **line);
 
 void	find_heredoc_delimiter(t_data *data, t_token *token_list)
 {
@@ -73,12 +75,22 @@ int	write_heredoc(t_data *data)
 	}
 	non_interactive_signals();
 	close(fd);
-	if (line)
-		free(line);
-	if (!line || g_end_heredoc)
+	check_line(&line);
+	if (g_end_heredoc)
 	{
 		write(1, "\n", 1);
 		return (ft_error(data, 10));
 	}
 	return (SUCCESS);
+}
+
+static void	check_line(char **line)
+{
+	if (!(*line))
+	{
+		write(1, "\n", 1);
+		ft_putstr_fd("warning: heredoc delimited by end-of-file\n", 1);
+	}
+	else
+		free(*line);
 }
