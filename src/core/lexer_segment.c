@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_segment.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:46:38 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/26 14:47:40 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:00:09 by ubazzane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Prototype declarations for clarity
-void    process_operator(t_data *data, char *str, size_t *i);
-void    process_next_word(t_data *data, char *str, size_t *i, int *len);
-void    process_remaining_string(t_data *data, char *str, size_t *i, int len);
+void	process_operator(t_data *data, char *str, size_t *i);
+void	process_next_word(t_data *data, char *str, size_t *i, int *len);
+void	process_remaining_string(t_data *data, char *str, size_t *i, int len);
 
-void    process_segment(t_data *data, char *str, size_t *i, int len)
+void	process_segment(t_data *data, char *str, size_t *i, int len)
 {
 	process_operator(data, str, i);
 	process_next_word(data, str, i, &len);
 	process_remaining_string(data, str, i, len);
 }
 
-void    process_operator(t_data *data, char *str, size_t *i)
+void	process_operator(t_data *data, char *str, size_t *i)
 {
 	if (is_operator(str[*i]))
 	{
@@ -36,14 +35,14 @@ void    process_operator(t_data *data, char *str, size_t *i)
 	}
 }
 
-void    process_next_word(t_data *data, char *str, size_t *i, int *len)
+void	process_next_word(t_data *data, char *str, size_t *i, int *len)
 {
-	char    *next_word;
-	t_token *last_token;
+	char	*next_word;
+	t_token	*last_token;
 
 	last_token = get_last_token(data->tokens);
-	if (*len > 0 && last_token && (last_token->token[0] == '>' 
-		|| last_token->token[0] == '<'))
+	if (*len > 0 && last_token && (last_token->token[0] == '>'
+			|| last_token->token[0] == '<'))
 	{
 		next_word = ft_get_next_word(str + *i);
 		*i += ft_strlen(next_word);
@@ -52,7 +51,7 @@ void    process_next_word(t_data *data, char *str, size_t *i, int *len)
 	}
 }
 
-void    process_remaining_string(t_data *data, char *str, size_t *i, int len)
+void	process_remaining_string(t_data *data, char *str, size_t *i, int len)
 {
 	if (len > 0)
 	{
@@ -60,4 +59,3 @@ void    process_remaining_string(t_data *data, char *str, size_t *i, int len)
 		*i += len;
 	}
 }
-
