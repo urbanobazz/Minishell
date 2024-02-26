@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/26 14:22:38 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:14:43 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,11 @@ int	run_builtin(t_data *data, int i)
 	int	tmp_fd[2];
 	int	io[2];
 
-	tmp_fd[0] = dup(STDIN_FILENO);
-	tmp_fd[1] = dup(STDOUT_FILENO);
-	if (tmp_fd[0] == -1 || tmp_fd[1] == -1)
+	if (!backup_redirection(data, i, io, tmp_fd))
 		return (FAILURE);
-	get_input_output(data, i, io);
-	if (io[0] != STDIN_FILENO && dup2(io[0], STDIN_FILENO) == -1)
-		error_and_quit(data, 11);
-	if (io[1] != STDOUT_FILENO && dup2(io[1], STDOUT_FILENO) == -1)
-		error_and_quit(data, 11);
 	if (!find_and_trigger_builtin(data, data->cmds[i]))
 		return (FAILURE);
-	if (i > 0)
-		close(data->pipes[i - 1][0]);
-	if (i < data->command_count - 1)
-		close(data->pipes[i][1]);
-	if (io[0] != STDIN_FILENO && dup2(tmp_fd[0], STDIN_FILENO) == -1)
-		error_and_quit(data, 11);
-	if (io[1] != STDOUT_FILENO && dup2(tmp_fd[1], STDOUT_FILENO) == -1)
-		error_and_quit(data, 11);
-	close(tmp_fd[0]);
-	close(tmp_fd[1]);
+	restore_redirection(data, i, io, tmp_fd);
 	data->exit_status = 0;
 	return (SUCCESS);
 }
