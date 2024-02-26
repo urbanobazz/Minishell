@@ -6,7 +6,7 @@
 /*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:03:36 by lodemetz          #+#    #+#             */
-/*   Updated: 2024/02/26 17:39:42 by lodemetz         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:23:34 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	find_command_paths(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->command_count || data->command_count < 0)
+	while (i < data->command_count)
 	{
 		data->cmd_paths[i] = ft_strdup(data->cmds[i][0]);
 		if (!data->cmd_paths[i])
