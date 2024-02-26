@@ -17,6 +17,7 @@ SRCS	:=	src/main.c \
 			src/core/redirect.c \
 			src/core/lexer_segment.c \
 			src/core/command_paths.c \
+			src/core/builtin_redirection.c \
 			src/builtins/switch.c \
 			src/builtins/nav.c \
 			src/builtins/env.c \
