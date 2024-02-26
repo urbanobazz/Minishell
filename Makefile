@@ -15,6 +15,7 @@ SRCS	:=	src/main.c \
 			src/core/signals.c \
 			src/core/signals_heredoc.c \
 			src/core/redirect.c \
+			src/core/lexer_segment.c \
 			src/builtins/switch.c \
 			src/builtins/nav.c \
 			src/builtins/env.c \

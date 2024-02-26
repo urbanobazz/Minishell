@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: louis.demetz <louis.demetz@student.42.f    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 18:28:20 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 20:59:10 by louis.demet      ###   ########.fr       */
+/*   Updated: 2024/02/26 14:53:55 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	init_pipes(t_data *data);
 int		init_redirections(t_data *data);
 void	close_all_pipes(t_data *data);
 void	get_input_output(t_data *data, int i, int io[2]);
+void	process_segment(t_data *data, char *str, size_t *i, int len);
+char	*ft_get_next_word(char *str);
 
 // BUILTINS
 int		find_and_trigger_builtin(t_data *data, char **cmds);

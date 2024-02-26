@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: piuser <piuser@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:43:43 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 22:11:22 by piuser           ###   ########.fr       */
+/*   Updated: 2024/02/26 14:22:38 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	run_subprocesses(t_data *data)
 	{
 		if (is_builtin(data->cmds[i][0]))
 		{
-			if(!run_builtin(data, i))
+			if (!run_builtin(data, i))
 				return (FAILURE);
 		}
 		else
