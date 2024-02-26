@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ubazzane <ubazzane@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lodemetz <lodemetz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 18:17:33 by louis.demet       #+#    #+#             */
-/*   Updated: 2024/02/25 14:28:44 by ubazzane         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:24:18 by lodemetz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	expand_variables_and_remove_quotes(t_data *data)
 		j = 0;
 		while (data->cmds[i][j])
 		{
-			if (data->cmds[i][j][0] != SGL_QUOTE)
+			if (!ft_strchr(data->cmds[i][j], SGL_QUOTE))
 				data->cmds[i][j] = replace_variables(data, &data->cmds[i][j]);
 			if (ft_strchr(data->cmds[i][j], DBL_QUOTE)
 				|| ft_strchr(data->cmds[i][j], SGL_QUOTE))
